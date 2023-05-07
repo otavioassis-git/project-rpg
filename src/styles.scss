@@ -1,3 +1,6 @@
+@import "primeng/resources/themes/viva-light/theme.css";
+@import "primeng/resources/primeng.css";
+
 /* You can add global styles to this file, and also import other style files */
 html, body {
   margin: 0;
@@ -5,6 +8,10 @@ html, body {
 
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
+
+  p {
+    margin: 0;
+  }
 }
 
 /* CAN (MUST) BE REMOVED ! Sample Global style */
