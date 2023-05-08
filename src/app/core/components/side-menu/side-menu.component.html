@@ -24,7 +24,7 @@
         <p *ngIf="!isRetracted">{{ item.label }}</p>
       </div>
     </div>
-    <div class="version-footer">
+    <div *ngIf="!isRetracted" class="version-footer">
       <i class="pi pi-info-circle"></i>
       <p>v{{ lVersion }}</p>
     </div>
