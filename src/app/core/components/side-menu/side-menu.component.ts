@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { MaximizeServiceService } from '../../services/maximize-service.service';
+import { Router } from '@angular/router';
+
+interface MenuItem {
+  icon: string;
+  label: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-side-menu',
@@ -7,25 +14,33 @@ import { MaximizeServiceService } from '../../services/maximize-service.service'
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent {
-  menuItems = [
-    {
-      icon: 'pi-volume-up',
-      label: 'Sound board',
-      redirect: '',
-    },
+  menuItems: MenuItem[] = [
     {
       icon: 'pi-map',
       label: 'Map hider',
-      redirect: '',
+      route: 'map-hider',
     },
+    {
+      icon: 'pi-volume-up',
+      label: 'Sound board',
+      route: 'soundboard',
+    },
+    // {
+    //   icon: 'pi-box',
+    //   label: '',
+    //   route: '',
+    // },
   ];
 
-  selectedMenu;
+  selectedMenu: MenuItem;
 
   isRetracted = false;
   isMaximized: boolean;
 
-  constructor(private maximizeService: MaximizeServiceService) {}
+  constructor(
+    private maximizeService: MaximizeServiceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.maximizeService.getIsMaximized().subscribe((value: boolean) => {
@@ -35,5 +50,10 @@ export class SideMenuComponent {
 
   toggleRetract() {
     this.isRetracted = !this.isRetracted;
+  }
+
+  navigate(item: MenuItem) {
+    this.selectedMenu = item;
+    this.router.navigateByUrl(item.route);
   }
 }

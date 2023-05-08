@@ -31,7 +31,7 @@
       }
 
       &-selected {
-        background-color: rgba(56, 56, 56, 0.678);
+        background-color: rgb(49, 51, 56);
       }
     }
 
@@ -44,6 +44,7 @@
       height: 1px;
       background-color: #fff;
       align-self: center;
+      margin: 0.325rem 0;
     }
 
     &-retracted {

@@ -2,6 +2,8 @@ import { MainWindowComponent } from './modules/main-window/pages/main-window/mai
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components';
+import { MapHiderComponent } from './modules/map-hider/pages/map-hider/map-hider.component';
+import { SoundboardComponent } from './modules/soundboard/pages/soundboard/soundboard.component';
 
 const routes: Routes = [
   {
@@ -10,6 +12,22 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/main-window/main-window.module').then(
         (m) => m.MainWindowModule
+      ),
+  },
+  {
+    path: 'map-hider',
+    component: MapHiderComponent,
+    loadChildren: () =>
+      import('./modules/map-hider/map-hider.module').then(
+        (m) => m.MapHiderModule
+      ),
+  },
+  {
+    path: 'soundboard',
+    component: SoundboardComponent,
+    loadChildren: () =>
+      import('./modules/soundboard/soundboard.module').then(
+        (m) => m.SoundboardModule
       ),
   },
   {
