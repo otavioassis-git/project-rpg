@@ -1,0 +1,19 @@
+#main-window-container {
+  display: flex;
+  height: 100%;
+
+  .welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+
+    p {
+      font-size: 3rem;
+    }
+  }
+
+  img {
+    height: 100px;
+  }
+}

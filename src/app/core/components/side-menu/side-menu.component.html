@@ -1,5 +1,8 @@
 <div id="side-menu-container" [ngClass]="isMaximized ? 'border-noround' : ''">
-  <div class="menu-container">
+  <div
+    class="menu-container"
+    [ngClass]="isRetracted ? 'menu-container-retracted' : ''"
+  >
     <div (click)="toggleRetract()" class="menu-item">
       <i
         [pTooltip]="isRetracted ? 'Expand menu' : ''"
