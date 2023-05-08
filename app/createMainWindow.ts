@@ -11,10 +11,10 @@ export function createMainWindow(): BrowserWindow {
 
   // Create the browser window.
   let win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: size.width,
-    height: size.height,
+    titleBarStyle: 'hidden',
+    transparent: true,
+    width: 1200,
+    height: 700,
     webPreferences: {
       // devTools: false,
       nodeIntegration: true,

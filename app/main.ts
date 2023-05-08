@@ -1,10 +1,13 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, ipcRenderer, ipcMain } from 'electron';
 import { createMainWindow } from './createMainWindow';
 
 let mainWin: BrowserWindow = null;
+let previousBounds;
 
 function App() {
   mainWin = createMainWindow();
+  previousBounds = mainWin.getBounds();
+  loadEvents();
 }
 
 try {
@@ -33,4 +36,26 @@ try {
 } catch (e) {
   // Catch Error
   // throw e;
+}
+
+function loadEvents() {
+  ipcMain.on('minimizeWindow', () => {
+    BrowserWindow.getFocusedWindow().minimize();
+  });
+
+  ipcMain.on('toogleWindowSize', () => {
+    if (
+      BrowserWindow.getFocusedWindow().getBounds().width ==
+      screen.getPrimaryDisplay().workAreaSize.width
+    ) {
+      BrowserWindow.getFocusedWindow().setBounds(previousBounds);
+    } else {
+      previousBounds = BrowserWindow.getFocusedWindow().getBounds();
+      BrowserWindow.getFocusedWindow().maximize();
+    }
+  });
+
+  ipcMain.on('closeWindow', () => {
+    BrowserWindow.getFocusedWindow().close();
+  });
 }

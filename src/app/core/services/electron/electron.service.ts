@@ -7,7 +7,7 @@ import * as childProcess from 'child_process';
 import * as fs from 'fs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ElectronService {
   ipcRenderer: typeof ipcRenderer;
@@ -52,5 +52,17 @@ export class ElectronService {
 
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
+  }
+
+  minimizeWindow() {
+    this.ipcRenderer.send('minimizeWindow');
+  }
+
+  toggleWindowSize() {
+    this.ipcRenderer.send('toogleWindowSize');
+  }
+
+  closeWindow() {
+    this.ipcRenderer.send('closeWindow');
   }
 }

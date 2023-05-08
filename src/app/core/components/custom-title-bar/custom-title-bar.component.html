@@ -1,0 +1,9 @@
+<div
+  id="custom-title-bar-container"
+  [ngClass]="isMaximized ? 'border-noround' : ''"
+>
+  <p class="title">{{ title }}</p>
+  <i (click)="minimize()" class="pi pi-minus minimize-button"></i>
+  <i (click)="maximize()" class="pi pi-stop maximize-button"></i>
+  <i (click)="close()" class="pi pi-times close-button"></i>
+</div>
