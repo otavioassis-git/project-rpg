@@ -26,6 +26,17 @@
         max-width: calc(100vw - 232px);
       }
     }
+
+    .empty-state {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      p {
+        font-size: 3rem;
+      }
+    }
   }
 
   .settings-container {

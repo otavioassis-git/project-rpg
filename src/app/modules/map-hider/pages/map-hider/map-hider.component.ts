@@ -1,3 +1,4 @@
+import { NotificationService } from './../../../../core/services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { MaximizeServiceService } from '../../../../core/services/maximize-service.service';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
@@ -14,7 +15,8 @@ export class MapHiderComponent implements OnInit {
 
   constructor(
     private maximizeService: MaximizeServiceService,
-    private sideMenuService: SideMenuService
+    private sideMenuService: SideMenuService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -34,5 +36,11 @@ export class MapHiderComponent implements OnInit {
       this.image = reader.result as string;
     };
     reader.readAsDataURL(file);
+
+    this.notificationService.add({
+      severity: 'info',
+      summary: 'Info',
+      detail: 'You can resize the image using the grab on the bottom right!',
+    });
   }
 }

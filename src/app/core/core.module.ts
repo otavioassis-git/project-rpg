@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CustomTitleBarComponent } from './components/custom-title-bar/custom-title-bar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [CustomTitleBarComponent, SideMenuComponent],
@@ -13,6 +14,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CustomTitleBarComponent,
     SideMenuComponent,
     TooltipModule,
+    ToastModule,
   ],
 })
 export class CoreModule {}

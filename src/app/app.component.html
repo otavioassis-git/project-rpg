@@ -1,6 +1,7 @@
 <div id="app" [ngClass]="isMaximized ? 'maximized' : ''">
   <app-custom-title-bar></app-custom-title-bar>
   <div class="content-container">
+    <p-toast></p-toast>
     <app-side-menu></app-side-menu>
     <div class="w-full h-full">
       <router-outlet></router-outlet>
