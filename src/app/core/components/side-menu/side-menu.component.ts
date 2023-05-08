@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MaximizeServiceService } from '../../services/maximize-service.service';
 import { Router } from '@angular/router';
+import { SideMenuService } from '../../services/side-menu.service';
 
 interface MenuItem {
   icon: string;
@@ -38,6 +39,7 @@ export class SideMenuComponent {
   isMaximized: boolean;
 
   constructor(
+    private sideMenuService: SideMenuService,
     private maximizeService: MaximizeServiceService,
     private router: Router
   ) {}
@@ -50,6 +52,7 @@ export class SideMenuComponent {
 
   toggleRetract() {
     this.isRetracted = !this.isRetracted;
+    this.sideMenuService.setIsRetracted(this.isRetracted);
   }
 
   navigate(item: MenuItem) {

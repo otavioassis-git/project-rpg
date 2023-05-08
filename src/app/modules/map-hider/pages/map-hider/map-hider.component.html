@@ -1,6 +1,9 @@
 <div id="map-hider-container">
   <div class="map-container">
-    <div id="image-container">
+    <div
+      class="image-container"
+      [ngClass]="isRetracted ? 'image-container-retracted-max-size' : ''"
+    >
       <img *ngIf="image && image != ''" [src]="image" alt="Uplaoded image" />
     </div>
   </div>
