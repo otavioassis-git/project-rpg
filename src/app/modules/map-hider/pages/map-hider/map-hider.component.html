@@ -1,1 +1,8 @@
-<p>map-hider works!</p>
+<div id="map-hider-container">
+  <div class="map-container">
+    <img *ngIf="image && image != ''" [src]="image" alt="Uplaoded image" />
+  </div>
+  <div class="settings-container">
+    <input (change)="loadImage($event)" accept="image/*" type="file" />
+  </div>
+</div>
