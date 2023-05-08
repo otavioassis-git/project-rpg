@@ -8,7 +8,7 @@ import {
   dialog,
 } from 'electron';
 import { createMainWindow } from './createMainWindow';
-import { autoUpdater } from 'electron';
+import { autoUpdater } from 'electron-updater';
 
 let mainWin: BrowserWindow = null;
 let previousBounds;
