@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MaximizeServiceService } from '../../services/maximize-service.service';
 import { Router } from '@angular/router';
 import { SideMenuService } from '../../services/side-menu.service';
+import packageInfo from '../../../../../package.json';
 
 interface MenuItem {
   icon: string;
@@ -15,6 +16,8 @@ interface MenuItem {
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent {
+  lVersion = packageInfo.version;
+
   menuItems: MenuItem[] = [
     {
       icon: 'pi-map',
