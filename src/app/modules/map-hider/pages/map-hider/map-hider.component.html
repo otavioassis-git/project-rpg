@@ -4,7 +4,10 @@
       <img *ngIf="image && image != ''" [src]="image" alt="Uplaoded image" />
     </div>
   </div>
-  <div class="settings-container">
+  <div
+    class="settings-container"
+    [ngClass]="isMaximized ? 'border-noround' : ''"
+  >
     <label class="input-file">
       <input (change)="loadImage($event)" accept="image/*" type="file" />
       <span>Upload image</span>

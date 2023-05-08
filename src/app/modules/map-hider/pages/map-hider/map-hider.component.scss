@@ -5,7 +5,7 @@
   .map-container {
     width: calc(100% - 100px);
     height: 100%;
-    padding: 1rem 0 0 1rem;
+    padding: 1rem;
     overflow: hidden;
 
     #image-container {
@@ -14,7 +14,7 @@
       border: 1px solid;
       height: 100%;
       max-height: calc(100vh - 85px);
-      max-width: calc(100vw - 342px);
+      max-width: calc(100vw - 348px);
 
       img {
         width: 100%;
