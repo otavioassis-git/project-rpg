@@ -29,6 +29,14 @@ export class MapHiderComponent implements OnInit {
   }
 
   loadImage(event) {
+    if (!this.image) {
+      this.notificationService.add({
+        severity: 'info',
+        summary: 'Info',
+        detail: 'You can resize the image using the grab on the bottom right!',
+      });
+    }
+
     const file = (event.target as HTMLInputElement).files[0];
 
     const reader = new FileReader();
@@ -36,11 +44,5 @@ export class MapHiderComponent implements OnInit {
       this.image = reader.result as string;
     };
     reader.readAsDataURL(file);
-
-    this.notificationService.add({
-      severity: 'info',
-      summary: 'Info',
-      detail: 'You can resize the image using the grab on the bottom right!',
-    });
   }
 }
