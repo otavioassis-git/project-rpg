@@ -1,26 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "12.0.0",
-  "description": "Angular 15 with Electron 22 (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "Project-RPG",
+  "version": "1.0.0",
+  "description": "Project RPG",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Otávio Fava Souza de Assis",
+    "email": "otavio.assis@hotmail.com"
   },
-  "keywords": [
-    "angular",
-    "angular 15",
-    "electron",
-    "electron 22",
-    "nodejs",
-    "typescript",
-    "playwright",
-    "eslint",
-    "sass",
-    "windows",
-    "mac",
-    "linux"
-  ],
   "main": "app/main.js",
   "private": true,
   "scripts": {
@@ -36,7 +21,7 @@
     "electron:serve-tsc": "tsc -p tsconfig.serve.json",
     "electron:serve": "wait-on tcp:4200 && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
-    "electron:build": "npm run build:prod && electron-builder build --publish=never",
+    "electron:build": "npm run build:prod && electron-builder build --win --x64 --publish=never",
     "test": "ng test --watch=false",
     "test:watch": "ng test",
     "e2e": "npm run build:prod && playwright test -c e2e/playwright.config.ts e2e/",
