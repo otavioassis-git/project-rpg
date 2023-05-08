@@ -17,7 +17,6 @@
   "publish": [
     {
       "provider": "github",
-      "private": true,
       "owner": "otavioassis-git",
       "repo": "rpg-soundboard"
     }

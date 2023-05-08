@@ -1,5 +1,14 @@
-import { app, BrowserWindow, screen, ipcRenderer, ipcMain } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  screen,
+  ipcRenderer,
+  ipcMain,
+  MessageBoxOptions,
+  dialog,
+} from 'electron';
 import { createMainWindow } from './createMainWindow';
+import { autoUpdater } from 'electron';
 
 let mainWin: BrowserWindow = null;
 let previousBounds;
@@ -8,7 +17,33 @@ function App() {
   mainWin = createMainWindow();
   previousBounds = mainWin.getBounds();
   loadEvents();
+  autoUpdater.checkForUpdates();
 }
+
+autoUpdater.on('update-downloaded', () => {
+  const dialogOpts: MessageBoxOptions = {
+    type: 'info',
+    buttons: ['Later', 'Install'],
+    title: 'A new version is ready to install!',
+    message:
+      "If you choose to install later you'll need to close and open the application again to search for updates.",
+  };
+  dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    if (returnValue.response === 1) {
+      autoUpdater.quitAndInstall();
+    }
+  });
+});
+
+autoUpdater.on('error', (err) => {
+  const dialogOpts: MessageBoxOptions = {
+    type: 'error',
+    buttons: ['Ok'],
+    title: 'Auto-Updater Error - ' + err.name,
+    message: err.message + '\n' + err.stack,
+  };
+  dialog.showMessageBox(dialogOpts);
+});
 
 try {
   // This method will be called when Electron has finished
