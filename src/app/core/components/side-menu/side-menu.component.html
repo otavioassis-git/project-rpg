@@ -1,0 +1,21 @@
+<div id="side-menu-container" [ngClass]="isMaximized ? 'border-noround' : ''">
+  <div class="menu-container">
+    <div (click)="toggleRetract()" class="menu-item">
+      <i
+        [pTooltip]="isRetracted ? 'Expand menu' : ''"
+        class="pi pi-align-justify"
+        [ngClass]="isRetracted ? 'text-xl' : ''"
+      ></i>
+      <p *ngIf="!isRetracted">Menu</p>
+    </div>
+    <div class="separator"></div>
+    <div class="menu-item" *ngFor="let item of menuItems">
+      <i
+        [pTooltip]="isRetracted ? item.label : ''"
+        class="pi"
+        [ngClass]="item.icon + (isRetracted ? ' text-xl' : '')"
+      ></i>
+      <p *ngIf="!isRetracted">{{ item.label }}</p>
+    </div>
+  </div>
+</div>
