@@ -1,8 +1,13 @@
 <div id="map-hider-container">
   <div class="map-container">
-    <img *ngIf="image && image != ''" [src]="image" alt="Uplaoded image" />
+    <div id="image-container">
+      <img *ngIf="image && image != ''" [src]="image" alt="Uplaoded image" />
+    </div>
   </div>
   <div class="settings-container">
-    <input (change)="loadImage($event)" accept="image/*" type="file" />
+    <label class="input-file">
+      <input (change)="loadImage($event)" accept="image/*" type="file" />
+      <span>Upload image</span>
+    </label>
   </div>
 </div>

@@ -5,13 +5,62 @@
   .map-container {
     width: calc(100% - 100px);
     height: 100%;
-    padding: 1rem;
+    padding: 1rem 0 0 1rem;
     overflow: hidden;
+
+    #image-container {
+      resize: both;
+      overflow: hidden;
+      border: 1px solid;
+      height: 100%;
+      max-height: calc(100vh - 85px);
+      max-width: calc(100vw - 342px);
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   .settings-container {
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    width: 150px;
     background-color: rgb(30, 31, 34);
-    width: 100px;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    border-bottom-right-radius: 1rem;
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .input-file {
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      background-color: #3b82f6;
+      border-radius: 10px;
+      text-align: center;
+      color: white;
+      padding: 4px 8px;
+
+      transition: background-color 0.2s;
+
+      span {
+        font-size: 0.75rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    }
+
+    .input-file:hover {
+      background-color: #2563eb;
+    }
   }
 }
