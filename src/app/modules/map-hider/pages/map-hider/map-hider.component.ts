@@ -18,6 +18,7 @@ export class MapHiderComponent implements OnInit {
   boxCount = 0;
 
   firstAddBox = true;
+  showboxinfo = true;
 
   constructor(
     private maximizeService: MaximizeServiceService,
@@ -64,6 +65,59 @@ export class MapHiderComponent implements OnInit {
   removeAllBoxes() {
     this.boxArray = [];
     this.boxCount = 0;
+  }
+
+  toggleBoxStyle() {
+    let resize = document.getElementsByClassName(
+      'p-resizable-handle'
+    ) as HTMLCollectionOf<HTMLElement>;
+    let content = document.getElementsByClassName(
+      'p-dialog-content'
+    ) as HTMLCollectionOf<HTMLElement>;
+    let header = document.getElementsByClassName(
+      'p-dialog-header'
+    ) as HTMLCollectionOf<HTMLElement>;
+    let text = document.getElementsByClassName(
+      'p-dialog-content'
+    ) as HTMLCollectionOf<HTMLElement>;
+
+    if (!this.showboxinfo) {
+      for (let i of [...Array(resize.length).keys()]) {
+        resize[i].style.backgroundColor = 'transparent';
+      }
+      for (let i of [...Array(content.length).keys()]) {
+        content[i].style.borderBottom = 'solid 2px black';
+        content[i].style.borderLeft = 'solid 2px black';
+        content[i].style.borderRight = 'solid 2px black';
+      }
+      for (let i of [...Array(header.length).keys()]) {
+        header[i].style.backgroundColor = 'black';
+        header[i].style.borderTop = 'solid 2px black';
+        header[i].style.borderLeft = 'solid 2px black';
+        header[i].style.borderRight = 'solid 2px black';
+      }
+      for (let i of [...Array(text.length).keys()]) {
+        text[i].style.color = 'black';
+      }
+    } else {
+      for (let i of [...Array(resize.length).keys()]) {
+        resize[i].style.backgroundColor = 'red';
+      }
+      for (let i of [...Array(content.length).keys()]) {
+        content[i].style.borderBottom = 'solid 2px red';
+        content[i].style.borderLeft = 'solid 2px red';
+        content[i].style.borderRight = 'solid 2px red';
+      }
+      for (let i of [...Array(content.length).keys()]) {
+        header[i].style.backgroundColor = 'gray';
+        header[i].style.borderTop = 'solid 2px red';
+        header[i].style.borderLeft = 'solid 2px red';
+        header[i].style.borderRight = 'solid 2px red';
+      }
+      for (let i of [...Array(text.length).keys()]) {
+        text[i].style.color = '#495057';
+      }
+    }
   }
 
   checkFirstTime() {

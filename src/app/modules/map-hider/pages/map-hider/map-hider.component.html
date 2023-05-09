@@ -31,11 +31,19 @@
             ></p-button>
           </div>
         </div>
+        <div class="bc-separator"></div>
         <p-button
           (onClick)="removeAllBoxes()"
           label="Remove all"
-          styleClass="p-button-rounded p-button-danger w-full mt-2"
+          styleClass="p-button-rounded p-button-danger w-full"
         ></p-button>
+        <p-toggleButton
+          (onChange)="toggleBoxStyle()"
+          [(ngModel)]="showboxinfo"
+          onLabel="Show style"
+          offLabel="Show style"
+          styleClass="w-full mt-2"
+        ></p-toggleButton>
       </p-accordionTab>
     </p-accordion>
   </div>

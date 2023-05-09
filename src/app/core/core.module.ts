@@ -7,6 +7,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { AccordionModule } from 'primeng/accordion';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CustomTitleBarComponent, SideMenuComponent],
@@ -19,6 +21,8 @@ import { AccordionModule } from 'primeng/accordion';
     ToastModule,
     DialogModule,
     AccordionModule,
+    ToggleButtonModule,
+    FormsModule,
   ],
 })
 export class CoreModule {}
