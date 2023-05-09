@@ -24,11 +24,11 @@ export class SideMenuComponent {
       label: 'Map hider',
       route: 'map-hider',
     },
-    {
-      icon: 'pi-volume-up',
-      label: 'Sound board',
-      route: 'soundboard',
-    },
+    // {
+    //   icon: 'pi-volume-up',
+    //   label: 'Sound board',
+    //   route: 'soundboard',
+    // },
     // {
     //   icon: 'pi-box',
     //   label: '',
