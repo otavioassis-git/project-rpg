@@ -1,5 +1,5 @@
 import { NotificationService } from './../../../../core/services/notification.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MaximizeServiceService } from '../../../../core/services/maximize-service.service';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 
@@ -7,11 +7,15 @@ import { SideMenuService } from '../../../../core/services/side-menu.service';
   selector: 'app-map-hider',
   templateUrl: './map-hider.component.html',
   styleUrls: ['./map-hider.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MapHiderComponent implements OnInit {
   image;
   isMaximized: boolean;
   isRetracted: boolean;
+
+  boxArray = [];
+  boxCount = 0;
 
   constructor(
     private maximizeService: MaximizeServiceService,
@@ -44,5 +48,9 @@ export class MapHiderComponent implements OnInit {
       this.image = reader.result as string;
     };
     reader.readAsDataURL(file);
+  }
+
+  addBox() {
+    this.boxArray.push(this.boxCount++);
   }
 }

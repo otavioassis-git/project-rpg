@@ -1,5 +1,5 @@
 import { NotificationService } from './core/services/notification.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ElectronService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
@@ -11,6 +11,7 @@ import { MessageService } from 'primeng/api';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: [MessageService],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
   isMaximized: boolean;

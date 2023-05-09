@@ -19,5 +19,10 @@
       <input (change)="loadImage($event)" accept="image/*" type="file" />
       <span>Upload image</span>
     </label>
+    <button pButton label="Add box" (click)="addBox()"></button>
   </div>
 </div>
+
+<p-dialog *ngFor="let box of boxArray" [visible]="true" [closable]="false">
+  {{ box }}
+</p-dialog>
