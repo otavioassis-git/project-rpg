@@ -17,6 +17,8 @@ export class MapHiderComponent implements OnInit {
   boxArray = [];
   boxCount = 0;
 
+  firstAddBox = true;
+
   constructor(
     private maximizeService: MaximizeServiceService,
     private sideMenuService: SideMenuService,
@@ -52,5 +54,26 @@ export class MapHiderComponent implements OnInit {
 
   addBox() {
     this.boxArray.push(this.boxCount++);
+  }
+
+  removeBox(box: number) {
+    this.boxArray.splice(this.boxArray.indexOf(box), 1);
+    if (this.boxArray.length == 0) this.boxCount = 0;
+  }
+
+  removeAllBoxes() {
+    this.boxArray = [];
+    this.boxCount = 0;
+  }
+
+  checkFirstTime() {
+    // if (this.firstAddBox) {
+    //   this.notificationService.add({
+    //     severity: 'info',
+    //     summary: 'Info',
+    //     detail: 'You can click on the boxes to remove them!',
+    //   });
+    //   this.firstAddBox = false;
+    // }
   }
 }

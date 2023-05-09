@@ -21,7 +21,7 @@
           class="pi"
           [ngClass]="item.icon + (isRetracted ? ' text-xl' : '')"
         ></i>
-        <p *ngIf="!isRetracted">{{ item.label }}</p>
+        <p *ngIf="!isRetracted" class="unselectable">{{ item.label }}</p>
       </div>
     </div>
     <div *ngIf="!isRetracted" class="version-footer">

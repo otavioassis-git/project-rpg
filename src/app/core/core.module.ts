@@ -6,6 +6,7 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [CustomTitleBarComponent, SideMenuComponent],
@@ -17,6 +18,7 @@ import { DialogModule } from 'primeng/dialog';
     TooltipModule,
     ToastModule,
     DialogModule,
+    AccordionModule,
   ],
 })
 export class CoreModule {}

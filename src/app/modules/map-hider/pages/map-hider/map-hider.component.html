@@ -8,7 +8,7 @@
       <img *ngIf="image && image != ''" [src]="image" alt="Uplaoded image" />
     </div>
     <div *ngIf="!image" class="empty-state">
-      <p>Upload an image to start</p>
+      <p class="unselectable text-center">Upload an image to start</p>
     </div>
   </div>
   <div
@@ -17,9 +17,27 @@
   >
     <label class="input-file">
       <input (change)="loadImage($event)" accept="image/*" type="file" />
-      <span>Upload image</span>
+      <span class="unselectable">Upload image</span>
     </label>
     <button pButton label="Add box" (click)="addBox()"></button>
+    <p-accordion *ngIf="boxArray.length > 0" (onOpen)="checkFirstTime()">
+      <p-accordionTab header="Box control">
+        <div class="box-control-container">
+          <div *ngFor="let box of boxArray">
+            <p-button
+              (onClick)="removeBox(box)"
+              [label]="'Box ' + box"
+              styleClass="p-button-rounded p-button-danger w-full"
+            ></p-button>
+          </div>
+        </div>
+        <p-button
+          (onClick)="removeAllBoxes()"
+          label="Remove all"
+          styleClass="p-button-rounded p-button-danger w-full mt-2"
+        ></p-button>
+      </p-accordionTab>
+    </p-accordion>
   </div>
 </div>
 
