@@ -121,13 +121,13 @@ export class MapHiderComponent implements OnInit {
   }
 
   checkFirstTime() {
-    // if (this.firstAddBox) {
-    //   this.notificationService.add({
-    //     severity: 'info',
-    //     summary: 'Info',
-    //     detail: 'You can click on the boxes to remove them!',
-    //   });
-    //   this.firstAddBox = false;
-    // }
+    if (this.firstAddBox) {
+      this.notificationService.add({
+        severity: 'info',
+        summary: 'Info',
+        detail: 'You can click on the boxes on the box control to remove them!',
+      });
+      this.firstAddBox = false;
+    }
   }
 }
