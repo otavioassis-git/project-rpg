@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components';
 import { MapHiderComponent } from './modules/map-hider/pages/map-hider/map-hider.component';
 import { SoundboardComponent } from './modules/soundboard/pages/soundboard/soundboard.component';
+import { ImageFinderComponent } from './modules/image-finder/pages/image-finder/image-finder.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/map-hider/map-hider.module').then(
         (m) => m.MapHiderModule
+      ),
+  },
+  {
+    path: 'image-finder',
+    component: ImageFinderComponent,
+    loadChildren: () =>
+      import('./modules/image-finder/image-finder.module').then(
+        (m) => m.ImageFinderModule
       ),
   },
   {
