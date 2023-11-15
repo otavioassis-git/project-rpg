@@ -40,18 +40,10 @@
   }
 
   .version-footer {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
     margin: auto auto 0 auto;
 
     p {
       font-size: 0.625rem;
-    }
-
-    i {
-      font-size: 0.625rem;
-      color: #fff;
     }
   }
 }
