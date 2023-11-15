@@ -79,15 +79,9 @@ function loadEvents() {
   });
 
   ipcMain.on('toogleWindowSize', () => {
-    if (
-      BrowserWindow.getFocusedWindow().getBounds().width ==
-      screen.getPrimaryDisplay().workAreaSize.width
-    ) {
-      BrowserWindow.getFocusedWindow().setBounds(previousBounds);
-    } else {
-      previousBounds = BrowserWindow.getFocusedWindow().getBounds();
-      BrowserWindow.getFocusedWindow().maximize();
-    }
+    const window = BrowserWindow.getFocusedWindow();
+    if (window.isMaximized()) window.unmaximize();
+    else window.maximize();
   });
 
   ipcMain.on('closeWindow', () => {
