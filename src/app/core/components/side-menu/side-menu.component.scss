@@ -1,5 +1,6 @@
 #side-menu-container {
   display: flex;
+  gap: 0.25rem;
   flex-direction: column;
   width: 150px;
   height: 100%;
@@ -25,11 +26,12 @@
     &-selected {
       background-color: rgb(49, 51, 56);
       border-radius: 16px 0 0 16px;
+      margin-left: 6px;
     }
   }
 
   .menu-item:hover {
-    background-color: rgba(56, 56, 56, 0.678);
+    background-color: rgb(49, 51, 56);
   }
 
   .separator {
