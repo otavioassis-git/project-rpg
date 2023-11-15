@@ -12,9 +12,10 @@ export function createMainWindow(): BrowserWindow {
   // Create the browser window.
   let win = new BrowserWindow({
     titleBarStyle: 'hidden',
-    transparent: true,
     width: 1200,
     height: 700,
+    minHeight: 600,
+    minWidth: 800,
     webPreferences: {
       // devTools: false,
       nodeIntegration: true,
