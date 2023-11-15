@@ -1,32 +1,23 @@
-<div id="side-menu-container">
-  <div
-    class="menu-container"
-    [ngClass]="isRetracted ? 'menu-container-retracted' : ''"
-  >
-    <div (click)="toggleRetract()" class="menu-item">
-      <i
-        class="pi pi-align-justify"
-        [ngClass]="isRetracted ? 'text-xl' : ''"
-      ></i>
-      <p *ngIf="!isRetracted">Menu</p>
+<div id="side-menu-container" [ngClass]="isRetracted ? 'retracted' : ''">
+  <div (click)="toggleRetract()" class="menu-item">
+    <i class="pi pi-align-justify" [ngClass]="isRetracted ? 'text-xl' : ''"></i>
+    <p *ngIf="!isRetracted">Menu</p>
+  </div>
+  <div class="separator"></div>
+  <div *ngFor="let item of menuItems">
+    <div
+      (click)="navigate(item)"
+      class="menu-item"
+      [ngClass]="selectedMenu == item ? 'menu-item-selected' : ''"
+    >
+      <i class="pi" [ngClass]="item.icon + (isRetracted ? ' text-xl' : '')"></i>
+      <p *ngIf="!isRetracted" class="unselectable white-space-nowrap">
+        {{ item.label }}
+      </p>
     </div>
-    <div class="separator"></div>
-    <div *ngFor="let item of menuItems">
-      <div
-        (click)="navigate(item)"
-        class="menu-item"
-        [ngClass]="selectedMenu == item ? 'menu-item-selected' : ''"
-      >
-        <i
-          class="pi"
-          [ngClass]="item.icon + (isRetracted ? ' text-xl' : '')"
-        ></i>
-        <p *ngIf="!isRetracted" class="unselectable">{{ item.label }}</p>
-      </div>
-    </div>
-    <div *ngIf="!isRetracted" class="version-footer">
-      <i class="pi pi-info-circle"></i>
-      <p>v{{ lVersion }}</p>
-    </div>
+  </div>
+  <div *ngIf="!isRetracted" class="version-footer">
+    <i class="pi pi-info-circle"></i>
+    <p>v{{ lVersion }}</p>
   </div>
 </div>
