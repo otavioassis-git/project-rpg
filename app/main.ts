@@ -10,6 +10,8 @@ import {
 } from 'electron';
 import { createMainWindow } from './createMainWindow';
 import { autoUpdater } from 'electron-updater';
+import { writeFileSync } from 'fs';
+import { resolve } from 'path';
 
 const contextMenu = require('electron-context-menu');
 
@@ -121,5 +123,13 @@ function loadEvents() {
     const view = win.getBrowserView();
 
     view.setBounds(bounds);
+  });
+
+  ipcMain.on('saveRoute', (event, route) => {
+    writeFileSync(
+      resolve(__dirname, '../', 'src', 'assets', 'route.json'),
+      JSON.stringify(route),
+      'utf-8'
+    );
   });
 }
