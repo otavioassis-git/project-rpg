@@ -13,8 +13,8 @@
       overflow: hidden;
       border: 1px solid;
       height: 100%;
-      max-height: calc(100vh - 85px);
-      max-width: calc(100vw - 348px);
+      max-height: calc(100vh - 69px);
+      max-width: calc(100vw - 332px);
 
       img {
         width: 100%;
@@ -22,8 +22,8 @@
       }
 
       &-retracted-max-size {
-        max-height: calc(100vh - 85px);
-        max-width: calc(100vw - 232px);
+        max-height: calc(100vh - 69px);
+        max-width: calc(100vw - 216px);
       }
     }
 
