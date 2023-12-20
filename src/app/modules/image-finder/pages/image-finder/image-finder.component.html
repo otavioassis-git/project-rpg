@@ -1,1 +1,14 @@
-<p>image-finder works!</p>
+<div id="image-finder-container">
+  <div *ngIf="showTutorial" class="tutorial">
+    <h1>Tutorial</h1>
+    <p>
+      You can use Google to find images for your map! When you find the image
+      that you want, click the google share button and copy the URL. Then go to
+      the "Map hider" and paste it using the "..." button.
+    </p>
+    <button pButton label="Open Google" (click)="openGoogle()"></button>
+  </div>
+  <div *ngIf="!showTutorial" class="loading">
+    <h1>Loading...</h1>
+  </div>
+</div>

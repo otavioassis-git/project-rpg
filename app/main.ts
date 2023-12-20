@@ -6,6 +6,7 @@ import {
   ipcMain,
   MessageBoxOptions,
   dialog,
+  BrowserView,
 } from 'electron';
 import { createMainWindow } from './createMainWindow';
 import { autoUpdater } from 'electron-updater';
@@ -86,5 +87,28 @@ function loadEvents() {
 
   ipcMain.on('closeWindow', () => {
     BrowserWindow.getFocusedWindow().close();
+  });
+
+  ipcMain.on('openGoogle', (event, bounds) => {
+    const win = BrowserWindow.getFocusedWindow();
+    const view = new BrowserView();
+
+    win.addBrowserView(view);
+    view.setBounds(bounds);
+    view.webContents.loadURL('https://www.google.com/imghp');
+  });
+
+  ipcMain.on('closeGoogle', () => {
+    const win = BrowserWindow.getFocusedWindow();
+    const view = win.getBrowserView();
+
+    win.removeBrowserView(view);
+  });
+
+  ipcMain.on('repositionGoogleWindow', (event, bounds) => {
+    const win = BrowserWindow.getFocusedWindow();
+    const view = win.getBrowserView();
+
+    view.setBounds(bounds);
   });
 }
