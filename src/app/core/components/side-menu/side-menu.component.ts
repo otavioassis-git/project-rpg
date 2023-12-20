@@ -24,6 +24,11 @@ export class SideMenuComponent {
       label: 'Map hider',
       route: 'map-hider',
     },
+    {
+      icon: 'pi-images',
+      label: 'Image finder',
+      route: 'image-finder',
+    },
     // {
     //   icon: 'pi-volume-up',
     //   label: 'Sound board',

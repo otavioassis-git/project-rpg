@@ -13,8 +13,8 @@
       overflow: hidden;
       border: 1px solid;
       height: 100%;
-      max-height: calc(100vh - 85px);
-      max-width: calc(100vw - 348px);
+      max-height: calc(100vh - 69px);
+      max-width: calc(100vw - 332px);
 
       img {
         width: 100%;
@@ -22,8 +22,8 @@
       }
 
       &-retracted-max-size {
-        max-height: calc(100vh - 85px);
-        max-width: calc(100vw - 232px);
+        max-height: calc(100vh - 69px);
+        max-width: calc(100vw - 216px);
       }
     }
 
@@ -47,7 +47,6 @@
     width: 150px;
     background-color: rgb(30, 31, 34);
     padding: 1rem 0.5rem 0.5rem 0.5rem;
-    border-bottom-right-radius: 1rem;
 
     input[type="file"] {
       display: none;
@@ -73,6 +72,11 @@
     .input-file:hover {
       background-color: #4868d1;
     }
+
+    .separator {
+      height: 1px;
+      background-color: #686868;
+    }
   }
 
   .box-control-container {
@@ -80,8 +84,8 @@
     gap: 0.375rem;
     flex-direction: column;
     max-height: 30vh;
-    overflow-x: overlay;
-    padding-right: 0.25rem;
+    overflow-y: overlay;
+    padding-right: 0.5rem;
   }
 
   .bc-separator {
@@ -126,39 +130,39 @@
 
   .p-accordion-content {
     border-radius: 0.375rem;
-    padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+    padding: 0.5rem 0 0.5rem 0.5rem;
   }
-}
 
-.p-dialog {
-  box-shadow: none;
-}
+  .p-dialog {
+    box-shadow: none;
+  }
 
-.p-dialog .p-dialog-content:last-of-type {
-  border-radius: 0;
-}
+  .p-dialog .p-dialog-content:last-of-type {
+    border-radius: 0;
+  }
 
-.p-dialog .p-dialog-header {
-  padding: 2px;
-  border-top-right-radius: 0px;
-  border-top-left-radius: 0px;
-  border-top: solid 2px red;
-  border-left: solid 2px red;
-  border-right: solid 2px red;
-  background-color: gray;
-}
+  .p-dialog .p-dialog-header {
+    padding: 2px !important;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top: solid 2px red;
+    border-left: solid 2px red;
+    border-right: solid 2px red;
+    background-color: gray;
+  }
 
-.p-dialog .p-dialog-content {
-  padding: 0;
-  overflow: hidden;
-  background-color: black;
-  border-bottom: solid 2px red;
-  border-left: solid 2px red;
-  border-right: solid 2px red;
-}
+  .p-dialog .p-dialog-content {
+    padding: 0 !important;
+    overflow: hidden;
+    background-color: black;
+    border-bottom: solid 2px red;
+    border-left: solid 2px red;
+    border-right: solid 2px red;
+  }
 
-.p-dialog .p-resizable-handle {
-  height: 8px !important;
-  width: 8px !important;
-  background-color: red;
+  .p-dialog .p-resizable-handle {
+    height: 8px !important;
+    width: 8px !important;
+    background-color: red;
+  }
 }
