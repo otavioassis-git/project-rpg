@@ -1,5 +1,5 @@
 <div id="image-finder-container">
-  <div *ngIf="showTutorial" class="tutorial">
+  <div *ngIf="tutorials.google_tutorial" class="tutorial">
     <h1>Tutorial</h1>
     <p>
       You can use Google to find images for your map! <br />
@@ -8,7 +8,7 @@
     </p>
     <button pButton label="Open Google" (click)="openGoogle()"></button>
   </div>
-  <div *ngIf="!showTutorial" class="loading">
+  <div *ngIf="!tutorials.google_tutorial" class="loading">
     <h1>Loading...</h1>
   </div>
 </div>
