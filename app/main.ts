@@ -150,11 +150,26 @@ function loadEvents() {
   });
 
   ipcMain.on('saveRoute', (event, route) => {
-    writeFileSync(
-      resolve(__dirname, '../', 'src', 'assets', 'route.json'),
-      JSON.stringify(route),
-      'utf-8'
-    );
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'route.json'),
+        JSON.stringify(route),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          'resources',
+          'app',
+          'assets',
+          'route.json'
+        ),
+        JSON.stringify(route),
+        'utf-8'
+      );
+    }
   });
 
   ipcMain.on('saveTutorials', (event, tutorial) => {
