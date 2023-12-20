@@ -9,6 +9,7 @@
   "main": "./main.js",
   "private": true,
   "dependencies": {
+    "electron-context-menu": "^3.6.1",
     "electron-updater": "^5.3.0"
   }
 }

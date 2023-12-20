@@ -113,7 +113,7 @@ function loadEvents() {
     const win = BrowserWindow.getFocusedWindow();
     const view = win.getBrowserView();
 
-    win.removeBrowserView(view);
+    if (view) win.removeBrowserView(view);
   });
 
   ipcMain.on('repositionGoogleWindow', (event, bounds) => {

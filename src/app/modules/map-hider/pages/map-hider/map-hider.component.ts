@@ -67,8 +67,10 @@ export class MapHiderComponent implements OnInit {
     });
 
     ref.onClose.subscribe((value) => {
-      this.image = null;
-      this.imageUrl = value;
+      if (value) {
+        this.image = null;
+        this.imageUrl = value;
+      }
     });
   }
 
