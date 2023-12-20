@@ -1,0 +1,22 @@
+#image-finder-container {
+  height: 100%;
+
+  .tutorial {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 1rem;
+
+    button {
+      align-self: center;
+      margin-top: 1rem;
+    }
+  }
+
+  .loading {
+    @extend .tutorial;
+    align-items: center;
+  }
+}

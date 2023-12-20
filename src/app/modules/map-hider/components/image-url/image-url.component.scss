@@ -1,0 +1,19 @@
+#image-url-container {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+
+  input {
+    width: 400px;
+  }
+
+  .footer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    button {
+      width: 100%;
+    }
+  }
+}
