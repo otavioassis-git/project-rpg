@@ -1,13 +1,14 @@
 <div id="map-hider-container">
   <div class="map-container">
     <div
-      *ngIf="image"
+      *ngIf="image || imageUrl"
       class="image-container"
       [ngClass]="isRetracted ? 'image-container-retracted-max-size' : ''"
     >
       <img *ngIf="image && image != ''" [src]="image" alt="Uplaoded image" />
+      <img *ngIf="imageUrl" [src]="imageUrl" [alt]="imageUrl" />
     </div>
-    <div *ngIf="!image" class="empty-state">
+    <div *ngIf="!image && !imageUrl" class="empty-state">
       <p class="unselectable text-center">Upload an image to start</p>
     </div>
   </div>
@@ -16,6 +17,8 @@
       <input (change)="loadImage($event)" accept="image/*" type="file" />
       <span class="unselectable">Upload image</span>
     </label>
+    <button pButton label="Insert URL" (click)="openImageUrl()"></button>
+    <div class="separator"></div>
     <button pButton label="Add box" (click)="addBox()"></button>
     <p-accordion *ngIf="boxArray.length > 0" (onOpen)="checkFirstTime()">
       <p-accordionTab header="Box control">
@@ -44,8 +47,8 @@
       </p-accordionTab>
     </p-accordion>
   </div>
-</div>
 
-<p-dialog *ngFor="let box of boxArray" [visible]="true" [closable]="false">
-  {{ box }}
-</p-dialog>
+  <p-dialog *ngFor="let box of boxArray" [visible]="true" [closable]="false">
+    {{ box }}
+  </p-dialog>
+</div>

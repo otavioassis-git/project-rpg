@@ -11,6 +11,8 @@ import {
 import { createMainWindow } from './createMainWindow';
 import { autoUpdater } from 'electron-updater';
 
+const contextMenu = require('electron-context-menu');
+
 let mainWin: BrowserWindow = null;
 let previousBounds;
 
@@ -96,6 +98,15 @@ function loadEvents() {
     win.addBrowserView(view);
     view.setBounds(bounds);
     view.webContents.loadURL('https://www.google.com/imghp');
+
+    contextMenu({
+      window: view,
+      showSaveImageAs: true,
+      showCopyImageAddress: true,
+      showCopyImage: false,
+      showInspectElement: false,
+      showSelectAll: false,
+    });
   });
 
   ipcMain.on('closeGoogle', () => {

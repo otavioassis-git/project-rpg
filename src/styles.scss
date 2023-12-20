@@ -19,6 +19,8 @@ body {
   padding: 0;
 }
 
+// globals --------------------------------------------------------------------
+
 .unselectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -26,4 +28,25 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.white-background {
+  color: #5472d4 !important;
+  background-color: #fff !important;
+  border-color: #fff !important;
+}
+
+// overrides ------------------------------------------------------------------
+.p-dialog {
+  p {
+    color: black;
+  }
+
+  .p-dialog-header {
+    padding: 1rem !important;
+  }
+
+  .p-dialog-content {
+    padding: 0 1rem 1rem 1rem !important;
+  }
 }

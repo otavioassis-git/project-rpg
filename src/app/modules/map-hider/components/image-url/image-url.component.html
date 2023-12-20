@@ -1,0 +1,17 @@
+<div id="image-url-container">
+  <input type="text" pInputText [(ngModel)]="imageUrl" placeholder="URL" />
+  <div class="footer">
+    <button
+      pButton
+      label="Cancel"
+      class="white-background"
+      (click)="close()"
+    ></button>
+    <button
+      pButton
+      label="Confirm"
+      (click)="submit()"
+      [disabled]="imageUrl.length == 0"
+    ></button>
+  </div>
+</div>

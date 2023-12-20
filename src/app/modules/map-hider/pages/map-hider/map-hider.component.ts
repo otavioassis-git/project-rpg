@@ -2,17 +2,22 @@ import { NotificationService } from './../../../../core/services/notification.se
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MaximizeServiceService } from '../../../../core/services/maximize-service.service';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ImageUrlComponent } from '../../components/image-url/image-url.component';
 
 @Component({
   selector: 'app-map-hider',
   templateUrl: './map-hider.component.html',
   styleUrls: ['./map-hider.component.scss'],
+  providers: [DialogService],
   encapsulation: ViewEncapsulation.None,
 })
 export class MapHiderComponent implements OnInit {
   image;
   isMaximized: boolean;
   isRetracted: boolean;
+
+  imageUrl = '';
 
   boxArray = [];
   boxCount = 0;
@@ -23,7 +28,8 @@ export class MapHiderComponent implements OnInit {
   constructor(
     private maximizeService: MaximizeServiceService,
     private sideMenuService: SideMenuService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dialog: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +50,8 @@ export class MapHiderComponent implements OnInit {
       });
     }
 
+    this.imageUrl = '';
+
     const file = (event.target as HTMLInputElement).files[0];
 
     const reader = new FileReader();
@@ -51,6 +59,17 @@ export class MapHiderComponent implements OnInit {
       this.image = reader.result as string;
     };
     reader.readAsDataURL(file);
+  }
+
+  openImageUrl() {
+    const ref = this.dialog.open(ImageUrlComponent, {
+      header: 'Insert URL',
+    });
+
+    ref.onClose.subscribe((value) => {
+      this.image = null;
+      this.imageUrl = value;
+    });
   }
 
   addBox() {
