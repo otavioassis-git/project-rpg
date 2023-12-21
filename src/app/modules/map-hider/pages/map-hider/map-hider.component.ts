@@ -205,7 +205,7 @@ export class MapHiderComponent implements OnInit {
                     '../',
                     '../',
                     '../',
-                    'Common',
+                    'Project-RPG-common',
                     'tutorials.json'
                   )
                 )

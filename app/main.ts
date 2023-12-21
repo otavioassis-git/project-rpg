@@ -10,7 +10,7 @@ import {
 } from 'electron';
 import { createMainWindow } from './createMainWindow';
 import { autoUpdater } from 'electron-updater';
-import { readFileSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 const contextMenu = require('electron-context-menu');
 
@@ -21,6 +21,7 @@ let mainWin: BrowserWindow = null;
 let previousBounds;
 
 function App() {
+  createCommonFolder();
   // is serve register for angular
   if (serve) {
     writeFileSync(
@@ -181,10 +182,23 @@ function loadEvents() {
       );
     } else {
       writeFileSync(
-        resolve(app.getPath('exe'), '../', '../', 'Common', 'tutorials.json'),
+        resolve(
+          app.getPath('exe'),
+          '../',
+          '../',
+          'Project-RPG-common',
+          'tutorials.json'
+        ),
         JSON.stringify(tutorial),
         'utf-8'
       );
     }
   });
+}
+
+function createCommonFolder() {
+  var dir = resolve(app.getPath('exe'), '../', '../', 'Project-RPG-common');
+  if (!existsSync(dir)) {
+    mkdirSync(dir);
+  }
 }

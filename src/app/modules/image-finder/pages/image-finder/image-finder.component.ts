@@ -33,6 +33,7 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
   }
 
   tutorials: Tutorials;
+  isLoading = true;
   constructor(
     private service: ImageFinderService,
     private sidemenuService: SideMenuService,
@@ -42,14 +43,12 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.tutorials = this.tutorialService.getDefaultTutorials();
-    this.tutorials.google_tutorial = false;
     this.getTutorials();
   }
 
-  openGoogle() {
-    this.service.setShowTutorial(false);
+  openGoogle(save?: boolean) {
     this.tutorials.google_tutorial = false;
-    this.tutorialService.saveTutorials(this.tutorials);
+    if (save) this.tutorialService.saveTutorials(this.tutorials);
 
     setTimeout(() => {
       const container = document.getElementById('image-finder-container');
@@ -102,10 +101,13 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
             .subscribe(
               (value: Tutorials) => {
                 this.tutorials = value;
-                if (!this.tutorials.box_tutorial) this.openGoogle();
+                if (!this.tutorials.google_tutorial) this.openGoogle();
                 this.menuRetractionSubscription();
+                this.isLoading = false;
               },
-              (error) => {}
+              (error) => {
+                this.isLoading = false;
+              }
             );
         } else {
           try {
@@ -118,16 +120,19 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
                     '../',
                     '../',
                     '../',
-                    'Common',
+                    'Project-RPG-common',
                     'tutorials.json'
                   )
                 )
             );
 
             this.tutorials = value;
-            if (!this.tutorials.box_tutorial) this.openGoogle();
+            if (!this.tutorials.google_tutorial) this.openGoogle();
             this.menuRetractionSubscription();
-          } catch (error) {}
+            this.isLoading = false;
+          } catch (error) {
+            this.isLoading = false;
+          }
         }
       });
   }
