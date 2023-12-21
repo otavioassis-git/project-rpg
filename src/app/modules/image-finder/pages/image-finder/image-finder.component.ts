@@ -50,16 +50,14 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
     this.tutorials.google_tutorial = false;
     if (save) this.tutorialService.saveTutorials(this.tutorials);
 
-    setTimeout(() => {
-      const container = document.getElementById('image-finder-container');
-      const bounds = {
-        x: this.isRetracted ? X_RETRACTED : X_BOUND,
-        y: Y_BOUND,
-        width: container.clientWidth,
-        height: container.clientHeight,
-      };
-      this.service.openGoogle(bounds);
-    }, 100);
+    const container = document.getElementById('image-finder-container');
+    const bounds = {
+      x: this.isRetracted ? X_RETRACTED : X_BOUND,
+      y: Y_BOUND,
+      width: container.clientWidth,
+      height: container.clientHeight,
+    };
+    this.service.openGoogle(bounds);
   }
 
   ngOnDestroy(): void {
