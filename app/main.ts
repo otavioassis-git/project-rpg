@@ -1,8 +1,6 @@
 import {
   app,
   BrowserWindow,
-  screen,
-  ipcRenderer,
   ipcMain,
   MessageBoxOptions,
   dialog,
