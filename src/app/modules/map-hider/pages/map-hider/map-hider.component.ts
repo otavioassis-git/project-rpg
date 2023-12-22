@@ -1,7 +1,6 @@
 import { TutorialService } from './../../../../core/services/tutorial.service';
 import { NotificationService } from './../../../../core/services/notification.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MaximizeServiceService } from '../../../../core/services/maximize-service.service';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from '../../components/image-url/image-url.component';
@@ -19,7 +18,6 @@ import { Tutorials } from '../../../../core/services/tutorial.service';
 })
 export class MapHiderComponent implements OnInit {
   image;
-  isMaximized: boolean;
   isRetracted: boolean;
 
   imageUrl = '';
@@ -33,7 +31,6 @@ export class MapHiderComponent implements OnInit {
   tutorials: Tutorials;
 
   constructor(
-    private maximizeService: MaximizeServiceService,
     private sideMenuService: SideMenuService,
     private notificationService: NotificationService,
     private dialog: DialogService,
@@ -42,9 +39,6 @@ export class MapHiderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.maximizeService.getIsMaximized().subscribe((value: boolean) => {
-      this.isMaximized = value;
-    });
     this.sideMenuService.getIsRetracted().subscribe((value: boolean) => {
       this.isRetracted = value;
     });
