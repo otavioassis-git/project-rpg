@@ -16,20 +16,10 @@ interface Bounds {
 export class ImageFinderService {
   ipcRenderer: typeof ipcRenderer;
 
-  showTutorial = new BehaviorSubject<boolean>(true);
-
   constructor(electron: ElectronService) {
     if (electron.isElectron) {
       this.ipcRenderer = window.require('electron').ipcRenderer;
     }
-  }
-
-  getShowTutorial() {
-    return this.showTutorial;
-  }
-
-  setShowTutorial(value: boolean) {
-    this.showTutorial.next(value);
   }
 
   // google window manipulation

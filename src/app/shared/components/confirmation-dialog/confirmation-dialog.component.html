@@ -1,0 +1,12 @@
+<div id="confirmation-dialog-container">
+  <p>{{ text }}</p>
+  <div class="footer">
+    <button
+      pButton
+      [label]="cancel"
+      class="white-background-cancel"
+      (click)="close(false)"
+    ></button>
+    <button pButton [label]="confirm" (click)="close(true)"></button>
+  </div>
+</div>

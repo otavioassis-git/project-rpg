@@ -1,7 +1,11 @@
+import { TutorialService } from './../../../../core/services/tutorial.service';
 import { take } from 'rxjs';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ImageFinderService } from '../../services/image-finder.service';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
+import { Tutorials } from '../../../../core/services/tutorial.service';
+import { HttpClient } from '@angular/common/http';
+import { resolve } from 'path';
 
 const Y_BOUND = 37;
 const X_BOUND = 150;
@@ -13,7 +17,6 @@ const X_RETRACTED = 34;
   styleUrls: ['./image-finder.component.scss'],
 })
 export class ImageFinderComponent implements OnInit, OnDestroy {
-  showTutorial = true;
   isRetracted: boolean;
   init = true;
 
@@ -29,22 +32,42 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
     this.service.repositionGoogleWindow(bounds);
   }
 
+  tutorials: Tutorials;
+  isLoading = true;
   constructor(
     private service: ImageFinderService,
-    private sidemenuService: SideMenuService
+    private sidemenuService: SideMenuService,
+    private httpClient: HttpClient,
+    private tutorialService: TutorialService
   ) {}
 
   ngOnInit(): void {
-    this.service
-      .getShowTutorial()
-      .pipe(take(1))
-      .subscribe((value) => {
-        this.showTutorial = value;
-        if (!this.showTutorial) this.openGoogle();
-      });
+    this.tutorials = this.tutorialService.getDefaultTutorials();
+    this.getTutorials();
+  }
+
+  openGoogle(save?: boolean) {
+    this.tutorials.google_tutorial = false;
+    if (save) this.tutorialService.saveTutorials(this.tutorials);
+
+    const container = document.getElementById('image-finder-container');
+    const bounds = {
+      x: this.isRetracted ? X_RETRACTED : X_BOUND,
+      y: Y_BOUND,
+      width: container.clientWidth,
+      height: container.clientHeight,
+    };
+    this.service.openGoogle(bounds);
+  }
+
+  ngOnDestroy(): void {
+    this.service.closeGoogle();
+  }
+
+  menuRetractionSubscription() {
     this.sidemenuService.getIsRetracted().subscribe((value) => {
       this.isRetracted = value;
-      if (!this.showTutorial && !this.init) {
+      if (!this.tutorials.google_tutorial && !this.init) {
         for (let i = 0; i <= 250; i += 5) {
           setTimeout(() => {
             const container = document.getElementById('image-finder-container');
@@ -64,23 +87,51 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
     });
   }
 
-  openGoogle() {
-    this.service.setShowTutorial(false);
-    this.showTutorial = false;
+  getTutorials() {
+    this.httpClient
+      .get('assets/isServe.json')
+      .pipe(take(1))
+      .subscribe((value: any) => {
+        if (value.serve) {
+          this.httpClient
+            .get('assets/tutorials.json')
+            .pipe(take(1))
+            .subscribe(
+              (value: Tutorials) => {
+                this.tutorials = value;
+                if (!this.tutorials.google_tutorial) this.openGoogle();
+                this.menuRetractionSubscription();
+                this.isLoading = false;
+              },
+              (error) => {
+                this.isLoading = false;
+              }
+            );
+        } else {
+          try {
+            let value: Tutorials = JSON.parse(
+              window
+                .require('fs')
+                .readFileSync(
+                  resolve(
+                    __dirname,
+                    '../',
+                    '../',
+                    '../',
+                    'Project-RPG-common',
+                    'tutorials.json'
+                  )
+                )
+            );
 
-    setTimeout(() => {
-      const container = document.getElementById('image-finder-container');
-      const bounds = {
-        x: this.isRetracted ? X_RETRACTED : X_BOUND,
-        y: Y_BOUND,
-        width: container.clientWidth,
-        height: container.clientHeight,
-      };
-      this.service.openGoogle(bounds);
-    }, 100);
-  }
-
-  ngOnDestroy(): void {
-    this.service.closeGoogle();
+            this.tutorials = value;
+            if (!this.tutorials.google_tutorial) this.openGoogle();
+            this.menuRetractionSubscription();
+            this.isLoading = false;
+          } catch (error) {
+            this.isLoading = false;
+          }
+        }
+      });
   }
 }

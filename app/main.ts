@@ -1,8 +1,6 @@
 import {
   app,
   BrowserWindow,
-  screen,
-  ipcRenderer,
   ipcMain,
   MessageBoxOptions,
   dialog,
@@ -10,13 +8,40 @@ import {
 } from 'electron';
 import { createMainWindow } from './createMainWindow';
 import { autoUpdater } from 'electron-updater';
-
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { resolve } from 'path';
 const contextMenu = require('electron-context-menu');
+
+const args = process.argv.slice(1),
+  serve = args.some((val) => ['--serve', '--local'].includes(val));
 
 let mainWin: BrowserWindow = null;
 let previousBounds;
 
 function App() {
+  createCommonFolder();
+  // is serve register for angular
+  if (serve) {
+    writeFileSync(
+      resolve(__dirname, '../', 'src', 'assets', 'isServe.json'),
+      JSON.stringify({ serve }),
+      'utf-8'
+    );
+  } else {
+    writeFileSync(
+      resolve(
+        app.getPath('exe'),
+        '../',
+        'resources',
+        'app',
+        'assets',
+        'isServe.json'
+      ),
+      JSON.stringify({ serve }),
+      'utf-8'
+    );
+  }
+
   mainWin = createMainWindow();
   previousBounds = mainWin.getBounds();
   loadEvents();
@@ -122,4 +147,56 @@ function loadEvents() {
 
     view.setBounds(bounds);
   });
+
+  ipcMain.on('saveRoute', (event, route) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'route.json'),
+        JSON.stringify(route),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          'resources',
+          'app',
+          'assets',
+          'route.json'
+        ),
+        JSON.stringify(route),
+        'utf-8'
+      );
+    }
+  });
+
+  ipcMain.on('saveTutorials', (event, tutorial) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'tutorials.json'),
+        JSON.stringify(tutorial),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          '../',
+          'Project-RPG-common',
+          'tutorials.json'
+        ),
+        JSON.stringify(tutorial),
+        'utf-8'
+      );
+    }
+  });
+}
+
+function createCommonFolder() {
+  var dir = resolve(app.getPath('exe'), '../', '../', 'Project-RPG-common');
+  if (!existsSync(dir)) {
+    mkdirSync(dir);
+  }
 }
