@@ -7,9 +7,9 @@ import { Tutorials } from '../../../../core/services/tutorial.service';
 import { HttpClient } from '@angular/common/http';
 import { resolve } from 'path';
 
-const Y_BOUND = 37;
-const X_BOUND = 150;
-const X_RETRACTED = 34;
+export const Y_BOUND = 37;
+export const X_BOUND = 150;
+export const X_RETRACTED = 34;
 
 @Component({
   selector: 'app-image-finder',
@@ -42,8 +42,14 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.tutorials = this.tutorialService.getDefaultTutorials();
-    this.getTutorials();
+    this.sidemenuService
+      .getIsRetracted()
+      .pipe(take(1))
+      .subscribe((value) => {
+        this.isRetracted = value;
+        this.tutorials = this.tutorialService.getDefaultTutorials();
+        this.getTutorials();
+      });
   }
 
   openGoogle(save?: boolean) {

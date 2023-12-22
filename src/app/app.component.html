@@ -4,7 +4,7 @@
     <p-toast></p-toast>
     <app-side-menu></app-side-menu>
     <div class="w-full h-full">
-      <router-outlet></router-outlet>
+      <router-outlet *ngIf="showContent"></router-outlet>
     </div>
   </div>
 </div>

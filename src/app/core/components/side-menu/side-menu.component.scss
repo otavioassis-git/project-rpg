@@ -29,10 +29,16 @@
       border-radius: 16px 0 0 16px;
       margin-left: 6px;
     }
+
+    &:hover {
+      background-color: rgb(49, 51, 56);
+    }
   }
 
-  .menu-item:hover {
-    background-color: rgb(49, 51, 56);
+  .settings-item {
+    @extend .menu-item;
+    align-self: center;
+    margin: auto 0 0.5rem 0;
   }
 
   .separator {
@@ -41,14 +47,6 @@
     background-color: #fff;
     align-self: center;
     margin: 0.325rem 0;
-  }
-
-  .version-footer {
-    margin: auto auto 0 auto;
-
-    p {
-      font-size: 0.625rem;
-    }
   }
 }
 .retracted {

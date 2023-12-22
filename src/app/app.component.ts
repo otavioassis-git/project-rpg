@@ -1,3 +1,4 @@
+import { SettingsService } from './core/services/settings.service';
 import { NotificationService } from './core/services/notification.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ElectronService } from './core/services';
@@ -13,11 +14,14 @@ import { MessageService } from 'primeng/api';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
+  showContent = true;
+
   constructor(
     private electronService: ElectronService,
     private translate: TranslateService,
     private messageService: MessageService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private settingsService: SettingsService
   ) {
     this.translate.setDefaultLang('en');
     console.log('APP_CONFIG', APP_CONFIG);
@@ -35,6 +39,15 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.notificationService.get().subscribe((value) => {
       if (value) this.messageService.add(value);
+    });
+    this.settingsService.getReloadContent().subscribe((value) => {
+      if (value) {
+        this.showContent = false;
+        setTimeout(() => {
+          this.showContent = true;
+          this.settingsService.reloadContent(false);
+        }, 1);
+      }
     });
   }
 }

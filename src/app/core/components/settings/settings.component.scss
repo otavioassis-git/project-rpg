@@ -1,0 +1,38 @@
+#settings-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 53px);
+
+  .setting-item {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #686868;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .content {
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+      margin-top: 0.5rem;
+
+      .item {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+    }
+  }
+
+  .version-footer {
+    margin: auto auto 0 auto;
+
+    p {
+      font-size: 0.625rem;
+    }
+  }
+}

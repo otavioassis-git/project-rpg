@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, SideMenuService } from '../../services/side-menu.service';
-import packageInfo from '../../../../../package.json';
 import { take } from 'rxjs';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -10,8 +10,6 @@ import { take } from 'rxjs';
   styleUrls: ['./side-menu.component.scss'],
 })
 export class SideMenuComponent implements OnInit {
-  lVersion = packageInfo.version;
-
   menuItems: MenuItem[] = [
     {
       icon: 'pi-map',
@@ -29,7 +27,11 @@ export class SideMenuComponent implements OnInit {
 
   isRetracted = false;
 
-  constructor(private service: SideMenuService, private router: Router) {}
+  constructor(
+    private service: SideMenuService,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit(): void {
     this.service
@@ -54,5 +56,9 @@ export class SideMenuComponent implements OnInit {
     this.selectedMenu = item;
     this.router.navigateByUrl(item.route);
     this.service.saveCurrentRoute(this.selectedMenu);
+  }
+
+  showSettings() {
+    this.settingsService.showSettings(true);
   }
 }
