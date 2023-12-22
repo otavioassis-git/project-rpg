@@ -1,6 +1,10 @@
 <app-settings></app-settings>
 <div id="side-menu-container" [ngClass]="isRetracted ? 'retracted' : ''">
-  <div (click)="toggleRetract()" class="menu-item">
+  <div
+    (click)="toggleRetract()"
+    class="menu-item"
+    [ngClass]="isRetracted ? ' menu-item-retracted' : ''"
+  >
     <i class="pi pi-align-justify"></i>
     <p [ngClass]="isRetracted ? 'opacity-0' : ''">Menu</p>
   </div>
@@ -10,11 +14,8 @@
       (click)="navigate(item)"
       class="menu-item"
       [ngClass]="
-        selectedMenu?.route == item.route
-          ? isRetracted
-            ? 'menu-item-selected menu-item-retracted'
-            : 'menu-item-selected'
-          : ''
+        (selectedMenu?.route == item.route ? 'menu-item-selected' : '') +
+        (isRetracted ? ' menu-item-retracted' : '')
       "
     >
       <i class="pi" [ngClass]="item.icon"></i>
@@ -26,6 +27,7 @@
       </p>
     </div>
   </div>
+  <div id="selected-indicator"></div>
   <div
     class="settings-item"
     [ngClass]="isRetracted ? '' : 'border-round-lg'"

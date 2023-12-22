@@ -4,6 +4,9 @@ import { MenuItem, SideMenuService } from '../../services/side-menu.service';
 import { take } from 'rxjs';
 import { SettingsService } from '../../services/settings.service';
 
+const BASE_TOP = 60;
+const TOP_ADDER = 45;
+
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
@@ -15,11 +18,13 @@ export class SideMenuComponent implements OnInit {
       icon: 'pi-map',
       label: 'Map hider',
       route: 'map-hider',
+      height: BASE_TOP,
     },
     {
       icon: 'pi-images',
       label: 'Image finder',
       route: 'image-finder',
+      height: BASE_TOP + 1 * TOP_ADDER,
     },
   ];
 
@@ -53,6 +58,8 @@ export class SideMenuComponent implements OnInit {
   }
 
   navigate(item: MenuItem) {
+    const indicator = document.getElementById('selected-indicator');
+    indicator.style.top = item.height + 'px';
     this.selectedMenu = item;
     this.router.navigateByUrl(item.route);
     this.service.saveCurrentRoute(this.selectedMenu);
