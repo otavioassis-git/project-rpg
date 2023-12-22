@@ -18,13 +18,13 @@ export class SideMenuComponent implements OnInit {
       icon: 'pi-map',
       label: 'Map hider',
       route: 'map-hider',
-      height: BASE_TOP,
+      height: 0,
     },
     {
       icon: 'pi-images',
       label: 'Image finder',
       route: 'image-finder',
-      height: BASE_TOP + 1 * TOP_ADDER,
+      height: 0,
     },
   ];
 
@@ -36,7 +36,11 @@ export class SideMenuComponent implements OnInit {
     private service: SideMenuService,
     private router: Router,
     private settingsService: SettingsService
-  ) {}
+  ) {
+    for (let i = 0; i < this.menuItems.length; i++) {
+      this.menuItems[i].height = BASE_TOP + i * TOP_ADDER;
+    }
+  }
 
   ngOnInit(): void {
     this.service
