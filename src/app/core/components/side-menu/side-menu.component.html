@@ -1,18 +1,27 @@
 <app-settings></app-settings>
 <div id="side-menu-container" [ngClass]="isRetracted ? 'retracted' : ''">
   <div (click)="toggleRetract()" class="menu-item">
-    <i class="pi pi-align-justify" [ngClass]="isRetracted ? 'text-xl' : ''"></i>
-    <p *ngIf="!isRetracted">Menu</p>
+    <i class="pi pi-align-justify"></i>
+    <p [ngClass]="isRetracted ? 'opacity-0' : ''">Menu</p>
   </div>
   <div class="separator"></div>
   <div *ngFor="let item of menuItems">
     <div
       (click)="navigate(item)"
       class="menu-item"
-      [ngClass]="selectedMenu?.route == item.route ? 'menu-item-selected' : ''"
+      [ngClass]="
+        selectedMenu?.route == item.route
+          ? isRetracted
+            ? 'menu-item-selected menu-item-retracted'
+            : 'menu-item-selected'
+          : ''
+      "
     >
-      <i class="pi" [ngClass]="item.icon + (isRetracted ? ' text-xl' : '')"></i>
-      <p *ngIf="!isRetracted" class="unselectable white-space-nowrap">
+      <i class="pi" [ngClass]="item.icon"></i>
+      <p
+        class="unselectable white-space-nowrap"
+        [ngClass]="isRetracted ? 'opacity-0' : ''"
+      >
         {{ item.label }}
       </p>
     </div>
@@ -22,6 +31,6 @@
     [ngClass]="isRetracted ? '' : 'border-round-lg'"
     (click)="showSettings()"
   >
-    <i class="pi pi-cog text-xl"></i>
+    <i class="pi pi-cog"></i>
   </div>
 </div>
