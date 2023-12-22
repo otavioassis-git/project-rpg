@@ -16,7 +16,7 @@ const args = process.argv.slice(1),
   serve = args.some((val) => ['--serve', '--local'].includes(val));
 
 let mainWin: BrowserWindow = null;
-let showDevTools = true;
+let showDevTools = serve;
 let previousBounds;
 
 function App() {
