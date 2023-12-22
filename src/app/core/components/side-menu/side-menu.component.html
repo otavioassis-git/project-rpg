@@ -8,7 +8,7 @@
     <div
       (click)="navigate(item)"
       class="menu-item"
-      [ngClass]="selectedMenu?.route == item.route ? 'menu-item-selected' : ''"
+      [ngClass]="selectedMenu == item ? 'menu-item-selected' : ''"
     >
       <i class="pi" [ngClass]="item.icon + (isRetracted ? ' text-xl' : '')"></i>
       <p *ngIf="!isRetracted" class="unselectable white-space-nowrap">
