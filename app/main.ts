@@ -16,6 +16,7 @@ const args = process.argv.slice(1),
   serve = args.some((val) => ['--serve', '--local'].includes(val));
 
 let mainWin: BrowserWindow = null;
+let showDevTools = false;
 let previousBounds;
 
 function App() {
@@ -116,11 +117,23 @@ function loadEvents() {
     BrowserWindow.getFocusedWindow().close();
   });
 
+  ipcMain.on('toggleDevTools', () => {
+    mainWin.close();
+    showDevTools = !showDevTools;
+    mainWin = createMainWindow(showDevTools);
+    if (showDevTools)
+      contextMenu({
+        window: mainWin,
+        showCopyImage: false,
+        showInspectElement: true,
+        showSelectAll: false,
+      });
+  });
+
   ipcMain.on('openGoogle', (event, bounds) => {
-    const win = BrowserWindow.getFocusedWindow();
     const view = new BrowserView();
 
-    win.addBrowserView(view);
+    mainWin.addBrowserView(view);
     view.setBounds(bounds);
     view.webContents.loadURL('https://www.google.com/imghp');
 
@@ -135,15 +148,13 @@ function loadEvents() {
   });
 
   ipcMain.on('closeGoogle', () => {
-    const win = BrowserWindow.getFocusedWindow();
-    const view = win.getBrowserView();
+    const view = mainWin.getBrowserView();
 
-    if (view) win.removeBrowserView(view);
+    if (view) mainWin.removeBrowserView(view);
   });
 
   ipcMain.on('repositionGoogleWindow', (event, bounds) => {
-    const win = BrowserWindow.getFocusedWindow();
-    const view = win.getBrowserView();
+    const view = mainWin.getBrowserView();
 
     view.setBounds(bounds);
   });

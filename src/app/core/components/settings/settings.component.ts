@@ -21,6 +21,8 @@ import {
 export class SettingsComponent implements OnInit {
   lVersion = packageInfo.version;
 
+  clickCount = 0;
+
   showSettings: boolean;
   stateOptions: any[] = [
     { label: 'Off', value: false },
@@ -57,7 +59,15 @@ export class SettingsComponent implements OnInit {
   }
 
   init() {
+    this.clickCount = 0;
     this.initTutorials();
+  }
+
+  addClickCount() {
+    this.clickCount++;
+    if (this.clickCount == 6) {
+      this.service.toggleDevTools();
+    }
   }
 
   initTutorials() {
