@@ -16,7 +16,7 @@ const args = process.argv.slice(1),
   serve = args.some((val) => ['--serve', '--local'].includes(val));
 
 let mainWin: BrowserWindow = null;
-let showDevTools = false;
+let showDevTools = true;
 let previousBounds;
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
     );
   }
 
-  mainWin = createMainWindow();
+  mainWin = createMainWindow(showDevTools);
   if (showDevTools)
     contextMenu({
       window: mainWin,
