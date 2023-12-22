@@ -1,5 +1,3 @@
-import { take } from 'rxjs';
-import { MaximizeServiceService } from '../../services/maximize-service.service';
 import { ElectronService } from './../../services/electron/electron.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,33 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomTitleBarComponent implements OnInit {
   title = 'Project RPG';
-  isMaximized: boolean;
 
-  constructor(
-    private electron: ElectronService,
-    private maximizeService: MaximizeServiceService
-  ) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.maximizeService.getIsMaximized().subscribe((value: boolean) => {
-      this.isMaximized = value;
-    });
-  }
-
-  toggleIsMaximized() {
-    this.maximizeService.setIsMaximized(!this.isMaximized);
-  }
-
-  minimize() {
-    this.electron.minimizeWindow();
-  }
-
-  maximize() {
-    this.toggleIsMaximized();
-    this.electron.toggleWindowSize();
-  }
-
-  close() {
-    this.electron.closeWindow();
-  }
+  ngOnInit(): void {}
 }

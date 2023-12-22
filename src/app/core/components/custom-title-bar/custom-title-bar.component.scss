@@ -3,35 +3,12 @@
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 0.375rem 0.75rem;
   background-color: rgb(30, 31, 34);
 
   .title {
     color: #fff;
-  }
-
-  i {
-    -webkit-app-region: no-drag;
-    cursor: pointer;
-    color: #fff;
-  }
-
-  .minimize-button {
-    margin: 0 1rem 0 auto;
-    font-size: 0.875rem;
-  }
-
-  .maximize-button {
-    margin-right: 1rem;
-    font-size: 0.75rem;
-  }
-
-  .close-button {
-    font-size: 0.875rem;
-  }
-
-  .color-red {
-    color: red;
+    padding: 0.375rem 0.75rem;
   }
 }

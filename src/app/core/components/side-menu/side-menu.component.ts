@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { MaximizeServiceService } from '../../services/maximize-service.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, SideMenuService } from '../../services/side-menu.service';
 import packageInfo from '../../../../../package.json';
@@ -29,18 +28,10 @@ export class SideMenuComponent implements OnInit {
   selectedMenu: MenuItem;
 
   isRetracted = false;
-  isMaximized: boolean;
 
-  constructor(
-    private service: SideMenuService,
-    private maximizeService: MaximizeServiceService,
-    private router: Router
-  ) {}
+  constructor(private service: SideMenuService, private router: Router) {}
 
   ngOnInit(): void {
-    this.maximizeService.getIsMaximized().subscribe((value: boolean) => {
-      this.isMaximized = value;
-    });
     this.service
       .getSavedRoute()
       .pipe(take(1))
