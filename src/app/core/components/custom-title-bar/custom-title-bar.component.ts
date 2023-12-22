@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./custom-title-bar.component.scss'],
 })
 export class CustomTitleBarComponent implements OnInit {
-  title = 'RPG dos acólitos';
+  title = 'Project RPG';
   isMaximized: boolean;
 
   constructor(
