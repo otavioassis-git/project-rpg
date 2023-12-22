@@ -149,7 +149,7 @@ function loadEvents() {
       showSaveImageAs: true,
       showCopyImageAddress: true,
       showCopyImage: false,
-      showInspectElement: false,
+      showInspectElement: showDevTools,
       showSelectAll: false,
     });
   });
