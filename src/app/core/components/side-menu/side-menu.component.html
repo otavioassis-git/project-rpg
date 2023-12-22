@@ -1,3 +1,4 @@
+<app-settings></app-settings>
 <div id="side-menu-container" [ngClass]="isRetracted ? 'retracted' : ''">
   <div (click)="toggleRetract()" class="menu-item">
     <i class="pi pi-align-justify" [ngClass]="isRetracted ? 'text-xl' : ''"></i>
@@ -16,7 +17,11 @@
       </p>
     </div>
   </div>
-  <div *ngIf="!isRetracted" class="version-footer">
-    <p>v{{ lVersion }}</p>
+  <div
+    class="settings-item"
+    [ngClass]="isRetracted ? '' : 'border-round-lg'"
+    (click)="showSettings()"
+  >
+    <i class="pi pi-cog text-xl"></i>
   </div>
 </div>

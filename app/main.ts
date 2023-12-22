@@ -16,6 +16,7 @@ const args = process.argv.slice(1),
   serve = args.some((val) => ['--serve', '--local'].includes(val));
 
 let mainWin: BrowserWindow = null;
+let showDevTools = serve;
 let previousBounds;
 
 function App() {
@@ -42,7 +43,14 @@ function App() {
     );
   }
 
-  mainWin = createMainWindow();
+  mainWin = createMainWindow(showDevTools);
+  if (showDevTools)
+    contextMenu({
+      window: mainWin,
+      showCopyImage: false,
+      showInspectElement: true,
+      showSelectAll: false,
+    });
   previousBounds = mainWin.getBounds();
   loadEvents();
   autoUpdater.checkForUpdates();
@@ -93,7 +101,7 @@ try {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWin === null) {
-      createMainWindow();
+      mainWin = createMainWindow();
     }
   });
 } catch (e) {
@@ -116,11 +124,23 @@ function loadEvents() {
     BrowserWindow.getFocusedWindow().close();
   });
 
+  ipcMain.on('toggleDevTools', () => {
+    mainWin.close();
+    showDevTools = !showDevTools;
+    mainWin = createMainWindow(showDevTools);
+    if (showDevTools)
+      contextMenu({
+        window: mainWin,
+        showCopyImage: false,
+        showInspectElement: true,
+        showSelectAll: false,
+      });
+  });
+
   ipcMain.on('openGoogle', (event, bounds) => {
-    const win = BrowserWindow.getFocusedWindow();
     const view = new BrowserView();
 
-    win.addBrowserView(view);
+    mainWin.addBrowserView(view);
     view.setBounds(bounds);
     view.webContents.loadURL('https://www.google.com/imghp');
 
@@ -135,15 +155,13 @@ function loadEvents() {
   });
 
   ipcMain.on('closeGoogle', () => {
-    const win = BrowserWindow.getFocusedWindow();
-    const view = win.getBrowserView();
+    const view = mainWin.getBrowserView();
 
-    if (view) win.removeBrowserView(view);
+    if (view) mainWin.removeBrowserView(view);
   });
 
   ipcMain.on('repositionGoogleWindow', (event, bounds) => {
-    const win = BrowserWindow.getFocusedWindow();
-    const view = win.getBrowserView();
+    const view = mainWin.getBrowserView();
 
     view.setBounds(bounds);
   });

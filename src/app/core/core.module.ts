@@ -9,10 +9,19 @@ import { DialogModule } from 'primeng/dialog';
 import { AccordionModule } from 'primeng/accordion';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
+import { SidebarModule } from 'primeng/sidebar';
+import { SettingsComponent } from './components/settings/settings.component';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
-  declarations: [CustomTitleBarComponent, SideMenuComponent],
-  imports: [CommonModule, ButtonModule],
+  declarations: [CustomTitleBarComponent, SideMenuComponent, SettingsComponent],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    SidebarModule,
+    SelectButtonModule,
+    FormsModule,
+  ],
   exports: [
     ButtonModule,
     CustomTitleBarComponent,

@@ -6,7 +6,7 @@ import * as url from 'url';
 const args = process.argv.slice(1),
   serve = args.some((val) => val === '--serve');
 
-export function createMainWindow(): BrowserWindow {
+export function createMainWindow(showDevTools?: boolean): BrowserWindow {
   const size = screen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
@@ -22,7 +22,7 @@ export function createMainWindow(): BrowserWindow {
     minHeight: 600,
     minWidth: 800,
     webPreferences: {
-      // devTools: false,
+      devTools: showDevTools,
       nodeIntegration: true,
       allowRunningInsecureContent: serve,
       contextIsolation: false, // false if you want to run e2e test with Spectron
