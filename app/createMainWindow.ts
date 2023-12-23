@@ -12,6 +12,11 @@ export function createMainWindow(showDevTools?: boolean): BrowserWindow {
   // Create the browser window.
   let win = new BrowserWindow({
     titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: 'rgb(30, 31, 34)',
+      symbolColor: '#fff',
+      height: 37,
+    },
     width: 1200,
     height: 700,
     minHeight: 600,

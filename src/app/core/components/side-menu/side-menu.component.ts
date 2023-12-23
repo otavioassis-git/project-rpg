@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { MaximizeServiceService } from '../../services/maximize-service.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, SideMenuService } from '../../services/side-menu.service';
 import { take } from 'rxjs';
@@ -13,9 +12,7 @@ const TOP_ADDER = 45;
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
 })
-
 export class SideMenuComponent implements OnInit {
-
   menuItems: MenuItem[] = [
     {
       icon: 'pi-map',
@@ -29,22 +26,11 @@ export class SideMenuComponent implements OnInit {
       route: 'image-finder',
       height: 0,
     },
-    // {
-    //   icon: 'pi-volume-up',
-    //   label: 'Sound board',
-    //   route: 'soundboard',
-    // },
-    // {
-    //   icon: 'pi-box',
-    //   label: '',
-    //   route: '',
-    // },
   ];
 
   selectedMenu: MenuItem;
 
   isRetracted = false;
-  isMaximized: boolean;
 
   constructor(
     private service: SideMenuService,
@@ -73,7 +59,7 @@ export class SideMenuComponent implements OnInit {
 
   toggleRetract() {
     this.isRetracted = !this.isRetracted;
-    this.sideMenuService.setIsRetracted(this.isRetracted);
+    this.service.setIsRetracted(this.isRetracted);
   }
 
   navigate(item: MenuItem) {
@@ -81,6 +67,7 @@ export class SideMenuComponent implements OnInit {
     indicator.style.top = item.height + 'px';
     this.selectedMenu = item;
     this.router.navigateByUrl(item.route);
+    this.service.saveCurrentRoute(this.selectedMenu);
   }
 
   showSettings() {
