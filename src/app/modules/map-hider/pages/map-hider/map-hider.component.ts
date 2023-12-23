@@ -1,6 +1,6 @@
-import { TutorialService } from './../../../../core/services/tutorial.service';
 import { NotificationService } from './../../../../core/services/notification.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MaximizeServiceService } from '../../../../core/services/maximize-service.service';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from '../../components/image-url/image-url.component';
@@ -20,6 +20,7 @@ import { MapHiderService } from '../../services/map-hider.service';
 })
 export class MapHiderComponent implements OnInit {
   image;
+  isMaximized: boolean;
   isRetracted: boolean;
 
   imageUrl = '';
@@ -30,9 +31,8 @@ export class MapHiderComponent implements OnInit {
   firstAddBox = true;
   showboxinfo = true;
 
-  tutorials: Tutorials;
-
   constructor(
+    private maximizeService: MaximizeServiceService,
     private sideMenuService: SideMenuService,
     private notificationService: NotificationService,
     private dialog: DialogService,
@@ -43,23 +43,21 @@ export class MapHiderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.maximizeService.getIsMaximized().subscribe((value: boolean) => {
+      this.isMaximized = value;
+    });
     this.sideMenuService.getIsRetracted().subscribe((value: boolean) => {
       this.isRetracted = value;
     });
-
-    this.tutorials = this.tutorialService.getDefaultTutorials();
-    this.getTutorials();
   }
 
   loadImage(event) {
-    if (!this.image && this.tutorials.resize_tutorial) {
+    if (!this.image) {
       this.notificationService.add({
         severity: 'info',
         summary: 'Info',
         detail: 'You can resize the image using the grab on the bottom right!',
       });
-      this.tutorials.resize_tutorial = false;
-      this.tutorialService.saveTutorials(this.tutorials);
     }
 
     this.imageUrl = '';
@@ -82,17 +80,6 @@ export class MapHiderComponent implements OnInit {
       if (value) {
         this.image = null;
         this.imageUrl = value;
-
-        if (this.tutorials.resize_tutorial) {
-          this.notificationService.add({
-            severity: 'info',
-            summary: 'Info',
-            detail:
-              'You can resize the image using the grab on the bottom right!',
-          });
-          this.tutorials.resize_tutorial = false;
-          this.tutorialService.saveTutorials(this.tutorials);
-        }
       }
     });
   }
@@ -165,18 +152,15 @@ export class MapHiderComponent implements OnInit {
   }
 
   checkFirstTime() {
-    if (this.firstAddBox && this.tutorials.box_tutorial) {
+    if (this.firstAddBox) {
       this.notificationService.add({
         severity: 'info',
         summary: 'Info',
         detail: 'You can click on the boxes on the box control to remove them!',
       });
-      this.tutorials.box_tutorial = false;
-      this.tutorialService.saveTutorials(this.tutorials);
       this.firstAddBox = false;
     }
   }
-
   getTutorials() {
     this.httpClient
       .get('assets/isServe.json')

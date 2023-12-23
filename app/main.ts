@@ -1,6 +1,8 @@
 import {
   app,
   BrowserWindow,
+  screen,
+  ipcRenderer,
   ipcMain,
   MessageBoxOptions,
   dialog,
@@ -19,8 +21,7 @@ import { resolve } from 'path';
 import { createMapProjectionWindow } from './createMapProjectionWindow';
 const contextMenu = require('electron-context-menu');
 
-const args = process.argv.slice(1),
-  serve = args.some((val) => ['--serve', '--local'].includes(val));
+const contextMenu = require('electron-context-menu');
 
 let mainWin: BrowserWindow = null;
 let mapWin: BrowserWindow = null;
@@ -203,56 +204,4 @@ function loadEvents() {
 
     view.setBounds(bounds);
   });
-
-  ipcMain.on('saveRoute', (event, route) => {
-    if (serve) {
-      writeFileSync(
-        resolve(__dirname, '../', 'src', 'assets', 'route.json'),
-        JSON.stringify(route),
-        'utf-8'
-      );
-    } else {
-      writeFileSync(
-        resolve(
-          app.getPath('exe'),
-          '../',
-          'resources',
-          'app',
-          'assets',
-          'route.json'
-        ),
-        JSON.stringify(route),
-        'utf-8'
-      );
-    }
-  });
-
-  ipcMain.on('saveTutorials', (event, tutorial) => {
-    if (serve) {
-      writeFileSync(
-        resolve(__dirname, '../', 'src', 'assets', 'tutorials.json'),
-        JSON.stringify(tutorial),
-        'utf-8'
-      );
-    } else {
-      writeFileSync(
-        resolve(
-          app.getPath('exe'),
-          '../',
-          '../',
-          'Project-RPG-common',
-          'tutorials.json'
-        ),
-        JSON.stringify(tutorial),
-        'utf-8'
-      );
-    }
-  });
-}
-
-function createCommonFolder() {
-  var dir = resolve(app.getPath('exe'), '../', '../', 'Project-RPG-common');
-  if (!existsSync(dir)) {
-    mkdirSync(dir);
-  }
 }

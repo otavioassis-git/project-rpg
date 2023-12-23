@@ -31,18 +31,9 @@ body {
 }
 
 .white-background {
+  color: #5472d4 !important;
   background-color: #fff !important;
   border-color: #fff !important;
-
-  &-normal {
-    @extend .white-background;
-    color: #5472d4 !important;
-  }
-
-  &-cancel {
-    @extend .white-background;
-    color: #d74c4c !important;
-  }
 }
 
 // overrides ------------------------------------------------------------------
