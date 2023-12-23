@@ -48,7 +48,8 @@ export class SideMenuComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (value: MenuItem) => {
-          this.navigate(value);
+          if (!window.location.hash.includes('#/map-projection'))
+            this.navigate(value);
         },
         (error) => {
           this.selectedMenu = null;

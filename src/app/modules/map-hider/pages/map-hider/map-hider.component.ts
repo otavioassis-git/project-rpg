@@ -4,10 +4,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from '../../components/image-url/image-url.component';
-import { take } from 'rxjs';
+import { take, tap } from 'rxjs';
 import { resolve } from 'path';
 import { HttpClient } from '@angular/common/http';
 import { Tutorials } from '../../../../core/services/tutorial.service';
+import { NgxCaptureService } from 'ngx-capture';
+import { MapHiderService } from '../../services/map-hider.service';
 
 @Component({
   selector: 'app-map-hider',
@@ -35,7 +37,9 @@ export class MapHiderComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: DialogService,
     private httpClient: HttpClient,
-    private tutorialService: TutorialService
+    private tutorialService: TutorialService,
+    private captureService: NgxCaptureService,
+    private service: MapHiderService
   ) {}
 
   ngOnInit(): void {
@@ -209,5 +213,28 @@ export class MapHiderComponent implements OnInit {
           } catch (error) {}
         }
       });
+  }
+
+  projectMap() {
+    this.captureService
+      .getImage(document.getElementById('map'), true)
+      .pipe(
+        tap((img) => {
+          this.service.projectMap(img);
+        })
+      )
+      .subscribe();
+  }
+
+  dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[arr.length - 1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
   }
 }

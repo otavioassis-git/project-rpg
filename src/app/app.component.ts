@@ -15,6 +15,7 @@ import { MessageService } from 'primeng/api';
 })
 export class AppComponent implements OnInit {
   showContent = true;
+  showMenus = true;
 
   constructor(
     private electronService: ElectronService,
@@ -49,5 +50,6 @@ export class AppComponent implements OnInit {
         }, 1);
       }
     });
+    this.showMenus = !window.location.hash.includes('#/map-projection');
   }
 }

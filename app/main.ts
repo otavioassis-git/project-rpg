@@ -8,14 +8,22 @@ import {
 } from 'electron';
 import { createMainWindow } from './createMainWindow';
 import { autoUpdater } from 'electron-updater';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFile,
+  writeFileSync,
+} from 'fs';
 import { resolve } from 'path';
+import { createMapProjectionWindow } from './createMapProjectionWindow';
 const contextMenu = require('electron-context-menu');
 
 const args = process.argv.slice(1),
   serve = args.some((val) => ['--serve', '--local'].includes(val));
 
 let mainWin: BrowserWindow = null;
+let mapWin: BrowserWindow = null;
 let showDevTools = serve;
 let previousBounds;
 
@@ -135,6 +143,36 @@ function loadEvents() {
         showInspectElement: true,
         showSelectAll: false,
       });
+  });
+
+  ipcMain.on('projectMap', (event, image) => {
+    if (mapWin != null && !mapWin.isDestroyed()) mapWin.close();
+    const base64Data = image.replace(/^data:image\/png;base64,/, '');
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'projection.png'),
+        base64Data,
+        'base64'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          'resources',
+          'app',
+          'assets',
+          'projection.png'
+        ),
+        base64Data,
+        'base64'
+      );
+    }
+    mapWin = createMapProjectionWindow(showDevTools);
+  });
+
+  ipcMain.on('stopProjection', () => {
+    if (mapWin != null && !mapWin.isDestroyed()) mapWin.close();
   });
 
   ipcMain.on('openGoogle', (event, bounds) => {

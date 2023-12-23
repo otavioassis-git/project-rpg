@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './shared/components';
 import { MapHiderComponent } from './modules/map-hider/pages/map-hider/map-hider.component';
 import { SoundboardComponent } from './modules/soundboard/pages/soundboard/soundboard.component';
 import { ImageFinderComponent } from './modules/image-finder/pages/image-finder/image-finder.component';
+import { MapProjectionComponent } from './modules/map-hider/pages/map-projection/map-projection.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,14 @@ const routes: Routes = [
   {
     path: 'map-hider',
     component: MapHiderComponent,
+    loadChildren: () =>
+      import('./modules/map-hider/map-hider.module').then(
+        (m) => m.MapHiderModule
+      ),
+  },
+  {
+    path: 'map-projection',
+    component: MapProjectionComponent,
     loadChildren: () =>
       import('./modules/map-hider/map-hider.module').then(
         (m) => m.MapHiderModule
