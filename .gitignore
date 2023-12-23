@@ -53,3 +53,4 @@ Thumbs.db
 
 # Save files
 src/assets/*.json
+src/assets/projection.png
