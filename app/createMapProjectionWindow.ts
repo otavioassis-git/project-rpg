@@ -18,6 +18,7 @@ export function createMapProjectionWindow(
     titleBarStyle: 'hidden',
     width: 1200,
     height: 700,
+    skipTaskbar: true,
     webPreferences: {
       devTools: showDevTools,
       nodeIntegration: true,
