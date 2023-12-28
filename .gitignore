@@ -50,3 +50,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Save files
+src/assets/*.json
+src/assets/projection.png

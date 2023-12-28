@@ -13,6 +13,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
+import { NgxCaptureModule } from 'ngx-capture';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
@@ -28,6 +29,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgxCaptureModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

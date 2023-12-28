@@ -1,8 +1,6 @@
 import {
   app,
   BrowserWindow,
-  screen,
-  ipcRenderer,
   ipcMain,
   MessageBoxOptions,
   dialog,
@@ -10,14 +8,57 @@ import {
 } from 'electron';
 import { createMainWindow } from './createMainWindow';
 import { autoUpdater } from 'electron-updater';
-
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFile,
+  writeFileSync,
+} from 'fs';
+import { resolve } from 'path';
+import { createMapProjectionWindow } from './createMapProjectionWindow';
 const contextMenu = require('electron-context-menu');
 
+const args = process.argv.slice(1),
+  serve = args.some((val) => ['--serve', '--local'].includes(val));
+
 let mainWin: BrowserWindow = null;
+let mapWin: BrowserWindow = null;
+let showDevTools = serve;
 let previousBounds;
 
 function App() {
-  mainWin = createMainWindow();
+  createCommonFolder();
+  // is serve register for angular
+  if (serve) {
+    writeFileSync(
+      resolve(__dirname, '../', 'src', 'assets', 'isServe.json'),
+      JSON.stringify({ serve }),
+      'utf-8'
+    );
+  } else {
+    writeFileSync(
+      resolve(
+        app.getPath('exe'),
+        '../',
+        'resources',
+        'app',
+        'assets',
+        'isServe.json'
+      ),
+      JSON.stringify({ serve }),
+      'utf-8'
+    );
+  }
+
+  mainWin = createMainWindow(showDevTools);
+  if (showDevTools)
+    contextMenu({
+      window: mainWin,
+      showCopyImage: false,
+      showInspectElement: true,
+      showSelectAll: false,
+    });
   previousBounds = mainWin.getBounds();
   loadEvents();
   autoUpdater.checkForUpdates();
@@ -68,7 +109,7 @@ try {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWin === null) {
-      createMainWindow();
+      mainWin = createMainWindow();
     }
   });
 } catch (e) {
@@ -91,11 +132,53 @@ function loadEvents() {
     BrowserWindow.getFocusedWindow().close();
   });
 
+  ipcMain.on('toggleDevTools', () => {
+    mainWin.close();
+    showDevTools = !showDevTools;
+    mainWin = createMainWindow(showDevTools);
+    if (showDevTools)
+      contextMenu({
+        window: mainWin,
+        showCopyImage: false,
+        showInspectElement: true,
+        showSelectAll: false,
+      });
+  });
+
+  ipcMain.on('projectMap', (event, image) => {
+    if (mapWin != null && !mapWin.isDestroyed()) mapWin.close();
+    const base64Data = image.replace(/^data:image\/png;base64,/, '');
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'projection.png'),
+        base64Data,
+        'base64'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          'resources',
+          'app',
+          'assets',
+          'projection.png'
+        ),
+        base64Data,
+        'base64'
+      );
+    }
+    mapWin = createMapProjectionWindow(showDevTools);
+  });
+
+  ipcMain.on('stopProjection', () => {
+    if (mapWin != null && !mapWin.isDestroyed()) mapWin.close();
+  });
+
   ipcMain.on('openGoogle', (event, bounds) => {
-    const win = BrowserWindow.getFocusedWindow();
     const view = new BrowserView();
 
-    win.addBrowserView(view);
+    mainWin.addBrowserView(view);
     view.setBounds(bounds);
     view.webContents.loadURL('https://www.google.com/imghp');
 
@@ -104,22 +187,72 @@ function loadEvents() {
       showSaveImageAs: true,
       showCopyImageAddress: true,
       showCopyImage: false,
-      showInspectElement: false,
+      showInspectElement: showDevTools,
       showSelectAll: false,
     });
   });
 
   ipcMain.on('closeGoogle', () => {
-    const win = BrowserWindow.getFocusedWindow();
-    const view = win.getBrowserView();
+    const view = mainWin.getBrowserView();
 
-    if (view) win.removeBrowserView(view);
+    if (view) mainWin.removeBrowserView(view);
   });
 
   ipcMain.on('repositionGoogleWindow', (event, bounds) => {
-    const win = BrowserWindow.getFocusedWindow();
-    const view = win.getBrowserView();
+    const view = mainWin.getBrowserView();
 
     view.setBounds(bounds);
   });
+
+  ipcMain.on('saveRoute', (event, route) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'route.json'),
+        JSON.stringify(route),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          'resources',
+          'app',
+          'assets',
+          'route.json'
+        ),
+        JSON.stringify(route),
+        'utf-8'
+      );
+    }
+  });
+
+  ipcMain.on('saveTutorials', (event, tutorial) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'tutorials.json'),
+        JSON.stringify(tutorial),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          '../',
+          'Project-RPG-common',
+          'tutorials.json'
+        ),
+        JSON.stringify(tutorial),
+        'utf-8'
+      );
+    }
+  });
+}
+
+function createCommonFolder() {
+  var dir = resolve(app.getPath('exe'), '../', '../', 'Project-RPG-common');
+  if (!existsSync(dir)) {
+    mkdirSync(dir);
+  }
 }

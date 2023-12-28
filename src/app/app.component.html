@@ -1,10 +1,10 @@
 <div id="app">
-  <app-custom-title-bar></app-custom-title-bar>
+  <app-custom-title-bar *ngIf="showMenus"></app-custom-title-bar>
   <div class="content-container">
     <p-toast></p-toast>
-    <app-side-menu></app-side-menu>
+    <app-side-menu *ngIf="showMenus"></app-side-menu>
     <div class="w-full h-full">
-      <router-outlet></router-outlet>
+      <router-outlet *ngIf="showContent"></router-outlet>
     </div>
   </div>
 </div>

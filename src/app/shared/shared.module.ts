@@ -6,10 +6,21 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PageNotFoundComponent } from './components/';
 import { WebviewDirective } from './directives/';
 import { FormsModule } from '@angular/forms';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
-  declarations: [PageNotFoundComponent, WebviewDirective],
-  imports: [CommonModule, TranslateModule, FormsModule],
-  exports: [TranslateModule, WebviewDirective, FormsModule]
+  declarations: [
+    PageNotFoundComponent,
+    WebviewDirective,
+    ConfirmationDialogComponent,
+  ],
+  imports: [CommonModule, TranslateModule, FormsModule, ButtonModule],
+  exports: [
+    TranslateModule,
+    WebviewDirective,
+    FormsModule,
+    ConfirmationDialogComponent,
+  ],
 })
 export class SharedModule {}

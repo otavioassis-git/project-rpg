@@ -31,9 +31,18 @@ body {
 }
 
 .white-background {
-  color: #5472d4 !important;
   background-color: #fff !important;
   border-color: #fff !important;
+
+  &-normal {
+    @extend .white-background;
+    color: #5472d4 !important;
+  }
+
+  &-cancel {
+    @extend .white-background;
+    color: #d74c4c !important;
+  }
 }
 
 // overrides ------------------------------------------------------------------
@@ -48,5 +57,41 @@ body {
 
   .p-dialog-content {
     padding: 0 1rem 1rem 1rem !important;
+  }
+}
+
+.p-sidebar-left,
+.p-component-overlay {
+  top: unset !important;
+  bottom: 0;
+  height: calc(100% - 37px) !important;
+}
+
+.p-sidebar-header {
+  display: none !important;
+}
+
+.p-sidebar-footer {
+  display: none !important;
+}
+
+.p-sidebar-content {
+  padding: 1rem !important;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    i {
+      cursor: pointer;
+      color: black;
+      font-size: 1rem;
+    }
+  }
+
+  p {
+    color: black;
   }
 }
