@@ -11,7 +11,7 @@
 The creation of the Project RPG came from the necessity of our party to have custom maps for our adventures. We got a projector so we could project the maps on a surface but that wasn't enought. So I've build this program where you could hide parts of the map and project them at the DM's will.
 
 ## How to use (windows only)
-### Just download the latest version, install it and have fun!
+### Just download the latest version (Project-RPG-Setup-x.x.x.exe), install it and have fun!
 
 It uses electron auto updater, which  means if a new update is ready to install the app will notify you! Don't have to worry about needing to download and install again!
 
