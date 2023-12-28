@@ -18,13 +18,13 @@ It uses electron auto updater, which  means if a new update is ready to install 
 ## Features
 The app is divided in pages. Here is its features:
 
-### Map Hider
+- ### Map Hider
 The main feature of the app. It's a page where you can upload your map, or paste its URL to it. With the map in hands you can now spawn boxes and hide the places that are not meant to be seen yet. When ready, you can project it to you second monitor or a projector!
 
-### Image Finder
+- ### Image Finder
 Don't worry, if you haven't decided yet on which map to use you can search them on this page. It's a google images page where you can save or copy the maps that you search.
 
-### Settings
+- ### Settings
 A menu where you can tweek some features.
 
 ## Screenshots
