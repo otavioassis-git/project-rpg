@@ -1,14 +1,20 @@
 #custom-title-bar-container {
   -webkit-app-region: drag;
+  height: 37px;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
   background-color: rgb(30, 31, 34);
 
   .title {
     color: #fff;
     padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  img {
+    height: 26px;
+    margin-left: 0.5rem;
   }
 }
