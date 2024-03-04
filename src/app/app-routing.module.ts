@@ -4,11 +4,13 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { ProjectionLayoutComponent } from './layouts/projection-layout/projection-layout.component';
 import { PageNotFoundComponent } from './shared/components';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/main/main.module').then((m) => m.MainModule),
   },

@@ -10,7 +10,6 @@ import { SettingsService } from '../../core/services/settings.service';
 })
 export class MainLayoutComponent {
   showContent = true;
-  showMenus = true;
 
   constructor(
     private messageService: MessageService,
@@ -31,6 +30,5 @@ export class MainLayoutComponent {
         }, 1);
       }
     });
-    this.showMenus = !window.location.hash.includes('#/map-projection');
   }
 }
