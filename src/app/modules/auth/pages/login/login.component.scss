@@ -1,0 +1,38 @@
+#auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  h1,
+  h2,
+  a {
+    color: white;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  form {
+    display: flex;
+    gap: 1.75rem;
+    flex-direction: column;
+    margin-top: 2.5rem;
+
+    .p-float-label {
+      width: 420px;
+    }
+  }
+
+  button {
+    padding: 0.5rem 2.5rem;
+    margin-top: 1.5rem;
+  }
+}
