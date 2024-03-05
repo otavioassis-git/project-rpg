@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ElectronService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
-import { APP_CONFIG } from '../environments/environment';
+import { environment } from '../environments/environment';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     private translate: TranslateService
   ) {
     this.translate.setDefaultLang('en');
-    console.log('APP_CONFIG', APP_CONFIG);
+    console.log('environment', environment);
 
     if (electronService.isElectron) {
       console.log(process.env);
