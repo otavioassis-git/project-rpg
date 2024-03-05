@@ -248,6 +248,28 @@ function loadEvents() {
       );
     }
   });
+
+  ipcMain.on('saveLogin', (event, login) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'login.json'),
+        JSON.stringify(login),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          '../',
+          'Project-RPG-common',
+          'login.json'
+        ),
+        JSON.stringify(login),
+        'utf-8'
+      );
+    }
+  });
 }
 
 function createCommonFolder() {

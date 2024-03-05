@@ -7,10 +7,9 @@ import { CoreModule } from '../../core/core.module';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from './components/image-url/image-url.component';
 import { InputTextModule } from 'primeng/inputtext';
-import { MapProjectionComponent } from './pages/map-projection/map-projection.component';
 
 @NgModule({
-  declarations: [MapHiderComponent, ImageUrlComponent, MapProjectionComponent],
+  declarations: [MapHiderComponent, ImageUrlComponent],
   imports: [
     CommonModule,
     MapHiderRoutingModule,
