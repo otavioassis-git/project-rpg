@@ -52,7 +52,7 @@ export class AuthGuard implements CanActivate {
                     '../',
                     '../',
                     'Project-RPG-common',
-                    'tutorials.json'
+                    'login.json'
                   )
                 )
             );
