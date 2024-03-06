@@ -1,26 +1,22 @@
-import { SideMenuService } from './../../services/side-menu.service';
 import { ImageFinderService } from './../../../modules/image-finder/services/image-finder.service';
 import { TutorialService, Tutorials } from './../../services/tutorial.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import packageInfo from '../../../../../package.json';
 import { HttpClient } from '@angular/common/http';
-import { take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { resolve } from 'path';
-import {
-  X_BOUND,
-  X_RETRACTED,
-  Y_BOUND,
-} from '../../../modules/image-finder/pages/image-finder/image-finder.component';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   lVersion = packageInfo.version;
 
+  subscription: Subscription;
   clickCount = 0;
 
   showSettings: boolean;
@@ -39,12 +35,11 @@ export class SettingsComponent implements OnInit {
     private service: SettingsService,
     private httpClient: HttpClient,
     private tutorialService: TutorialService,
-    private imageFinderService: ImageFinderService,
-    private sideMenuService: SideMenuService
+    private imageFinderService: ImageFinderService
   ) {}
 
   ngOnInit(): void {
-    this.service.getShowSettings().subscribe((value) => {
+    this.subscription = this.service.getShowSettings().subscribe((value) => {
       this.showSettings = value;
       if (value) {
         this.init();
@@ -56,6 +51,10 @@ export class SettingsComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   init() {

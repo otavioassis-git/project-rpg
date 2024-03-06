@@ -1,8 +1,11 @@
+import { NotificationService } from './../../../../core/services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { resolve } from 'path';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +21,21 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
+    let email = '';
+    if (localStorage.getItem('user')) {
+      email = JSON.parse(localStorage.getItem('user')).email;
+    }
+    this.buildForm(email);
+  }
+
+  buildForm(email?: string) {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: [email ? email : '', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
@@ -35,14 +47,23 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (value) => {
           this.error = '';
-          let payload = { email: value.email, token: value.token };
+          let payload = {
+            username: value.username,
+            email: value.email,
+            token: value.token,
+          };
           this.authService.saveLogin(payload);
+          localStorage.setItem('user', JSON.stringify(payload));
           this.router.navigate(['']);
         },
         (error) => {
           this.error = error.error.error;
         }
       );
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   verifyForm() {

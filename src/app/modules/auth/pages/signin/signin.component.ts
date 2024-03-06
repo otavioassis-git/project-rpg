@@ -35,7 +35,12 @@ export class SigninComponent implements OnInit {
       .subscribe(
         (value) => {
           this.error = '';
-          let payload = { email: value.email, token: value.token };
+          let payload = {
+            username: value.username,
+            email: value.email,
+            token: value.token,
+          };
+          localStorage.setItem('user', JSON.stringify(payload));
           this.authService.saveLogin(payload);
           this.router.navigate(['']);
         },
