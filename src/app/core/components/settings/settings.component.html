@@ -3,23 +3,10 @@
     <h3>Settings</h3>
     <i class="pi pi-times" (click)="close()"></i>
   </div>
-  <div id="settings-container">
+  <div *ngIf="showSettings" id="settings-container">
     <div class="setting-item">
       <h4 class="title">Tutorials</h4>
-      <div class="content">
-        <div class="item">
-          <p-selectButton
-            [options]="stateOptions"
-            [(ngModel)]="settings.tutorials"
-            optionLabel="label"
-            optionValue="value"
-            (onChange)="handleTutorialChange($event)"
-          ></p-selectButton>
-          <div>
-            <p>Show tutorials</p>
-          </div>
-        </div>
-      </div>
+      <app-tutorials></app-tutorials>
     </div>
     <div class="setting-item">
       <div class="title">
