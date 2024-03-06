@@ -15,6 +15,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { AccountComponent } from './components/settings/components/account/account.component';
 import { PasswordChangeComponent } from './components/settings/components/password-change/password-change.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { InputTextModule } from 'primeng/inputtext';
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
+    SharedModule,
   ],
   exports: [
     ButtonModule,

@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     tutorials: false,
   };
 
+  username: string = '';
   constructor(
     private service: SettingsService,
     private httpClient: HttpClient,
@@ -45,6 +46,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.init();
         if (window.location.hash == '#/image-finder')
           this.imageFinderService.closeGoogle();
+        if (localStorage.getItem('user'))
+          this.username = JSON.parse(localStorage.getItem('user')).username;
       } else {
         if (window.location.hash == '#/image-finder') {
           this.service.reloadContent(true);

@@ -24,7 +24,7 @@
     <div class="setting-item">
       <div class="title">
         <h4 class="title">Account</h4>
-        <p>Logged as: Marlhok</p>
+        <p *ngIf="username">Logged as: {{ username }}</p>
       </div>
       <app-account></app-account>
     </div>

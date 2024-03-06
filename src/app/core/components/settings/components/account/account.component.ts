@@ -5,6 +5,8 @@ import { AuthService } from './../../../../../modules/auth/services/auth.service
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { PasswordChangeComponent } from '../password-change/password-change.component';
+import { ConfirmationDialogComponent } from '../../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -22,10 +24,20 @@ export class AccountComponent {
   ) {}
 
   logout() {
-    this.authService.saveLogin({ email: '', token: '' });
-    this.service.showSettings(false);
-    this.sideMenuService.saveCurrentRoute(null);
-    this.router.navigate(['/auth/login']);
+    const ref = this.dialog.open(ConfirmationDialogComponent, {
+      header: 'Logout',
+      data: {
+        text: 'Are you sure you want to leave?',
+      },
+    });
+    ref.onClose.pipe(take(2)).subscribe((response) => {
+      if (response) {
+        this.authService.saveLogin({ email: '', token: '' });
+        this.service.showSettings(false);
+        this.sideMenuService.saveCurrentRoute(null);
+        this.router.navigate(['/auth/login']);
+      }
+    });
   }
 
   openChangePassword() {
