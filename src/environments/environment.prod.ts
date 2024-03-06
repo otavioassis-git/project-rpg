@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   environment: 'PROD',
-  url: 'http://localhost:3000',
+  url: 'http://project.rpg.backend:3000',
 };
