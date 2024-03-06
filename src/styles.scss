@@ -45,6 +45,28 @@ body {
   }
 }
 
+.custom-spinner .p-progress-spinner-circle {
+  animation: custom-progress-spinner-dash 1.5s ease-in-out infinite;
+  stroke: white;
+}
+
+@keyframes custom-progress-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
 // overrides ------------------------------------------------------------------
 .p-dialog {
   p {
@@ -96,6 +118,27 @@ body {
   }
 }
 
-.p-float-label input {
-  width: 100%;
+.p-float-label {
+  position: relative;
+
+  input {
+    width: 100%;
+  }
+
+  i {
+    cursor: pointer;
+    color: #898989 !important;
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    margin-top: -0.5rem;
+  }
+}
+
+.p-toast-message-content {
+  align-items: center !important;
+}
+
+.p-toast-detail {
+  margin: 0;
 }

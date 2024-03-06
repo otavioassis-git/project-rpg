@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 
 interface AuthResponse {
   success: boolean;
+  username: string;
   email: string;
   token: string;
 }
@@ -35,5 +36,15 @@ export class AuthService {
 
   signin(payload) {
     return this.api.post('auth/signin', payload);
+  }
+
+  changePassword(passwords: { password: string; newPassword: string }) {
+    const email = JSON.parse(localStorage.getItem('user')).email;
+    const payload = {
+      email,
+      password: passwords.password,
+      newPassword: passwords.newPassword,
+    };
+    return this.api.put('auth/update-password', payload);
   }
 }

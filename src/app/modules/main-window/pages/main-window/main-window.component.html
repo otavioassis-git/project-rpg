@@ -1,7 +1,7 @@
 <div id="main-window-container">
   <img src="assets/images/arrow-left.png" />
   <div class="welcome-message">
-    <p>Welcome Player</p>
+    <p>Welcome {{ username ? username : "Player" }}</p>
     <span>You can use the left menu to navegate between the windows</span>
   </div>
 </div>

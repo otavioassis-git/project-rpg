@@ -8,19 +8,32 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { AccordionModule } from 'primeng/accordion';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { AccountComponent } from './components/settings/components/account/account.component';
+import { PasswordChangeComponent } from './components/settings/components/password-change/password-change.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [CustomTitleBarComponent, SideMenuComponent, SettingsComponent],
+  declarations: [
+    CustomTitleBarComponent,
+    SideMenuComponent,
+    SettingsComponent,
+    AccountComponent,
+    PasswordChangeComponent,
+  ],
   imports: [
     CommonModule,
     ButtonModule,
     SidebarModule,
     SelectButtonModule,
     FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    SharedModule,
   ],
   exports: [
     ButtonModule,
