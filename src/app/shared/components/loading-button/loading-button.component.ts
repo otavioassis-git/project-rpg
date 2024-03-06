@@ -24,8 +24,6 @@ export class LoadingButtonComponent {
   typeClass: string = '';
   labelColor: string = 'color-white';
 
-  isLowRes: boolean = false;
-  subscription: Subscription;
   constructor() {}
 
   ngOnInit(): void {
@@ -41,10 +39,6 @@ export class LoadingButtonComponent {
     }
 
     if (this.type != 'default') this.labelColor = 'color-primary';
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   handleClick() {

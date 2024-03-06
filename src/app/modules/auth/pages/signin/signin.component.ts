@@ -13,6 +13,7 @@ export class SigninComponent implements OnInit {
   form: FormGroup;
   error: string = '';
 
+  isLoading = false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -29,6 +30,7 @@ export class SigninComponent implements OnInit {
   }
 
   signin() {
+    this.isLoading = true;
     this.error = '';
     this.authService
       .signin(this.form.value)
@@ -43,9 +45,11 @@ export class SigninComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(payload));
           this.authService.saveLogin(payload);
           this.router.navigate(['']);
+          this.isLoading = false;
         },
         (error) => {
           this.error = error.error.error;
+          this.isLoading = false;
         }
       );
   }

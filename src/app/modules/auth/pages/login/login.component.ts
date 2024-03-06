@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
 
+  isLoading = false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.isLoading = true;
     this.error = '';
     this.authService
       .login(this.form.value)
@@ -55,9 +57,11 @@ export class LoginComponent implements OnInit {
           this.authService.saveLogin(payload);
           localStorage.setItem('user', JSON.stringify(payload));
           this.router.navigate(['']);
+          this.isLoading = false;
         },
         (error) => {
           this.error = error.error.error;
+          this.isLoading = false;
         }
       );
   }

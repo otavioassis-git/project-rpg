@@ -25,10 +25,11 @@
     <i class="pi pi-exclamation-triangle"></i>
     <p>{{ error }}</p>
   </div>
-  <button
-    pButton
+  <loading-button
     label="Login"
     [disabled]="verifyForm()"
-    (click)="login()"
-  ></button>
+    (submit)="login()"
+    [isLoading]="isLoading"
+    style="padding: 0.5rem 2.5rem"
+  ></loading-button>
 </section>
