@@ -29,12 +29,12 @@ export class SigninComponent implements OnInit {
   }
 
   signin() {
+    this.error = '';
     this.authService
       .signin(this.form.value)
       .pipe(take(1))
       .subscribe(
         (value) => {
-          this.error = '';
           let payload = {
             username: value.username,
             email: value.email,

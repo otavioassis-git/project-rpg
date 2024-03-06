@@ -41,12 +41,12 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.error = '';
     this.authService
       .login(this.form.value)
       .pipe(take(1))
       .subscribe(
         (value) => {
-          this.error = '';
           let payload = {
             username: value.username,
             email: value.email,

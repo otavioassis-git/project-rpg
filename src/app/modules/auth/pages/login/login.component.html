@@ -1,4 +1,4 @@
-<section id="auth-container">
+<section id="auth-container" (keyup.enter)="login()">
   <h1>Welcome player</h1>
   <h2>Login below or <a href="#/auth/signin">register</a></h2>
   <form [formGroup]="form">
