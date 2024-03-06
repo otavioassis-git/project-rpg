@@ -117,3 +117,28 @@ body {
     color: black;
   }
 }
+
+.p-float-label {
+  position: relative;
+
+  input {
+    width: 100%;
+  }
+
+  i {
+    cursor: pointer;
+    color: #898989 !important;
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    margin-top: -0.5rem;
+  }
+}
+
+.p-toast-message-content {
+  align-items: center !important;
+}
+
+.p-toast-detail {
+  margin: 0;
+}

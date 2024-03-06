@@ -1,4 +1,5 @@
-export const APP_CONFIG = {
+export const environment = {
   production: true,
-  environment: 'PROD'
+  environment: 'PROD',
+  url: 'http://project.rpg.backend:3000',
 };

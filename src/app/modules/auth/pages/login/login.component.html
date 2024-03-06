@@ -1,0 +1,35 @@
+<section id="auth-container" (keyup.enter)="login()">
+  <h1>Welcome player</h1>
+  <h2>Login below or <a href="#/auth/signin">register</a></h2>
+  <form [formGroup]="form">
+    <span class="p-float-label">
+      <input id="email" pInputText type="text" formControlName="email" />
+      <label for="email" class="float">E-mail</label>
+    </span>
+    <span class="p-float-label">
+      <input
+        id="password"
+        pInputText
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+      />
+      <label for="password" class="float">Password</label>
+      <i
+        class="pi"
+        [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
+        (click)="toggleShowPassword()"
+      ></i>
+    </span>
+  </form>
+  <div *ngIf="error" class="error-message">
+    <i class="pi pi-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+  </div>
+  <loading-button
+    label="Login"
+    [disabled]="verifyForm()"
+    (submit)="login()"
+    [isLoading]="isLoading"
+    style="padding: 0.5rem 2.5rem"
+  ></loading-button>
+</section>

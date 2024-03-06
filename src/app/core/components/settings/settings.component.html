@@ -21,6 +21,13 @@
         </div>
       </div>
     </div>
+    <div class="setting-item">
+      <div class="title">
+        <h4 class="title">Account</h4>
+        <p *ngIf="username">Logged as: {{ username }}</p>
+      </div>
+      <app-account></app-account>
+    </div>
     <div class="version-footer unselectable" (click)="addClickCount()">
       <p>v{{ lVersion }}</p>
     </div>
