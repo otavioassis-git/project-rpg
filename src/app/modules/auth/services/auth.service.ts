@@ -5,6 +5,7 @@ import { ApiService } from '../../../core/services/api.service';
 import { Observable } from 'rxjs';
 
 interface AuthResponse {
+  id: number;
   success: boolean;
   username: string;
   email: string;

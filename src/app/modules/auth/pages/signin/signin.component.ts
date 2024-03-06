@@ -38,6 +38,7 @@ export class SigninComponent implements OnInit {
       .subscribe(
         (value) => {
           let payload = {
+            id: value.id,
             username: value.username,
             email: value.email,
             token: value.token,
