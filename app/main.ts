@@ -272,6 +272,28 @@ function loadEvents() {
   });
 }
 
+ipcMain.on('saveEnv', (event, env) => {
+  if (serve) {
+    writeFileSync(
+      resolve(__dirname, '../', 'src', 'assets', 'env.json'),
+      JSON.stringify(env),
+      'utf-8'
+    );
+  } else {
+    writeFileSync(
+      resolve(
+        app.getPath('exe'),
+        '../',
+        '../',
+        'Project-RPG-common',
+        'env.json'
+      ),
+      JSON.stringify(env),
+      'utf-8'
+    );
+  }
+});
+
 function createCommonFolder() {
   var dir = resolve(app.getPath('exe'), '../', '../', 'Project-RPG-common');
   if (!existsSync(dir)) {

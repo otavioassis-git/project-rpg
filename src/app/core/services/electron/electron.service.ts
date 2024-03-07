@@ -54,6 +54,10 @@ export class ElectronService {
     return !!(window && window.process && window.process.type);
   }
 
+  saveEnv(env: { env: string }) {
+    this.ipcRenderer.send('saveEnv', env);
+  }
+
   minimizeWindow() {
     this.ipcRenderer.send('minimizeWindow');
   }
