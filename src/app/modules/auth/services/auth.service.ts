@@ -12,6 +12,13 @@ interface AuthResponse {
   token: string;
 }
 
+export interface User {
+  id: number | string;
+  username: string;
+  email: string;
+  token: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -31,7 +38,8 @@ export class AuthService {
     return this.api.post('auth/login', payload);
   }
 
-  saveLogin(payload: { email: string; token: string }) {
+  saveLogin(payload: User) {
+    localStorage.setItem('user', JSON.stringify(payload));
     this.ipcRenderer.send('saveLogin', payload);
   }
 

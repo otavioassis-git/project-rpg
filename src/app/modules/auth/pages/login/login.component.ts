@@ -1,7 +1,7 @@
 import { NotificationService } from './../../../../core/services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, User } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -49,14 +49,13 @@ export class LoginComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (value) => {
-          let payload = {
+          let payload: User = {
             id: value.id,
             username: value.username,
             email: value.email,
             token: value.token,
           };
           this.authService.saveLogin(payload);
-          localStorage.setItem('user', JSON.stringify(payload));
           this.router.navigate(['']);
           this.isLoading = false;
         },

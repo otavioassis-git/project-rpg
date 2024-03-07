@@ -1,4 +1,4 @@
-import { AuthService } from './../../services/auth.service';
+import { AuthService, User } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -37,13 +37,12 @@ export class SigninComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (value) => {
-          let payload = {
+          let payload: User = {
             id: value.id,
             username: value.username,
             email: value.email,
             token: value.token,
           };
-          localStorage.setItem('user', JSON.stringify(payload));
           this.authService.saveLogin(payload);
           this.router.navigate(['']);
           this.isLoading = false;
