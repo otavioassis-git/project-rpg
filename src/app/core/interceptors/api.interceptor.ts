@@ -18,9 +18,11 @@ export class ApiInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    const customEnv = localStorage.getItem('env');
+
     if (request.headers.get('api') && request.headers.get('api') == 'true') {
       const req = request.clone({
-        url: URL + request.url,
+        url: (customEnv ? customEnv : URL) + request.url,
         headers: request.headers.delete('api'),
       });
       return next.handle(req);

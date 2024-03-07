@@ -2,5 +2,13 @@
   <app-custom-title-bar></app-custom-title-bar>
   <div class="content-container">
     <router-outlet></router-outlet>
+    <button
+      *ngIf="showChangeEnv"
+      pButton
+      class="change-env-button"
+      label="Change env"
+      (click)="openEnvChanger()"
+    ></button>
+    <p class="version-footer" (click)="clickCountHandler()">v{{ lVersion }}</p>
   </div>
 </section>

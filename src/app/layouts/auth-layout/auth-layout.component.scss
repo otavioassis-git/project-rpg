@@ -3,10 +3,25 @@
   width: 100vw;
 
   .content-container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     height: calc(100% - 37px);
     width: 100%;
+
+    .change-env-button {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 12px;
+    }
+
+    .version-footer {
+      position: absolute;
+      bottom: 0.5rem;
+      font-size: 10px;
+      user-select: none;
+    }
   }
 }
