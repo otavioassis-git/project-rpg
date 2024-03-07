@@ -1,0 +1,39 @@
+<p-sidebar [(visible)]="showImageList" position="right">
+  <div class="header">
+    <h3>Upload image</h3>
+    <i class="pi pi-times" (click)="close()"></i>
+  </div>
+  <div *ngIf="showImageList" id="settings-container">
+    <div class="setting-item">
+      <h4 class="title">Upload options</h4>
+      <div class="content">
+        <label class="input-file">
+          <input
+            (change)="loadLocalImage($event)"
+            accept="image/*"
+            type="file"
+          />
+          <span class="unselectable">Upload from local</span>
+        </label>
+        <span class="p-float-label">
+          <input id="url" pInputText type="text" [(ngModel)]="imageUrl" />
+          <label for="url">Insert url</label>
+        </span>
+        <button
+          pButton
+          label="Upload by image URL"
+          [disabled]="imageUrl.length == 0"
+          (click)="loadImageURL()"
+        ></button>
+      </div>
+    </div>
+    <div class="setting-item">
+      <h4 class="title">Image history</h4>
+      <div class="content"></div>
+    </div>
+    <div class="setting-item">
+      <h4 class="title">Account images</h4>
+      <div class="content"></div>
+    </div>
+  </div>
+</p-sidebar>

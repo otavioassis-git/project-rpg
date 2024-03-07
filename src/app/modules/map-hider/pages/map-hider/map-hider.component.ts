@@ -47,50 +47,36 @@ export class MapHiderComponent implements OnInit {
     this.tutorials = this.tutorialService.getTutorials();
   }
 
-  loadImage(event) {
-    if (!this.image && this.tutorials.resize_tutorial) {
-      this.notificationService.add({
-        severity: 'info',
-        summary: 'Info',
-        detail: 'You can resize the image using the grab on the bottom right!',
-      });
-      this.tutorials.resize_tutorial = false;
-      this.tutorialService.saveTutorials(this.tutorials);
-    }
+  // openImageUrl() {
+  //   const ref = this.dialog.open(ImageUrlComponent, {
+  //     header: 'Insert URL',
+  //   });
 
-    this.imageUrl = '';
+  //   ref.onClose.subscribe((value) => {
+  //     if (value) {
+  //       this.image = null;
+  //       this.imageUrl = value;
 
-    const file = (event.target as HTMLInputElement).files[0];
+  //       if (this.tutorials.resize_tutorial) {
+  //         this.notificationService.add({
+  //           severity: 'info',
+  //           summary: 'Info',
+  //           detail:
+  //             'You can resize the image using the grab on the bottom right!',
+  //         });
+  //         this.tutorials.resize_tutorial = false;
+  //         this.tutorialService.saveTutorials(this.tutorials);
+  //       }
+  //     }
+  //   });
+  // }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.image = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+  loadImage(value) {
+    this.image = value;
   }
 
-  openImageUrl() {
-    const ref = this.dialog.open(ImageUrlComponent, {
-      header: 'Insert URL',
-    });
-
-    ref.onClose.subscribe((value) => {
-      if (value) {
-        this.image = null;
-        this.imageUrl = value;
-
-        if (this.tutorials.resize_tutorial) {
-          this.notificationService.add({
-            severity: 'info',
-            summary: 'Info',
-            detail:
-              'You can resize the image using the grab on the bottom right!',
-          });
-          this.tutorials.resize_tutorial = false;
-          this.tutorialService.saveTutorials(this.tutorials);
-        }
-      }
-    });
+  openImageList() {
+    this.service.setShowImageList(true);
   }
 
   addBox() {
