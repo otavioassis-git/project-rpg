@@ -47,30 +47,6 @@ export class MapHiderComponent implements OnInit {
     this.tutorials = this.tutorialService.getTutorials();
   }
 
-  // openImageUrl() {
-  //   const ref = this.dialog.open(ImageUrlComponent, {
-  //     header: 'Insert URL',
-  //   });
-
-  //   ref.onClose.subscribe((value) => {
-  //     if (value) {
-  //       this.image = null;
-  //       this.imageUrl = value;
-
-  //       if (this.tutorials.resize_tutorial) {
-  //         this.notificationService.add({
-  //           severity: 'info',
-  //           summary: 'Info',
-  //           detail:
-  //             'You can resize the image using the grab on the bottom right!',
-  //         });
-  //         this.tutorials.resize_tutorial = false;
-  //         this.tutorialService.saveTutorials(this.tutorials);
-  //       }
-  //     }
-  //   });
-  // }
-
   loadImage(value) {
     this.image = value;
   }
