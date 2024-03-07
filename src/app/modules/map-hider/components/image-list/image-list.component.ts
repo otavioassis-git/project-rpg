@@ -112,6 +112,11 @@ export class ImageListComponent implements OnInit, OnDestroy {
   }
 
   updateImageHistory(image: Image, remove?: boolean) {
+    const index = this.imageHistory.findIndex(
+      (item) => item.value == image.value
+    );
+    if (index >= 0) return;
+
     if (remove) {
       const index = this.imageHistory.findIndex(
         (item) => item.value == image.value

@@ -34,7 +34,10 @@
     </div>
     <div class="item">
       <div class="title">
-        <h4>Image history</h4>
+        <h4>
+          Image history
+          <small *ngIf="imageHistory.length == 10">full</small>
+        </h4>
         <button
           pButton
           label="Clear"
