@@ -12,6 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { Settings } from '../../../../core/services/settings.service';
 
 export interface Image {
   name: string;
@@ -45,16 +46,12 @@ export class ImageListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.loadImageHistory();
     this.subscription = this.mapHiderService
       .getShowImageList()
       .subscribe((value) => {
         this.showImageList = value;
-        if (value) {
-          this.loadImageHistory();
-        }
       });
-    if (localStorage.getItem('image-history'))
-      this.imageHistory = JSON.parse(localStorage.getItem('image-history'));
   }
 
   loadImageHistory() {
@@ -63,6 +60,12 @@ export class ImageListComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((value: any) => {
         this.imageHistory = value;
+        const settings: Settings = JSON.parse(localStorage.getItem('settings'));
+        if (settings) {
+          const fill = settings.imageHistoryFill;
+          if (this.imageHistory.length > 0 && fill)
+            this.image.emit(this.imageHistory[0].value);
+        }
       });
   }
 

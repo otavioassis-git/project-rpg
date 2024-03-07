@@ -1,6 +1,6 @@
 import { TutorialService } from './../../../../core/services/tutorial.service';
 import { NotificationService } from './../../../../core/services/notification.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from '../../components/image-url/image-url.component';
@@ -16,7 +16,7 @@ import { MapHiderService } from '../../services/map-hider.service';
   providers: [DialogService],
   encapsulation: ViewEncapsulation.None,
 })
-export class MapHiderComponent implements OnInit {
+export class MapHiderComponent implements OnInit, OnDestroy {
   image;
   isRetracted: boolean;
 
@@ -45,6 +45,10 @@ export class MapHiderComponent implements OnInit {
     });
 
     this.tutorials = this.tutorialService.getTutorials();
+  }
+
+  ngOnDestroy(): void {
+    this.service.setShowImageList(false);
   }
 
   loadImage(value) {

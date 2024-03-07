@@ -17,6 +17,8 @@ import { PasswordChangeComponent } from './components/settings/components/passwo
 import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from '../shared/shared.module';
 import { TutorialsComponent } from './components/settings/components/tutorials/tutorials.component';
+import { ImagesComponent } from './components/settings/components/images/images.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { TutorialsComponent } from './components/settings/components/tutorials/t
     AccountComponent,
     PasswordChangeComponent,
     TutorialsComponent,
+    ImagesComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +39,7 @@ import { TutorialsComponent } from './components/settings/components/tutorials/t
     ReactiveFormsModule,
     InputTextModule,
     SharedModule,
+    CheckboxModule,
   ],
   exports: [
     ButtonModule,
