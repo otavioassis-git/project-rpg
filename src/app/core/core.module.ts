@@ -16,6 +16,7 @@ import { AccountComponent } from './components/settings/components/account/accou
 import { PasswordChangeComponent } from './components/settings/components/password-change/password-change.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from '../shared/shared.module';
+import { TutorialsComponent } from './components/settings/components/tutorials/tutorials.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { SharedModule } from '../shared/shared.module';
     SettingsComponent,
     AccountComponent,
     PasswordChangeComponent,
+    TutorialsComponent,
   ],
   imports: [
     CommonModule,

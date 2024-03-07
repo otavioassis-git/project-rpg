@@ -4,9 +4,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from '../../components/image-url/image-url.component';
-import { take, tap } from 'rxjs';
-import { resolve } from 'path';
-import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs';
 import { Tutorials } from '../../../../core/services/tutorial.service';
 import { NgxCaptureService } from 'ngx-capture';
 import { MapHiderService } from '../../services/map-hider.service';
@@ -36,7 +34,6 @@ export class MapHiderComponent implements OnInit {
     private sideMenuService: SideMenuService,
     private notificationService: NotificationService,
     private dialog: DialogService,
-    private httpClient: HttpClient,
     private tutorialService: TutorialService,
     private captureService: NgxCaptureService,
     private service: MapHiderService
@@ -47,8 +44,7 @@ export class MapHiderComponent implements OnInit {
       this.isRetracted = value;
     });
 
-    this.tutorials = this.tutorialService.getDefaultTutorials();
-    this.getTutorials();
+    this.tutorials = this.tutorialService.getTutorials();
   }
 
   loadImage(event) {
@@ -175,44 +171,6 @@ export class MapHiderComponent implements OnInit {
       this.tutorialService.saveTutorials(this.tutorials);
       this.firstAddBox = false;
     }
-  }
-
-  getTutorials() {
-    this.httpClient
-      .get('assets/isServe.json')
-      .pipe(take(1))
-      .subscribe((value: any) => {
-        if (value.serve) {
-          this.httpClient
-            .get('assets/tutorials.json')
-            .pipe(take(1))
-            .subscribe(
-              (value: Tutorials) => {
-                this.tutorials = value;
-              },
-              (error) => {}
-            );
-        } else {
-          try {
-            let value: Tutorials = JSON.parse(
-              window
-                .require('fs')
-                .readFileSync(
-                  resolve(
-                    __dirname,
-                    '../',
-                    '../',
-                    '../',
-                    'Project-RPG-common',
-                    'tutorials.json'
-                  )
-                )
-            );
-
-            this.tutorials = value;
-          } catch (error) {}
-        }
-      });
   }
 
   projectMap() {

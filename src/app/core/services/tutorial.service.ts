@@ -21,8 +21,13 @@ export class TutorialService {
     }
   }
 
-  saveTutorials(tutorial) {
-    this.ipcRenderer.send('saveTutorials', tutorial);
+  saveTutorials(tutorials: Tutorials) {
+    this.ipcRenderer.send('saveTutorials', tutorials);
+    localStorage.setItem('tutorials', JSON.stringify(tutorials));
+  }
+
+  getTutorials(): Tutorials {
+    return JSON.parse(localStorage.getItem('tutorials'));
   }
 
   public getDefaultTutorials(): Tutorials {

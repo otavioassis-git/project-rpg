@@ -5,7 +5,6 @@ import { ImageFinderService } from '../../services/image-finder.service';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { Tutorials } from '../../../../core/services/tutorial.service';
 import { HttpClient } from '@angular/common/http';
-import { resolve } from 'path';
 
 export const Y_BOUND = 37;
 export const X_BOUND = 150;
@@ -47,8 +46,7 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((value) => {
         this.isRetracted = value;
-        this.tutorials = this.tutorialService.getDefaultTutorials();
-        this.getTutorials();
+        this.tutorials = this.tutorialService.getTutorials();
       });
   }
 
@@ -91,53 +89,5 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
       }
       this.init = false;
     });
-  }
-
-  getTutorials() {
-    this.httpClient
-      .get('assets/isServe.json')
-      .pipe(take(1))
-      .subscribe((value: any) => {
-        if (value.serve) {
-          this.httpClient
-            .get('assets/tutorials.json')
-            .pipe(take(1))
-            .subscribe(
-              (value: Tutorials) => {
-                this.tutorials = value;
-                if (!this.tutorials.google_tutorial) this.openGoogle();
-                this.menuRetractionSubscription();
-                this.isLoading = false;
-              },
-              (error) => {
-                this.isLoading = false;
-              }
-            );
-        } else {
-          try {
-            let value: Tutorials = JSON.parse(
-              window
-                .require('fs')
-                .readFileSync(
-                  resolve(
-                    __dirname,
-                    '../',
-                    '../',
-                    '../',
-                    'Project-RPG-common',
-                    'tutorials.json'
-                  )
-                )
-            );
-
-            this.tutorials = value;
-            if (!this.tutorials.google_tutorial) this.openGoogle();
-            this.menuRetractionSubscription();
-            this.isLoading = false;
-          } catch (error) {
-            this.isLoading = false;
-          }
-        }
-      });
   }
 }
