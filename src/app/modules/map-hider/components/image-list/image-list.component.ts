@@ -38,15 +38,6 @@ export class ImageListComponent implements OnInit, OnDestroy {
   }
 
   loadLocalImage(event) {
-    // if (!this.image && this.tutorials.resize_tutorial) {
-    //   this.notificationService.add({
-    //     severity: 'info',
-    //     summary: 'Info',
-    //     detail: 'You can resize the image using the grab on the bottom right!',
-    //   });
-    //   this.tutorials.resize_tutorial = false;
-    //   this.tutorialService.saveTutorials(this.tutorials);
-    // }
     const file = (event.target as HTMLInputElement).files[0];
 
     const reader = new FileReader();

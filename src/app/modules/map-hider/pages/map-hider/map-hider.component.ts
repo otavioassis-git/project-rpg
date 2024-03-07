@@ -49,6 +49,15 @@ export class MapHiderComponent implements OnInit {
 
   loadImage(value) {
     this.image = value;
+    if (this.tutorials.resize_tutorial) {
+      this.notificationService.add({
+        severity: 'info',
+        summary: 'Info',
+        detail: 'You can resize the image using the grab on the bottom right!',
+      });
+      this.tutorials.resize_tutorial = false;
+      this.tutorialService.saveTutorials(this.tutorials);
+    }
   }
 
   openImageList() {
