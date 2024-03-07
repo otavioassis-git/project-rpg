@@ -1,6 +1,7 @@
 @import "primeng/resources/themes/viva-light/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
+@import "overlayscrollbars/styles/overlayscrollbars.css";
 
 /* You can add global styles to this file, and also import other style files */
 html,
@@ -48,6 +49,20 @@ body {
 .custom-spinner .p-progress-spinner-circle {
   animation: custom-progress-spinner-dash 1.5s ease-in-out infinite;
   stroke: white;
+}
+
+.image-preview {
+  height: 200px;
+}
+
+.image-preview-overlaypanel {
+  .p-overlaypanel-content {
+    padding: 0.375rem 0.375rem 0 0.375rem !important;
+
+    img {
+      border-radius: 0.375rem;
+    }
+  }
 }
 
 @keyframes custom-progress-spinner-dash {
@@ -100,12 +115,13 @@ body {
 }
 
 .p-sidebar-content {
-  padding: 1rem !important;
+  padding: 1rem 0 1rem 1rem !important;
 
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-right: 1rem;
     margin-bottom: 1.5rem;
 
     i {
@@ -113,6 +129,12 @@ body {
       color: black;
       font-size: 1rem;
     }
+  }
+
+  .sidebar-content {
+    height: calc(100% - (24px + 29px));
+    overflow-y: auto;
+    padding-right: 1rem;
   }
 
   p {
@@ -143,4 +165,8 @@ body {
 
 .p-toast-detail {
   margin: 0;
+}
+
+.p-tooltip-text {
+  font-size: 0.875rem;
 }

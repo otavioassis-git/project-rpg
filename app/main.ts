@@ -227,6 +227,29 @@ function loadEvents() {
     }
   });
 
+  ipcMain.on('saveImageHistory', (event, imageHistory) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'image-history.json'),
+        JSON.stringify(imageHistory),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          'resources',
+          'app',
+          'assets',
+          'image-history.json'
+        ),
+        JSON.stringify(imageHistory),
+        'utf-8'
+      );
+    }
+  });
+
   ipcMain.on('saveTutorials', (event, tutorial) => {
     if (serve) {
       writeFileSync(

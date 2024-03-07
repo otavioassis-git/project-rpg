@@ -3,8 +3,13 @@
     <h3>Upload image</h3>
     <i class="pi pi-times" (click)="close()"></i>
   </div>
-  <div *ngIf="showImageList" id="settings-container">
-    <div class="setting-item">
+  <div
+    *ngIf="showImageList"
+    id="image-list-container"
+    class="sidebar-content"
+    overlay-scrollbars
+  >
+    <div class="item">
       <h4 class="title">Upload options</h4>
       <div class="content">
         <label class="input-file">
@@ -27,13 +32,60 @@
         ></button>
       </div>
     </div>
-    <div class="setting-item">
-      <h4 class="title">Image history</h4>
-      <div class="content"></div>
+    <div class="item">
+      <div class="title">
+        <h4>Image history</h4>
+        <button
+          pButton
+          label="Clear"
+          (click)="cleanImageHistory()"
+          [disabled]="imageHistory.length == 0"
+        ></button>
+      </div>
+      <div *ngIf="imageHistory.length == 0" class="empty-state">
+        <img
+          src="assets/images/image-list-empty-state.jpg"
+          alt="Empty state image"
+        />
+      </div>
+      <div *ngIf="imageHistory.length > 0" class="content">
+        <div
+          *ngFor="let image of imageHistory"
+          class="image-item"
+          (click)="loadFromImageHistory(image)"
+        >
+          <img
+            [src]="image.value"
+            alt="Image preview"
+            (mouseover)="showImagePreview($event, image.value, true)"
+            (mouseleave)="showImagePreview($event, image.value, false)"
+          />
+          <div class="image-info">
+            <p
+              [pTooltip]="image.name"
+              tooltipPosition="left"
+              (click)="copyToClipboard($event, image.name)"
+            >
+              {{ image.name }}
+            </p>
+            <p
+              [pTooltip]="image.url"
+              tooltipPosition="left"
+              (click)="copyToClipboard($event, image.url)"
+            >
+              {{ image.url }}
+            </p>
+          </div>
+          <span class="tag">{{ image.type }}</span>
+        </div>
+        <p-overlayPanel #op styleClass="image-preview-overlaypanel">
+          <img class="image-preview" [src]="imagePreview" alt="Image preview" />
+        </p-overlayPanel>
+      </div>
     </div>
-    <div class="setting-item">
+    <!-- <div class="item">
       <h4 class="title">Account images</h4>
       <div class="content"></div>
-    </div>
+    </div> -->
   </div>
 </p-sidebar>

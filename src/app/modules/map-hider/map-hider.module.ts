@@ -9,6 +9,9 @@ import { ImageUrlComponent } from './components/image-url/image-url.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ImageListComponent } from './components/image-list/image-list.component';
 import { SidebarModule } from 'primeng/sidebar';
+import { TooltipModule } from 'primeng/tooltip';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 
 @NgModule({
   declarations: [MapHiderComponent, ImageUrlComponent, ImageListComponent],
@@ -19,6 +22,9 @@ import { SidebarModule } from 'primeng/sidebar';
     DynamicDialogModule,
     InputTextModule,
     SidebarModule,
+    TooltipModule,
+    OverlayPanelModule,
+    OverlayscrollbarsModule,
   ],
 })
 export class MapHiderModule {}

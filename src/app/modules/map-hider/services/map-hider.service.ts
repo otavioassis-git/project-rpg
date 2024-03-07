@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ipcRenderer } from 'electron';
 import { ElectronService } from '../../../core/services';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Image } from '../components/image-list/image-list.component';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,9 @@ export class MapHiderService {
 
   setShowImageList(value: boolean) {
     this.showImageList.next(value);
+  }
+
+  saveImageHistory(value: Image[]) {
+    this.ipcRenderer.send('saveImageHistory', value);
   }
 }
