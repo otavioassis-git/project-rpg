@@ -1,15 +1,15 @@
-import { AuthService, User } from './../../services/auth.service';
+import { AuthService, User } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
 })
-export class SigninComponent implements OnInit {
+export class SignupComponent implements OnInit {
   form: FormGroup;
   error: string = '';
 
