@@ -58,7 +58,9 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
         },
         (error) => {
-          this.error = 'Incorrect username or password';
+          if (error.status == '401')
+            this.error = 'Incorrect username or password';
+          else this.error = error.message;
           this.isLoading = false;
         }
       );

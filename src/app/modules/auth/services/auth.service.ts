@@ -52,6 +52,6 @@ export class AuthService {
       password: passwords.password,
       newPassword: passwords.newPassword,
     };
-    return this.api.put('auth/update-password', payload);
+    return this.api.put('user/update-password', payload);
   }
 }

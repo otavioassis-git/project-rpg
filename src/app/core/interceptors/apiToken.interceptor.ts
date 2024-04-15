@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 const URL = environment.url;
 
 @Injectable()
-export class ApiInterceptor implements HttpInterceptor {
+export class ApiTokenInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(
@@ -21,10 +21,21 @@ export class ApiInterceptor implements HttpInterceptor {
     const customEnv = localStorage.getItem('env');
 
     if (request.headers.get('api') && request.headers.get('api') == 'true') {
-      const req = request.clone({
+      let req = request.clone({
         url: (customEnv ? customEnv : URL) + request.url,
         headers: request.headers.delete('api'),
       });
+
+      // adding token
+      if (localStorage.getItem('user')) {
+        const token = JSON.parse(localStorage.getItem('user')).token;
+        if (token) {
+          req = req.clone({
+            headers: req.headers.set('Authorization', token),
+          });
+        }
+      }
+
       return next.handle(req);
     }
 

@@ -21,7 +21,7 @@ import { NgxCaptureModule } from 'ngx-capture';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { ProjectionLayoutComponent } from './layouts/projection-layout/projection-layout.component';
-import { ApiInterceptor } from './core/interceptors/api.interceptor';
+import { ApiTokenInterceptor } from './core/interceptors/apiToken.interceptor';
 import { EnvChangerComponent } from './layouts/auth-layout/components/env-changer/env-changer.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -62,7 +62,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ApiInterceptor,
+      useClass: ApiTokenInterceptor,
       multi: true,
     },
   ],
