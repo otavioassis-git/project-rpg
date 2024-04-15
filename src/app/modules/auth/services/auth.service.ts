@@ -13,9 +13,7 @@ interface AuthResponse {
 }
 
 export interface User {
-  id: number | string;
   username: string;
-  email: string;
   token: string;
 }
 
@@ -44,7 +42,7 @@ export class AuthService {
   }
 
   signup(payload) {
-    return this.api.post('auth/signin', payload);
+    return this.api.post('auth/signup', payload);
   }
 
   changePassword(passwords: { password: string; newPassword: string }) {

@@ -22,14 +22,15 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(3)]],
       passwordRepeat: ['', Validators.required],
     });
   }
 
-  signin() {
+  signup() {
     this.isLoading = true;
     this.error = '';
     this.authService
@@ -38,9 +39,7 @@ export class SignupComponent implements OnInit {
       .subscribe(
         (value) => {
           let payload: User = {
-            id: value.id,
             username: value.username,
-            email: value.email,
             token: value.token,
           };
           this.authService.saveLogin(payload);

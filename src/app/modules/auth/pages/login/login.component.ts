@@ -27,16 +27,16 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let email = '';
+    let username = '';
     if (localStorage.getItem('user')) {
-      email = JSON.parse(localStorage.getItem('user')).email;
+      username = JSON.parse(localStorage.getItem('user')).username;
     }
-    this.buildForm(email);
+    this.buildForm(username);
   }
 
-  buildForm(email?: string) {
+  buildForm(username?: string) {
     this.form = this.fb.group({
-      email: [email ? email : '', [Validators.required, Validators.email]],
+      username: [username ? username : '', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
@@ -50,9 +50,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (value) => {
           let payload: User = {
-            id: value.id,
             username: value.username,
-            email: value.email,
             token: value.token,
           };
           this.authService.saveLogin(payload);
@@ -60,7 +58,7 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
         },
         (error) => {
-          this.error = error.error.error;
+          this.error = 'Incorrect username or password';
           this.isLoading = false;
         }
       );

@@ -37,9 +37,7 @@ export class AccountComponent {
       if (response) {
         const user: User = JSON.parse(localStorage.getItem('user'));
         this.authService.saveLogin({
-          id: '',
-          username: '',
-          email: user ? user.email : '',
+          username: user ? user.username : '',
           token: '',
         });
         this.service.showSettings(false);
