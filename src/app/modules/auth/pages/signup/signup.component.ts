@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit {
     this.isLoading = true;
     this.error = '';
     this.authService
-      .signin(this.form.value)
+      .signup(this.form.value)
       .pipe(take(1))
       .subscribe(
         (value) => {

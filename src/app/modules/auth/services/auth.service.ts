@@ -43,7 +43,7 @@ export class AuthService {
     this.ipcRenderer.send('saveLogin', payload);
   }
 
-  signin(payload) {
+  signup(payload) {
     return this.api.post('auth/signin', payload);
   }
 
