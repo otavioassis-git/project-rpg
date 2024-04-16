@@ -1,4 +1,3 @@
-import { NotificationService } from './../../services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, SideMenuService } from '../../services/side-menu.service';
@@ -36,8 +35,7 @@ export class SideMenuComponent implements OnInit {
   constructor(
     private service: SideMenuService,
     private router: Router,
-    private settingsService: SettingsService,
-    private notificationService: NotificationService
+    private settingsService: SettingsService
   ) {
     for (let i = 0; i < this.menuItems.length; i++) {
       this.menuItems[i].height = BASE_TOP + i * TOP_ADDER;
@@ -50,17 +48,8 @@ export class SideMenuComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (value: MenuItem) => {
-          if (!window.location.hash.includes('#/map-projection')) {
-            if (localStorage.getItem('user') && value) {
-              this.notificationService.add({
-                severity: 'info',
-                summary: `Welcome back ${
-                  JSON.parse(localStorage.getItem('user')).username
-                }!`,
-              });
-            }
+          if (!window.location.hash.includes('#/map-projection'))
             this.navigate(value);
-          }
         },
         (error) => {
           this.selectedMenu = null;

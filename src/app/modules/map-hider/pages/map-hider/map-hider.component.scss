@@ -48,6 +48,31 @@
     background-color: rgb(30, 31, 34);
     padding: 1rem 0.5rem 0.5rem 0.5rem;
 
+    input[type="file"] {
+      display: none;
+    }
+
+    .input-file {
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      background-color: #5472d4;
+      border-radius: 0.625rem;
+      text-align: center;
+      color: white;
+      padding: 0.25rem 0.5rem;
+
+      transition: background-color 0.2s;
+
+      span {
+        font-size: 0.75rem;
+      }
+    }
+
+    .input-file:hover {
+      background-color: #4868d1;
+    }
+
     .separator {
       height: 1px;
       background-color: #686868;

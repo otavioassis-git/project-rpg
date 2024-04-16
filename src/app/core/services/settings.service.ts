@@ -3,14 +3,6 @@ import { ipcRenderer } from 'electron';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ElectronService } from './electron/electron.service';
 
-export interface Settings {
-  imageHistoryFill: boolean;
-}
-
-export const DEFAULT_SETTINGS: Settings = {
-  imageHistoryFill: false,
-};
-
 @Injectable({
   providedIn: 'root',
 })
@@ -43,15 +35,5 @@ export class SettingsService {
 
   toggleDevTools() {
     this.ipcRenderer.send('toggleDevTools');
-  }
-
-  getSettings(): Settings {
-    const settings: Settings = JSON.parse(localStorage.getItem('settings'));
-    return settings ? settings : DEFAULT_SETTINGS;
-  }
-
-  saveSettings(settings: Settings) {
-    localStorage.setItem('settings', JSON.stringify(settings));
-    this.ipcRenderer.send('saveSettings', settings);
   }
 }

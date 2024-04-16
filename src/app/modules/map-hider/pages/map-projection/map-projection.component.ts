@@ -1,5 +1,5 @@
-import { MapHiderService } from '../../../map-hider/services/map-hider.service';
-import { ElectronService } from '../../../../core/services/electron/electron.service';
+import { MapHiderService } from './../../services/map-hider.service';
+import { ElectronService } from './../../../../core/services/electron/electron.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { resolve } from 'path';

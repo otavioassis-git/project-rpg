@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { SettingsService } from './core/services/settings.service';
+import { NotificationService } from './core/services/notification.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ElectronService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../environments/environment';
+import { APP_CONFIG } from '../environments/environment';
 import { MessageService } from 'primeng/api';
-import { take } from 'rxjs';
-import { resolve } from 'path';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +20,12 @@ export class AppComponent implements OnInit {
   constructor(
     private electronService: ElectronService,
     private translate: TranslateService,
-    private httpClient: HttpClient
+    private messageService: MessageService,
+    private notificationService: NotificationService,
+    private settingsService: SettingsService
   ) {
     this.translate.setDefaultLang('en');
-    console.log('environment', environment);
+    console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
       console.log(process.env);
@@ -36,39 +37,19 @@ export class AppComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
-
-  loadEnv() {
-    this.httpClient
-      .get('assets/isServe.json')
-      .pipe(take(1))
-      .subscribe((value: any) => {
-        if (value.serve) {
-          this.httpClient
-            .get('assets/env.json')
-            .pipe(take(1))
-            .subscribe((value: { env: string }) => {
-              localStorage.setItem('env', value.env);
-            });
-        } else {
-          try {
-            let value: { env: string } = JSON.parse(
-              window
-                .require('fs')
-                .readFileSync(
-                  resolve(
-                    __dirname,
-                    '../',
-                    '../',
-                    '../',
-                    'Project-RPG-common',
-                    'env.json'
-                  )
-                )
-            );
-            localStorage.setItem('env', value.env);
-          } catch (error) {}
-        }
-      });
+  ngOnInit(): void {
+    this.notificationService.get().subscribe((value) => {
+      if (value) this.messageService.add(value);
+    });
+    this.settingsService.getReloadContent().subscribe((value) => {
+      if (value) {
+        this.showContent = false;
+        setTimeout(() => {
+          this.showContent = true;
+          this.settingsService.reloadContent(false);
+        }, 1);
+      }
+    });
+    this.showMenus = !window.location.hash.includes('#/map-projection');
   }
 }

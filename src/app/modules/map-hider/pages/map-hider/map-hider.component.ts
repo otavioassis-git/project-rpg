@@ -1,10 +1,12 @@
 import { TutorialService } from './../../../../core/services/tutorial.service';
 import { NotificationService } from './../../../../core/services/notification.service';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from '../../components/image-url/image-url.component';
-import { tap } from 'rxjs';
+import { take, tap } from 'rxjs';
+import { resolve } from 'path';
+import { HttpClient } from '@angular/common/http';
 import { Tutorials } from '../../../../core/services/tutorial.service';
 import { NgxCaptureService } from 'ngx-capture';
 import { MapHiderService } from '../../services/map-hider.service';
@@ -16,7 +18,7 @@ import { MapHiderService } from '../../services/map-hider.service';
   providers: [DialogService],
   encapsulation: ViewEncapsulation.None,
 })
-export class MapHiderComponent implements OnInit, OnDestroy {
+export class MapHiderComponent implements OnInit {
   image;
   isRetracted: boolean;
 
@@ -34,6 +36,7 @@ export class MapHiderComponent implements OnInit, OnDestroy {
     private sideMenuService: SideMenuService,
     private notificationService: NotificationService,
     private dialog: DialogService,
+    private httpClient: HttpClient,
     private tutorialService: TutorialService,
     private captureService: NgxCaptureService,
     private service: MapHiderService
@@ -44,16 +47,12 @@ export class MapHiderComponent implements OnInit, OnDestroy {
       this.isRetracted = value;
     });
 
-    this.tutorials = this.tutorialService.getTutorials();
+    this.tutorials = this.tutorialService.getDefaultTutorials();
+    this.getTutorials();
   }
 
-  ngOnDestroy(): void {
-    this.service.setShowImageList(false);
-  }
-
-  loadImage(value) {
-    this.image = value;
-    if (this.tutorials.resize_tutorial) {
+  loadImage(event) {
+    if (!this.image && this.tutorials.resize_tutorial) {
       this.notificationService.add({
         severity: 'info',
         summary: 'Info',
@@ -62,10 +61,40 @@ export class MapHiderComponent implements OnInit, OnDestroy {
       this.tutorials.resize_tutorial = false;
       this.tutorialService.saveTutorials(this.tutorials);
     }
+
+    this.imageUrl = '';
+
+    const file = (event.target as HTMLInputElement).files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.image = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
-  openImageList() {
-    this.service.setShowImageList(true);
+  openImageUrl() {
+    const ref = this.dialog.open(ImageUrlComponent, {
+      header: 'Insert URL',
+    });
+
+    ref.onClose.subscribe((value) => {
+      if (value) {
+        this.image = null;
+        this.imageUrl = value;
+
+        if (this.tutorials.resize_tutorial) {
+          this.notificationService.add({
+            severity: 'info',
+            summary: 'Info',
+            detail:
+              'You can resize the image using the grab on the bottom right!',
+          });
+          this.tutorials.resize_tutorial = false;
+          this.tutorialService.saveTutorials(this.tutorials);
+        }
+      }
+    });
   }
 
   addBox() {
@@ -146,6 +175,44 @@ export class MapHiderComponent implements OnInit, OnDestroy {
       this.tutorialService.saveTutorials(this.tutorials);
       this.firstAddBox = false;
     }
+  }
+
+  getTutorials() {
+    this.httpClient
+      .get('assets/isServe.json')
+      .pipe(take(1))
+      .subscribe((value: any) => {
+        if (value.serve) {
+          this.httpClient
+            .get('assets/tutorials.json')
+            .pipe(take(1))
+            .subscribe(
+              (value: Tutorials) => {
+                this.tutorials = value;
+              },
+              (error) => {}
+            );
+        } else {
+          try {
+            let value: Tutorials = JSON.parse(
+              window
+                .require('fs')
+                .readFileSync(
+                  resolve(
+                    __dirname,
+                    '../',
+                    '../',
+                    '../',
+                    'Project-RPG-common',
+                    'tutorials.json'
+                  )
+                )
+            );
+
+            this.tutorials = value;
+          } catch (error) {}
+        }
+      });
   }
 
   projectMap() {
