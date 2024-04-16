@@ -62,6 +62,13 @@ body {
   stroke: white;
 }
 
+.custom-spinner-blue {
+  @extend .custom-spinner;
+  .p-progress-spinner-circle {
+    stroke: #5472d4;
+  }
+}
+
 .image-preview {
   height: 200px;
 }

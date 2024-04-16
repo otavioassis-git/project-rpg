@@ -1,3 +1,5 @@
+import { SideMenuService } from './../services/side-menu.service';
+import { AuthService } from './../../modules/auth/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
@@ -9,12 +11,28 @@ import {
 } from '@angular/router';
 import { resolve } from 'path';
 import { Observable, take } from 'rxjs';
+import { User } from '../../modules/auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private authService: AuthService,
+    private sideMenuService: SideMenuService
+  ) {}
+
+  logout() {
+    const user: User = JSON.parse(localStorage.getItem('user'));
+    this.authService.saveLogin({
+      username: user ? user.username : '',
+      token: '',
+    });
+    this.sideMenuService.saveCurrentRoute(null);
+    this.router.navigate(['/auth/login']);
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -34,10 +52,10 @@ export class AuthGuard implements CanActivate {
             .pipe(take(1))
             .subscribe(
               (value: any) => {
-                if (!value.token) this.router.navigate(['auth/login']);
+                if (!value.token) this.logout();
               },
               (error) => {
-                this.router.navigate(['auth/login']);
+                this.logout();
               }
             );
         } else {
@@ -57,9 +75,9 @@ export class AuthGuard implements CanActivate {
                 )
             );
 
-            if (!value.token) this.router.navigate(['auth/login']);
+            if (!value.token) this.logout();
           } catch (error) {
-            this.router.navigate(['auth/login']);
+            this.logout();
           }
         }
       });

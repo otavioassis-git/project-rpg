@@ -15,7 +15,6 @@ export class ConfirmationDialogComponent {
     if (config.data.text) this.text = config.data.text;
     if (config.data.confirm) this.confirm = config.data.confirm;
     if (config.data.cancel) this.cancel = config.data.cancel;
-    console.log(config);
   }
 
   close(confirm: boolean) {

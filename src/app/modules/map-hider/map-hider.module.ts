@@ -14,6 +14,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SharedModule } from '../../shared/shared.module';
     OverlayPanelModule,
     OverlayscrollbarsModule,
     SharedModule,
+    ProgressSpinnerModule,
   ],
 })
 export class MapHiderModule {}

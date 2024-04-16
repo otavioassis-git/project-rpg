@@ -18,11 +18,11 @@
       <img *ngIf="imageUrl" [src]="imageUrl" [alt]="imageUrl" />
     </div>
     <div *ngIf="!image && !imageUrl" class="empty-state">
-      <p class="unselectable text-center">Chose an image to start</p>
+      <p class="unselectable text-center">Select an image to start</p>
     </div>
   </div>
   <div class="settings-container">
-    <button pButton label="Upload image" (click)="openImageList()"></button>
+    <button pButton label="Select image" (click)="openImageList()"></button>
     <button
       pButton
       label="Project map"
