@@ -4,4 +4,15 @@
   gap: 2rem;
   align-items: center;
   min-width: 200px;
+
+  .footer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
 }

@@ -1,31 +1,51 @@
+import { MainWindowComponent } from './modules/main-window/pages/main-window/main-window.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { ProjectionLayoutComponent } from './layouts/projection-layout/projection-layout.component';
 import { PageNotFoundComponent } from './shared/components';
-import { AuthGuard } from './core/guards/auth.guard';
+import { MapHiderComponent } from './modules/map-hider/pages/map-hider/map-hider.component';
+import { SoundboardComponent } from './modules/soundboard/pages/soundboard/soundboard.component';
+import { ImageFinderComponent } from './modules/image-finder/pages/image-finder/image-finder.component';
+import { MapProjectionComponent } from './modules/map-hider/pages/map-projection/map-projection.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainLayoutComponent,
-    canActivate: [AuthGuard],
+    component: MainWindowComponent,
     loadChildren: () =>
-      import('./modules/main/main.module').then((m) => m.MainModule),
+      import('./modules/main-window/main-window.module').then(
+        (m) => m.MainWindowModule
+      ),
   },
   {
-    path: 'auth',
-    component: AuthLayoutComponent,
+    path: 'map-hider',
+    component: MapHiderComponent,
     loadChildren: () =>
-      import('./modules/auth/auth.module').then((m) => m.AuthModule),
+      import('./modules/map-hider/map-hider.module').then(
+        (m) => m.MapHiderModule
+      ),
   },
   {
     path: 'map-projection',
-    component: ProjectionLayoutComponent,
+    component: MapProjectionComponent,
     loadChildren: () =>
-      import('./modules/map-projection/map-projection.module').then(
-        (m) => m.MapProjectionModule
+      import('./modules/map-hider/map-hider.module').then(
+        (m) => m.MapHiderModule
+      ),
+  },
+  {
+    path: 'image-finder',
+    component: ImageFinderComponent,
+    loadChildren: () =>
+      import('./modules/image-finder/image-finder.module').then(
+        (m) => m.ImageFinderModule
+      ),
+  },
+  {
+    path: 'soundboard',
+    component: SoundboardComponent,
+    loadChildren: () =>
+      import('./modules/soundboard/soundboard.module').then(
+        (m) => m.SoundboardModule
       ),
   },
   {

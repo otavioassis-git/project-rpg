@@ -227,56 +227,11 @@ function loadEvents() {
     }
   });
 
-  ipcMain.on('saveImageHistory', (event, imageHistory) => {
-    if (serve) {
-      writeFileSync(
-        resolve(__dirname, '../', 'src', 'assets', 'image-history.json'),
-        JSON.stringify(imageHistory),
-        'utf-8'
-      );
-    } else {
-      writeFileSync(
-        resolve(
-          app.getPath('exe'),
-          '../',
-          'resources',
-          'app',
-          'assets',
-          'image-history.json'
-        ),
-        JSON.stringify(imageHistory),
-        'utf-8'
-      );
-    }
-  });
-
-  ipcMain.on('saveSettings', (event, settings) => {
-    if (serve) {
-      writeFileSync(
-        resolve(__dirname, '../', 'src', 'assets', 'settings.json'),
-        JSON.stringify(settings),
-        'utf-8'
-      );
-    } else {
-      writeFileSync(
-        resolve(
-          app.getPath('exe'),
-          '../',
-          '../',
-          'Project-RPG-common',
-          'settings.json'
-        ),
-        JSON.stringify(settings),
-        'utf-8'
-      );
-    }
-  });
-
-  ipcMain.on('saveTutorials', (event, tutorials) => {
+  ipcMain.on('saveTutorials', (event, tutorial) => {
     if (serve) {
       writeFileSync(
         resolve(__dirname, '../', 'src', 'assets', 'tutorials.json'),
-        JSON.stringify(tutorials),
+        JSON.stringify(tutorial),
         'utf-8'
       );
     } else {
@@ -288,56 +243,12 @@ function loadEvents() {
           'Project-RPG-common',
           'tutorials.json'
         ),
-        JSON.stringify(tutorials),
-        'utf-8'
-      );
-    }
-  });
-
-  ipcMain.on('saveLogin', (event, login) => {
-    if (serve) {
-      writeFileSync(
-        resolve(__dirname, '../', 'src', 'assets', 'login.json'),
-        JSON.stringify(login),
-        'utf-8'
-      );
-    } else {
-      writeFileSync(
-        resolve(
-          app.getPath('exe'),
-          '../',
-          '../',
-          'Project-RPG-common',
-          'login.json'
-        ),
-        JSON.stringify(login),
+        JSON.stringify(tutorial),
         'utf-8'
       );
     }
   });
 }
-
-ipcMain.on('saveEnv', (event, env) => {
-  if (serve) {
-    writeFileSync(
-      resolve(__dirname, '../', 'src', 'assets', 'env.json'),
-      JSON.stringify(env),
-      'utf-8'
-    );
-  } else {
-    writeFileSync(
-      resolve(
-        app.getPath('exe'),
-        '../',
-        '../',
-        'Project-RPG-common',
-        'env.json'
-      ),
-      JSON.stringify(env),
-      'utf-8'
-    );
-  }
-});
 
 function createCommonFolder() {
   var dir = resolve(app.getPath('exe'), '../', '../', 'Project-RPG-common');

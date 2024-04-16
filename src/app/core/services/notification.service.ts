@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-interface NotificationData {
-  severity: string;
-  summary: string;
-  detail?: string;
-  sticky?: boolean;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +9,7 @@ export class NotificationService {
 
   constructor() {}
 
-  add(data: NotificationData) {
+  add(data) {
     this.notification.next(data);
   }
 
