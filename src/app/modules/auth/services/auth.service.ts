@@ -12,6 +12,11 @@ interface AuthResponse {
   token: string;
 }
 
+export interface User {
+  username: string;
+  token: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -31,12 +36,13 @@ export class AuthService {
     return this.api.post('auth/login', payload);
   }
 
-  saveLogin(payload: { email: string; token: string }) {
+  saveLogin(payload: User) {
+    localStorage.setItem('user', JSON.stringify(payload));
     this.ipcRenderer.send('saveLogin', payload);
   }
 
-  signin(payload) {
-    return this.api.post('auth/signin', payload);
+  signup(payload) {
+    return this.api.post('auth/signup', payload);
   }
 
   changePassword(passwords: { password: string; newPassword: string }) {
@@ -46,6 +52,6 @@ export class AuthService {
       password: passwords.password,
       newPassword: passwords.newPassword,
     };
-    return this.api.put('auth/update-password', payload);
+    return this.api.put('users/update-password', payload);
   }
 }

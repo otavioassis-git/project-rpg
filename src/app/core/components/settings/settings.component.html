@@ -3,10 +3,14 @@
     <h3>Settings</h3>
     <i class="pi pi-times" (click)="close()"></i>
   </div>
-  <div *ngIf="showSettings" id="settings-container">
+  <div *ngIf="showSettings" id="settings-container" class="sidebar-content">
     <div class="setting-item">
       <h4 class="title">Tutorials</h4>
       <app-tutorials></app-tutorials>
+    </div>
+    <div class="setting-item">
+      <h4 class="title">Images</h4>
+      <app-images></app-images>
     </div>
     <div class="setting-item">
       <div class="title">

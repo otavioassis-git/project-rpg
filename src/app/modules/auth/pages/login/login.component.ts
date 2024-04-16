@@ -1,7 +1,7 @@
 import { NotificationService } from './../../../../core/services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, User } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -27,16 +27,16 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let email = '';
+    let username = '';
     if (localStorage.getItem('user')) {
-      email = JSON.parse(localStorage.getItem('user')).email;
+      username = JSON.parse(localStorage.getItem('user')).username;
     }
-    this.buildForm(email);
+    this.buildForm(username);
   }
 
-  buildForm(email?: string) {
+  buildForm(username?: string) {
     this.form = this.fb.group({
-      email: [email ? email : '', [Validators.required, Validators.email]],
+      username: [username ? username : '', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
@@ -49,19 +49,18 @@ export class LoginComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (value) => {
-          let payload = {
-            id: value.id,
+          let payload: User = {
             username: value.username,
-            email: value.email,
             token: value.token,
           };
           this.authService.saveLogin(payload);
-          localStorage.setItem('user', JSON.stringify(payload));
           this.router.navigate(['']);
           this.isLoading = false;
         },
         (error) => {
-          this.error = error.error.error;
+          if (error.status == '401')
+            this.error = 'Incorrect username or password';
+          else this.error = error.message;
           this.isLoading = false;
         }
       );

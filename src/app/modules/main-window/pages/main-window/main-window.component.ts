@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 import { Tutorials } from '../../../../core/services/tutorial.service';
 import { resolve } from 'path';
+import { Settings } from '../../../../core/services/settings.service';
 
 @Component({
   selector: 'app-main-window',
@@ -24,6 +25,38 @@ export class MainWindowComponent implements OnInit {
 
   loadSettings() {
     this.loadTutorials();
+
+    this.httpClient
+      .get('assets/isServe.json')
+      .pipe(take(1))
+      .subscribe((value: any) => {
+        if (value.serve) {
+          this.httpClient
+            .get('assets/settings.json')
+            .pipe(take(1))
+            .subscribe((value: Settings) => {
+              localStorage.setItem('settings', JSON.stringify(value));
+            });
+        } else {
+          try {
+            let value: Settings = JSON.parse(
+              window
+                .require('fs')
+                .readFileSync(
+                  resolve(
+                    __dirname,
+                    '../',
+                    '../',
+                    '../',
+                    'Project-RPG-common',
+                    'settings.json'
+                  )
+                )
+            );
+            localStorage.setItem('settings', JSON.stringify(value));
+          } catch (error) {}
+        }
+      });
   }
 
   loadTutorials() {

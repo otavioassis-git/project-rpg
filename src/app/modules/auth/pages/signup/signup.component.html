@@ -1,14 +1,23 @@
-<section id="auth-container" (keyup.enter)="signin()">
-  <h1>Sign in</h1>
+<section id="auth-container" (keyup.enter)="signup()">
+  <h1>Sign up</h1>
   <h2>Already have an account? Login <a href="#/auth/login">here</a></h2>
   <form class="form" [formGroup]="form">
     <span class="p-float-label">
-      <input id="email" pInputText type="text" formControlName="username" />
-      <label for="email" class="float">Username</label>
+      <input
+        id="firstName"
+        pInputText
+        type="text"
+        formControlName="firstName"
+      />
+      <label for="firstName" class="float">First name</label>
     </span>
     <span class="p-float-label">
-      <input id="email" pInputText type="text" formControlName="email" />
-      <label for="email" class="float">E-mail</label>
+      <input id="lastName" pInputText type="text" formControlName="lastName" />
+      <label for="lastName" class="float">Last name</label>
+    </span>
+    <span class="p-float-label">
+      <input id="username" pInputText type="text" formControlName="username" />
+      <label for="username" class="float">Username</label>
     </span>
     <span class="p-float-label">
       <input
@@ -36,7 +45,7 @@
   <loading-button
     label="Sign in"
     [disabled]="verifyForm()"
-    (submit)="signin()"
+    (submit)="signup()"
     [isLoading]="isLoading"
     style="padding: 0.5rem 2.5rem"
   ></loading-button>

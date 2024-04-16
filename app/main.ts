@@ -227,11 +227,56 @@ function loadEvents() {
     }
   });
 
-  ipcMain.on('saveTutorials', (event, tutorial) => {
+  ipcMain.on('saveImageHistory', (event, imageHistory) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'image-history.json'),
+        JSON.stringify(imageHistory),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          'resources',
+          'app',
+          'assets',
+          'image-history.json'
+        ),
+        JSON.stringify(imageHistory),
+        'utf-8'
+      );
+    }
+  });
+
+  ipcMain.on('saveSettings', (event, settings) => {
+    if (serve) {
+      writeFileSync(
+        resolve(__dirname, '../', 'src', 'assets', 'settings.json'),
+        JSON.stringify(settings),
+        'utf-8'
+      );
+    } else {
+      writeFileSync(
+        resolve(
+          app.getPath('exe'),
+          '../',
+          '../',
+          'Project-RPG-common',
+          'settings.json'
+        ),
+        JSON.stringify(settings),
+        'utf-8'
+      );
+    }
+  });
+
+  ipcMain.on('saveTutorials', (event, tutorials) => {
     if (serve) {
       writeFileSync(
         resolve(__dirname, '../', 'src', 'assets', 'tutorials.json'),
-        JSON.stringify(tutorial),
+        JSON.stringify(tutorials),
         'utf-8'
       );
     } else {
@@ -243,7 +288,7 @@ function loadEvents() {
           'Project-RPG-common',
           'tutorials.json'
         ),
-        JSON.stringify(tutorial),
+        JSON.stringify(tutorials),
         'utf-8'
       );
     }

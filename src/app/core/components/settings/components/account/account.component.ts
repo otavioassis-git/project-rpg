@@ -1,7 +1,10 @@
 import { SideMenuService } from './../../../../services/side-menu.service';
 import { SettingsService } from './../../../../services/settings.service';
 import { Router } from '@angular/router';
-import { AuthService } from './../../../../../modules/auth/services/auth.service';
+import {
+  AuthService,
+  User,
+} from './../../../../../modules/auth/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { PasswordChangeComponent } from '../password-change/password-change.component';
@@ -32,7 +35,11 @@ export class AccountComponent {
     });
     ref.onClose.pipe(take(2)).subscribe((response) => {
       if (response) {
-        this.authService.saveLogin({ email: '', token: '' });
+        const user: User = JSON.parse(localStorage.getItem('user'));
+        this.authService.saveLogin({
+          username: user ? user.username : '',
+          token: '',
+        });
         this.service.showSettings(false);
         this.sideMenuService.saveCurrentRoute(null);
         this.router.navigate(['/auth/login']);

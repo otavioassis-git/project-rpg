@@ -1,6 +1,6 @@
 import { TutorialService } from './../../../../core/services/tutorial.service';
 import { NotificationService } from './../../../../core/services/notification.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SideMenuService } from '../../../../core/services/side-menu.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ImageUrlComponent } from '../../components/image-url/image-url.component';
@@ -16,7 +16,7 @@ import { MapHiderService } from '../../services/map-hider.service';
   providers: [DialogService],
   encapsulation: ViewEncapsulation.None,
 })
-export class MapHiderComponent implements OnInit {
+export class MapHiderComponent implements OnInit, OnDestroy {
   image;
   isRetracted: boolean;
 
@@ -47,8 +47,13 @@ export class MapHiderComponent implements OnInit {
     this.tutorials = this.tutorialService.getTutorials();
   }
 
-  loadImage(event) {
-    if (!this.image && this.tutorials.resize_tutorial) {
+  ngOnDestroy(): void {
+    this.service.setShowImageList(false);
+  }
+
+  loadImage(value) {
+    this.image = value;
+    if (this.tutorials.resize_tutorial) {
       this.notificationService.add({
         severity: 'info',
         summary: 'Info',
@@ -57,40 +62,10 @@ export class MapHiderComponent implements OnInit {
       this.tutorials.resize_tutorial = false;
       this.tutorialService.saveTutorials(this.tutorials);
     }
-
-    this.imageUrl = '';
-
-    const file = (event.target as HTMLInputElement).files[0];
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.image = reader.result as string;
-    };
-    reader.readAsDataURL(file);
   }
 
-  openImageUrl() {
-    const ref = this.dialog.open(ImageUrlComponent, {
-      header: 'Insert URL',
-    });
-
-    ref.onClose.subscribe((value) => {
-      if (value) {
-        this.image = null;
-        this.imageUrl = value;
-
-        if (this.tutorials.resize_tutorial) {
-          this.notificationService.add({
-            severity: 'info',
-            summary: 'Info',
-            detail:
-              'You can resize the image using the grab on the bottom right!',
-          });
-          this.tutorials.resize_tutorial = false;
-          this.tutorialService.saveTutorials(this.tutorials);
-        }
-      }
-    });
+  openImageList() {
+    this.service.setShowImageList(true);
   }
 
   addBox() {

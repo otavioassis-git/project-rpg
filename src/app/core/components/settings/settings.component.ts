@@ -1,5 +1,4 @@
 import { ImageFinderService } from './../../../modules/image-finder/services/image-finder.service';
-import { TutorialService, Tutorials } from './../../services/tutorial.service';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import packageInfo from '../../../../../package.json';
@@ -21,7 +20,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: SettingsService,
-    private tutorialService: TutorialService,
     private imageFinderService: ImageFinderService
   ) {}
 

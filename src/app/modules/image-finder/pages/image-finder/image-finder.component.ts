@@ -32,11 +32,10 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
   }
 
   tutorials: Tutorials;
-  isLoading = true;
+  isLoading = false;
   constructor(
     private service: ImageFinderService,
     private sidemenuService: SideMenuService,
-    private httpClient: HttpClient,
     private tutorialService: TutorialService
   ) {}
 
@@ -46,11 +45,14 @@ export class ImageFinderComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((value) => {
         this.isRetracted = value;
-        this.tutorials = this.tutorialService.getTutorials();
       });
+    this.tutorials = this.tutorialService.getTutorials();
+    if (!this.tutorials.google_tutorial) this.openGoogle();
   }
 
   openGoogle(save?: boolean) {
+    console.log('init google');
+    this.isLoading = true;
     this.tutorials.google_tutorial = false;
     if (save) this.tutorialService.saveTutorials(this.tutorials);
 
