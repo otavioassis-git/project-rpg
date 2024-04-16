@@ -85,10 +85,23 @@
         </p-overlayPanel>
       </div>
     </div>
-    <div *ngIf="accountImages.length > 0" class="item">
-      <h4 class="title">Account images</h4>
-      <small>{{ accountImages.length }}/10</small>
-      <div class="content">
+    <div
+      *ngIf="accountImages.length > 0 || isLoadingAccountImages"
+      class="item"
+    >
+      <div class="title">
+        <h4 class="white-space-nowrap">Account images</h4>
+        <small *ngIf="!isLoadingAccountImages"
+          >{{ accountImages.length }}/10</small
+        >
+        <p-progressSpinner
+          *ngIf="isLoadingAccountImages"
+          styleClass="ml-auto custom-spinner-blue"
+          [style]="{ height: '24px' }"
+          strokeWidth="5"
+        ></p-progressSpinner>
+      </div>
+      <div *ngIf="!isLoadingAccountImages" class="content">
         <div
           *ngFor="let image of accountImages"
           class="image-item"

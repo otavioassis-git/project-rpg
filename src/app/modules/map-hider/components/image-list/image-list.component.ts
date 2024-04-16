@@ -49,6 +49,7 @@ export class ImageListComponent implements OnInit, OnDestroy {
   accountImages: AccountImage[] = [];
   imagePreview: string;
 
+  isLoadingAccountImages = false;
   constructor(
     private mapHiderService: MapHiderService,
     private notificationService: NotificationService,
@@ -57,12 +58,14 @@ export class ImageListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loadAccountImages();
     this.loadImageHistory();
     this.subscription = this.mapHiderService
       .getShowImageList()
       .subscribe((value) => {
         this.showImageList = value;
+        if (value) {
+          this.loadAccountImages();
+        }
       });
   }
 
@@ -71,12 +74,19 @@ export class ImageListComponent implements OnInit, OnDestroy {
   }
 
   loadAccountImages() {
+    this.isLoadingAccountImages = true;
     this.mapHiderService
       .getAccountImages()
       .pipe(take(1))
-      .subscribe((value) => {
-        this.accountImages = value;
-      });
+      .subscribe(
+        (value) => {
+          this.accountImages = value;
+          this.isLoadingAccountImages = false;
+        },
+        (error) => {
+          this.isLoadingAccountImages = false;
+        }
+      );
   }
 
   openUploadImageToAccount(event: Event, image: Image) {
@@ -106,7 +116,7 @@ export class ImageListComponent implements OnInit, OnDestroy {
     const ref = this.dialog.open(ConfirmationDialogComponent, {
       header: 'Delete account image',
       data: {
-        text: `Delete image ${image.name} from account?`,
+        text: `Delete image <b>${image.name}</b> from account?`,
       },
     });
     ref.onClose.pipe(take(2)).subscribe((response) => {
