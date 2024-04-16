@@ -12,9 +12,16 @@ import { SidebarModule } from 'primeng/sidebar';
 import { TooltipModule } from 'primeng/tooltip';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [MapHiderComponent, ImageUrlComponent, ImageListComponent],
+  declarations: [
+    MapHiderComponent,
+    ImageUrlComponent,
+    ImageListComponent,
+    UploadImageComponent,
+  ],
   imports: [
     CommonModule,
     MapHiderRoutingModule,
@@ -25,6 +32,7 @@ import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
     TooltipModule,
     OverlayPanelModule,
     OverlayscrollbarsModule,
+    SharedModule,
   ],
 })
 export class MapHiderModule {}

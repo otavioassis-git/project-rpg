@@ -13,11 +13,12 @@ import {
 } from '@angular/core';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { Settings } from '../../../../core/services/settings.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { UploadImageComponent } from '../upload-image/upload-image.component';
 
 export interface Image {
   name: string;
   url: string;
-  type: 'local' | 'url' | 'account';
   value: string;
 }
 
@@ -26,6 +27,7 @@ export interface Image {
   templateUrl: './image-list.component.html',
   styleUrls: ['./image-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  providers: [DialogService],
 })
 export class ImageListComponent implements OnInit, OnDestroy {
   @Output() image = new EventEmitter();
@@ -37,21 +39,49 @@ export class ImageListComponent implements OnInit, OnDestroy {
 
   imageUrl: string = '';
   imageHistory: Image[] = [];
+  accountImages: Image[] = [];
   imagePreview: string;
 
   constructor(
     private mapHiderService: MapHiderService,
     private notificationService: NotificationService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private dialog: DialogService
   ) {}
 
   ngOnInit(): void {
+    this.loadAccountImages();
     this.loadImageHistory();
     this.subscription = this.mapHiderService
       .getShowImageList()
       .subscribe((value) => {
         this.showImageList = value;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  loadAccountImages() {
+    this.mapHiderService
+      .getAccountImages()
+      .pipe(take(1))
+      .subscribe((value) => {
+        this.accountImages = value;
+      });
+  }
+
+  openUploadImageToAccount(event: Event, image: Image) {
+    event.stopPropagation();
+    const ref = this.dialog.open(UploadImageComponent, {
+      header: 'Upload image',
+      data: { image },
+    });
+
+    ref.onClose.pipe(take(2)).subscribe((reload) => {
+      if (reload) this.loadAccountImages();
+    });
   }
 
   loadImageHistory() {
@@ -69,8 +99,11 @@ export class ImageListComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  checkImageInAccount(image: Image) {
+    for (let aimage of this.accountImages) {
+      if (image.value === aimage.value) return true;
+    }
+    return false;
   }
 
   loadLocalImage(event) {
@@ -84,7 +117,6 @@ export class ImageListComponent implements OnInit, OnDestroy {
       this.updateImageHistory({
         name: file.name,
         url: file.path,
-        type: 'local',
         value: image,
       });
     };
@@ -100,7 +132,6 @@ export class ImageListComponent implements OnInit, OnDestroy {
     this.updateImageHistory({
       name,
       url: this.imageUrl,
-      type: 'url',
       value: this.imageUrl,
     });
 
@@ -108,7 +139,7 @@ export class ImageListComponent implements OnInit, OnDestroy {
     this.close();
   }
 
-  loadFromImageHistory(image: Image) {
+  loadImage(image: Image) {
     this.updateImageHistory(image, true);
     this.image.emit(image.value);
     this.close();

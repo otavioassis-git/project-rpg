@@ -55,7 +55,7 @@
         <div
           *ngFor="let image of imageHistory"
           class="image-item"
-          (click)="loadFromImageHistory(image)"
+          (click)="loadImage(image)"
         >
           <img
             [src]="image.value"
@@ -79,16 +79,44 @@
               {{ image.url }}
             </p>
           </div>
-          <span class="tag">{{ image.type }}</span>
+          <span
+            *ngIf="!checkImageInAccount(image)"
+            class="upload-button"
+            (click)="openUploadImageToAccount($event, image)"
+            >Upload to account</span
+          >
         </div>
         <p-overlayPanel #op styleClass="image-preview-overlaypanel">
           <img class="image-preview" [src]="imagePreview" alt="Image preview" />
         </p-overlayPanel>
       </div>
     </div>
-    <!-- <div class="item">
+    <div *ngIf="accountImages.length > 0" class="item">
       <h4 class="title">Account images</h4>
-      <div class="content"></div>
-    </div> -->
+      <div class="content">
+        <div
+          *ngFor="let image of accountImages"
+          class="image-item"
+          (click)="loadImage(image)"
+        >
+          <img
+            [src]="image.value"
+            alt="Image preview"
+            (mouseover)="showImagePreview($event, image.value, true)"
+            (mouseleave)="showImagePreview($event, image.value, false)"
+          />
+          <div class="image-info">
+            <p
+              [pTooltip]="image.name"
+              tooltipPosition="left"
+              (click)="copyToClipboard($event, image.name)"
+            >
+              {{ image.name }}
+            </p>
+          </div>
+          <span class="delete-button">Delete</span>
+        </div>
+      </div>
+    </div>
   </div>
 </p-sidebar>
