@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { ipcRenderer } from 'electron';
 import { ElectronService } from '../../../core/services';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Image } from '../components/image-list/image-list.component';
+import {
+  AccountImage,
+  Image,
+} from '../components/image-list/image-list.component';
 import { ApiService } from '../../../core/services/api.service';
 
 @Injectable({
@@ -35,7 +38,7 @@ export class MapHiderService {
     this.showImageList.next(value);
   }
 
-  saveImageHistory(value: Image[]) {
+  saveImageHistory(value: (Image | AccountImage)[]) {
     this.ipcRenderer.send('saveImageHistory', value);
   }
 
@@ -49,5 +52,9 @@ export class MapHiderService {
       value: image.value,
     };
     return this.api.post('user/images', payload);
+  }
+
+  deleteAccountImage(image: AccountImage) {
+    return this.api.delete(`user/images/${image.id}`);
   }
 }

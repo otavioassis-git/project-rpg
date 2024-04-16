@@ -15,10 +15,17 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { Settings } from '../../../../core/services/settings.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UploadImageComponent } from '../upload-image/upload-image.component';
+import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 export interface Image {
   name: string;
   url: string;
+  value: string;
+}
+
+export interface AccountImage {
+  id: number;
+  name: string;
   value: string;
 }
 
@@ -39,7 +46,7 @@ export class ImageListComponent implements OnInit, OnDestroy {
 
   imageUrl: string = '';
   imageHistory: Image[] = [];
-  accountImages: Image[] = [];
+  accountImages: AccountImage[] = [];
   imagePreview: string;
 
   constructor(
@@ -80,7 +87,37 @@ export class ImageListComponent implements OnInit, OnDestroy {
     });
 
     ref.onClose.pipe(take(2)).subscribe((reload) => {
-      if (reload) this.loadAccountImages();
+      if (reload) {
+        this.loadAccountImages();
+
+        const index = this.imageHistory.findIndex(
+          (item) => item.value == image.value
+        );
+        if (index >= 0) {
+          this.imageHistory.splice(index, 1);
+        }
+        this.mapHiderService.saveImageHistory(this.imageHistory);
+      }
+    });
+  }
+
+  deleteAccountImage(event: Event, image: AccountImage) {
+    event.stopPropagation();
+    const ref = this.dialog.open(ConfirmationDialogComponent, {
+      header: 'Delete account image',
+      data: {
+        text: `Delete image ${image.name} from account?`,
+      },
+    });
+    ref.onClose.pipe(take(2)).subscribe((response) => {
+      if (response) {
+        this.mapHiderService
+          .deleteAccountImage(image)
+          .pipe(take(1))
+          .subscribe((value) => {
+            this.loadAccountImages();
+          });
+      }
     });
   }
 
@@ -139,22 +176,19 @@ export class ImageListComponent implements OnInit, OnDestroy {
     this.close();
   }
 
-  loadImage(image: Image) {
-    this.updateImageHistory(image, true);
+  loadImage(image: Image | AccountImage) {
+    const imageTest = image as Image;
+    if (imageTest.url) this.updateImageHistory(imageTest);
     this.image.emit(image.value);
     this.close();
   }
 
-  updateImageHistory(image: Image, remove?: boolean) {
+  updateImageHistory(image: Image) {
     const index = this.imageHistory.findIndex(
       (item) => item.value == image.value
     );
-    if (index >= 0) return;
 
-    if (remove) {
-      const index = this.imageHistory.findIndex(
-        (item) => item.value == image.value
-      );
+    if (index >= 0) {
       this.imageHistory.splice(index, 1);
     } else if (this.imageHistory.length == 10) this.imageHistory.shift();
 

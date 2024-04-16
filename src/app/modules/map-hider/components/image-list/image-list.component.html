@@ -32,7 +32,7 @@
         ></button>
       </div>
     </div>
-    <div class="item">
+    <div *ngIf="imageHistory.length > 0" class="item">
       <div class="title">
         <h4>
           Image history
@@ -45,13 +45,7 @@
           [disabled]="imageHistory.length == 0"
         ></button>
       </div>
-      <div *ngIf="imageHistory.length == 0" class="empty-state">
-        <img
-          src="assets/images/image-list-empty-state.jpg"
-          alt="Empty state image"
-        />
-      </div>
-      <div *ngIf="imageHistory.length > 0" class="content">
+      <div class="content">
         <div
           *ngFor="let image of imageHistory"
           class="image-item"
@@ -80,7 +74,7 @@
             </p>
           </div>
           <span
-            *ngIf="!checkImageInAccount(image)"
+            *ngIf="!checkImageInAccount(image) && accountImages.length <= 10"
             class="upload-button"
             (click)="openUploadImageToAccount($event, image)"
             >Upload to account</span
@@ -93,6 +87,7 @@
     </div>
     <div *ngIf="accountImages.length > 0" class="item">
       <h4 class="title">Account images</h4>
+      <small>{{ accountImages.length }}/10</small>
       <div class="content">
         <div
           *ngFor="let image of accountImages"
@@ -114,7 +109,18 @@
               {{ image.name }}
             </p>
           </div>
-          <span class="delete-button">Delete</span>
+          <span
+            class="delete-button"
+            (click)="deleteAccountImage($event, image)"
+            >Delete</span
+          >
+          <p-overlayPanel #op styleClass="image-preview-overlaypanel">
+            <img
+              class="image-preview"
+              [src]="imagePreview"
+              alt="Image preview"
+            />
+          </p-overlayPanel>
         </div>
       </div>
     </div>
