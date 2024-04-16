@@ -1,0 +1,14 @@
+<div class="content">
+  <div class="item">
+    <p-selectButton
+      [options]="stateOptions"
+      [(ngModel)]="tutorialsEnabled"
+      optionLabel="label"
+      optionValue="value"
+      (onChange)="handleTutorialChange($event)"
+    ></p-selectButton>
+    <div>
+      <p>Show tutorials</p>
+    </div>
+  </div>
+</div>
