@@ -1,0 +1,22 @@
+<div id="link-image-container">
+  <p>Do you want to upload this image to your account?</p>
+  <span class="p-float-label">
+    <input id="name" pInputText type="text" [(ngModel)]="image.name" />
+    <label for="name">Image name</label>
+  </span>
+  <div class="dialog-footer">
+    <button
+      pButton
+      label="Cancel"
+      class="white-background-cancel"
+      (click)="close(false)"
+    ></button>
+    <loading-button
+      class="w-full"
+      label="Upload"
+      (submit)="linkImage()"
+      [isLoading]="isLoading"
+      [disabled]="!image.name || image.name.length == 0"
+    ></loading-button>
+  </div>
+</div>
