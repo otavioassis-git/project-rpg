@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="item">
+  <div *ngIf="!isOfflineMode" class="item">
     <button
       pButton
       label="Change Password"
@@ -7,6 +7,10 @@
     ></button>
   </div>
   <div class="item">
-    <button pButton label="Logout" (click)="logout()"></button>
+    <button
+      pButton
+      [label]="isOfflineMode ? 'Quit offline mode' : 'Logout'"
+      (click)="isOfflineMode ? quitOfflineMode() : logout()"
+    ></button>
   </div>
 </div>

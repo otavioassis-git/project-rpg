@@ -12,12 +12,18 @@ import { Settings } from '../../../../core/services/settings.service';
 })
 export class MainWindowComponent implements OnInit {
   username: string = '';
+  isOfflineMode: boolean = false;
 
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('user')) {
+    if (
+      localStorage.getItem('user') &&
+      localStorage.getItem('offlineMode') != 'true'
+    ) {
       this.username = JSON.parse(localStorage.getItem('user')).username;
+    } else {
+      this.username = 'player';
     }
 
     this.loadSettings();

@@ -15,7 +15,7 @@
     <div class="setting-item">
       <div class="title">
         <h4 class="title">Account</h4>
-        <p *ngIf="username">Logged as: {{ username }}</p>
+        <p *ngIf="username && !isOfflineMode">Logged as: {{ username }}</p>
       </div>
       <app-account></app-account>
     </div>

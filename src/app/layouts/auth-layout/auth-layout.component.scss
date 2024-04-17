@@ -23,5 +23,11 @@
       font-size: 10px;
       user-select: none;
     }
+
+    .offline-mode-button {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+    }
   }
 }

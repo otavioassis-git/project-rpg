@@ -10,5 +10,11 @@
       (click)="openEnvChanger()"
     ></button>
     <p class="version-footer" (click)="clickCountHandler()">v{{ lVersion }}</p>
+    <button
+      pButton
+      label="Offline mode"
+      (click)="offlineMode()"
+      class="offline-mode-button"
+    ></button>
   </div>
 </section>

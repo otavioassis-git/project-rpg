@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import packageInfo from '../../../../../package.json';
 import { Subscription, take } from 'rxjs';
+import { checkOfflineMode } from '../../../shared/utils/checkOfflineMode';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +18,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   clickCount = 0;
   showSettings: boolean;
   username: string = '';
+  isOfflineMode: boolean = false;
 
   constructor(
     private service: SettingsService,
@@ -24,6 +26,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isOfflineMode = checkOfflineMode();
     this.subscription = this.service.getShowSettings().subscribe((value) => {
       this.showSettings = value;
       if (value) {

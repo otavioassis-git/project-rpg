@@ -10,6 +10,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { PasswordChangeComponent } from '../password-change/password-change.component';
 import { ConfirmationDialogComponent } from '../../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { take } from 'rxjs';
+import { checkOfflineMode } from '../../../../../shared/utils/checkOfflineMode';
 
 @Component({
   selector: 'app-account',
@@ -17,7 +18,9 @@ import { take } from 'rxjs';
   styleUrls: ['./account.component.scss'],
   providers: [DialogService],
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
+  isOfflineMode: boolean = false;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -25,6 +28,10 @@ export class AccountComponent {
     private dialog: DialogService,
     private sideMenuService: SideMenuService
   ) {}
+
+  ngOnInit(): void {
+    this.isOfflineMode = checkOfflineMode();
+  }
 
   logout() {
     const ref = this.dialog.open(ConfirmationDialogComponent, {
@@ -45,6 +52,17 @@ export class AccountComponent {
         this.router.navigate(['/auth/login']);
       }
     });
+  }
+
+  quitOfflineMode() {
+    this.authService.saveLogin({
+      username: '',
+      token: '',
+    });
+    this.service.showSettings(false);
+    this.sideMenuService.saveCurrentRoute(null);
+    localStorage.setItem('offlineMode', 'false');
+    this.router.navigate(['/auth/login']);
   }
 
   openChangePassword() {
