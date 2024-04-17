@@ -23,7 +23,7 @@ export class MainWindowComponent implements OnInit {
     ) {
       this.username = JSON.parse(localStorage.getItem('user')).username;
     } else {
-      this.username = 'to offline mode';
+      this.username = 'player';
     }
 
     this.loadSettings();
