@@ -66,7 +66,7 @@ export class SideMenuComponent implements OnInit {
       .subscribe(
         (value: MenuItem) => {
           if (!window.location.hash.includes('#/map-projection')) {
-            if (localStorage.getItem('user') && value) {
+            if (localStorage.getItem('user') && value && !checkOfflineMode()) {
               this.notificationService.add({
                 severity: 'info',
                 summary: `Welcome back ${

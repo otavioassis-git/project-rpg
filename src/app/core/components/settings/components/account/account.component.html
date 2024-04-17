@@ -9,7 +9,7 @@
   <div class="item">
     <button
       pButton
-      [label]="isOfflineMode ? 'Quit offline mode' : 'Logout'"
+      [label]="isOfflineMode ? 'Quit no backend mode' : 'Logout'"
       (click)="isOfflineMode ? quitOfflineMode() : logout()"
     ></button>
   </div>
