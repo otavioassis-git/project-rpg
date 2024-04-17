@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MenuItem, SideMenuService } from '../../services/side-menu.service';
 import { take } from 'rxjs';
 import { SettingsService } from '../../services/settings.service';
+import { checkOfflineMode } from '../../../shared/utils/checkOfflineMode';
 
 const BASE_TOP = 60;
 const TOP_ADDER = 45;
@@ -20,24 +21,27 @@ export class SideMenuComponent implements OnInit {
       label: 'Map hider',
       route: 'map-hider',
       height: 0,
+      offline: true,
     },
     {
       icon: 'pi-images',
       label: 'Image finder',
       route: 'image-finder',
       height: 0,
+      offline: true,
     },
     {
       icon: 'pi-share-alt',
       label: 'Comunity',
       route: 'comunity-images',
       height: 0,
+      offline: false,
     },
   ];
 
   selectedMenu: MenuItem;
-
   isRetracted = false;
+  isOfflineMode: boolean = false;
 
   constructor(
     private service: SideMenuService,
@@ -51,6 +55,11 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (checkOfflineMode()) {
+      for (let [idx, item] of this.menuItems.entries()) {
+        if (!item.offline) this.menuItems.splice(idx, 1);
+      }
+    }
     this.service
       .getSavedRoute()
       .pipe(take(1))
