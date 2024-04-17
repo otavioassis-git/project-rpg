@@ -177,6 +177,10 @@ body {
   }
 }
 
+.p-toast {
+  z-index: 10000 !important;
+}
+
 .p-toast-message-content {
   align-items: center !important;
 }
