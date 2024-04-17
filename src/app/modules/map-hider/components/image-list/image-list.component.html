@@ -74,7 +74,11 @@
             </p>
           </div>
           <span
-            *ngIf="!checkImageInAccount(image) && accountImages.length <= 10"
+            *ngIf="
+              !checkImageInAccount(image) &&
+              accountImages.length <= 10 &&
+              !isOfflineMode
+            "
             class="upload-button"
             (click)="openUploadImageToAccount($event, image)"
             >Upload to account</span

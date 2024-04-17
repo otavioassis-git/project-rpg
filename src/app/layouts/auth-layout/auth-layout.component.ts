@@ -3,6 +3,8 @@ import packageInfo from '../../../../package.json';
 import { DialogService } from 'primeng/dynamicdialog';
 import { EnvChangerComponent } from './components/env-changer/env-changer.component';
 import { take } from 'rxjs';
+import { AuthService } from '../../modules/auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
@@ -15,7 +17,11 @@ export class AuthLayoutComponent {
   clickCount = 0;
   showChangeEnv = false;
 
-  constructor(private dialog: DialogService) {}
+  constructor(
+    private dialog: DialogService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   clickCountHandler() {
     this.clickCount++;
@@ -33,5 +39,14 @@ export class AuthLayoutComponent {
       this.clickCount = 0;
       this.showChangeEnv = false;
     });
+  }
+
+  offlineMode() {
+    this.authService.saveLogin({
+      username: 'OfflineMode',
+      token: 'OfflineMode',
+    });
+    this.router.navigate(['']);
+    localStorage.setItem('offlineMode', 'true');
   }
 }

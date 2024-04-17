@@ -16,6 +16,7 @@ import { Settings } from '../../../../core/services/settings.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UploadImageComponent } from '../upload-image/upload-image.component';
 import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { checkOfflineMode } from '../../../../shared/utils/checkOfflineMode';
 
 export interface Image {
   name: string;
@@ -48,6 +49,7 @@ export class ImageListComponent implements OnInit, OnDestroy {
   imageHistory: Image[] = [];
   accountImages: AccountImage[] = [];
   imagePreview: string;
+  isOfflineMode: boolean = false;
 
   isLoadingAccountImages = false;
   constructor(
@@ -58,13 +60,14 @@ export class ImageListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isOfflineMode = checkOfflineMode();
     this.loadImageHistory();
     this.subscription = this.mapHiderService
       .getShowImageList()
       .subscribe((value) => {
         this.showImageList = value;
         if (value) {
-          this.loadAccountImages();
+          if (!this.isOfflineMode) this.loadAccountImages();
         }
       });
   }
