@@ -27,6 +27,12 @@ export class SideMenuComponent implements OnInit {
       route: 'image-finder',
       height: 0,
     },
+    {
+      icon: 'pi-share-alt',
+      label: 'Comunity',
+      route: 'comunity-images',
+      height: 0,
+    },
   ];
 
   selectedMenu: MenuItem;
