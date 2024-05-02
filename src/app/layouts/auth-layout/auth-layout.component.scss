@@ -13,6 +13,13 @@
     .change-env-button {
       position: absolute;
       bottom: 1rem;
+      left: 1rem;
+      font-size: 12px;
+    }
+
+    .offline-mode-button {
+      position: absolute;
+      bottom: 1rem;
       right: 1rem;
       font-size: 12px;
     }
@@ -22,12 +29,6 @@
       bottom: 0.5rem;
       font-size: 10px;
       user-select: none;
-    }
-
-    .offline-mode-button {
-      position: absolute;
-      bottom: 1rem;
-      right: 1rem;
     }
   }
 }
