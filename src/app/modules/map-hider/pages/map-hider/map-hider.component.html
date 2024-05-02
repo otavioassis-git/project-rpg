@@ -1,3 +1,4 @@
+<app-image-list (image)="loadImage($event)"></app-image-list>
 <div id="map-hider-container">
   <div class="map-container">
     <div
@@ -17,15 +18,11 @@
       <img *ngIf="imageUrl" [src]="imageUrl" [alt]="imageUrl" />
     </div>
     <div *ngIf="!image && !imageUrl" class="empty-state">
-      <p class="unselectable text-center">Upload an image to start</p>
+      <p class="unselectable text-center">Select an image to start</p>
     </div>
   </div>
   <div class="settings-container">
-    <label class="input-file">
-      <input (change)="loadImage($event)" accept="image/*" type="file" />
-      <span class="unselectable">Upload image</span>
-    </label>
-    <button pButton label="Insert URL" (click)="openImageUrl()"></button>
+    <button pButton label="Select image" (click)="openImageList()"></button>
     <button
       pButton
       label="Project map"

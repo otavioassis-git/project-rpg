@@ -1,0 +1,47 @@
+<p-sidebar [(visible)]="showAccountImages" position="right">
+  <div class="header">
+    <h3>Account images</h3>
+    <i class="pi pi-times" (click)="close()"></i>
+  </div>
+  <div id="account-images-container" overlay-scrollbars>
+    <div *ngIf="images.length > 0 && !isLoading" class="content">
+      <div *ngFor="let image of images" class="image-item">
+        <img
+          [src]="image.value"
+          alt="Image preview"
+          (mouseover)="showImagePreview($event, image.value, true)"
+          (mouseleave)="showImagePreview($event, image.value, false)"
+        />
+        <div class="image-info">
+          <p
+            [pTooltip]="image.name"
+            tooltipPosition="left"
+            (click)="copyToClipboard($event, image.name)"
+          >
+            {{ image.name }}
+          </p>
+        </div>
+        <span class="delete-button" (click)="deleteAccountImage($event, image)"
+          >Delete</span
+        >
+        <p-overlayPanel #op styleClass="image-preview-overlaypanel">
+          <img class="image-preview" [src]="imagePreview" alt="Image preview" />
+        </p-overlayPanel>
+      </div>
+    </div>
+    <div *ngIf="images.length == 0" class="empty-state">
+      <img
+        src="assets/images/image-list-empty-state.jpg"
+        alt="Image list empty state"
+      />
+      <p>No images associated with your account</p>
+    </div>
+    <div *ngIf="isLoading" class="loader">
+      <p-progressSpinner
+        styleClass="ml-auto custom-spinner-blue"
+        [style]="{ height: '48px' }"
+        strokeWidth="5"
+      ></p-progressSpinner>
+    </div>
+  </div>
+</p-sidebar>

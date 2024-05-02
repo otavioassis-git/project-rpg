@@ -1,0 +1,16 @@
+<div class="content">
+  <div *ngIf="!isOfflineMode" class="item">
+    <button
+      pButton
+      label="Change Password"
+      (click)="openChangePassword()"
+    ></button>
+  </div>
+  <div class="item">
+    <button
+      pButton
+      [label]="isOfflineMode ? 'Quit no backend mode' : 'Logout'"
+      (click)="isOfflineMode ? quitOfflineMode() : logout()"
+    ></button>
+  </div>
+</div>

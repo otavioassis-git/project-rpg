@@ -1,0 +1,52 @@
+<section id="auth-container" (keyup.enter)="signup()">
+  <h1>Sign up</h1>
+  <h2>Already have an account? Login <a href="#/auth/login">here</a></h2>
+  <form class="form" [formGroup]="form">
+    <span class="p-float-label">
+      <input
+        id="firstName"
+        pInputText
+        type="text"
+        formControlName="firstName"
+      />
+      <label for="firstName" class="float">First name</label>
+    </span>
+    <span class="p-float-label">
+      <input id="lastName" pInputText type="text" formControlName="lastName" />
+      <label for="lastName" class="float">Last name</label>
+    </span>
+    <span class="p-float-label">
+      <input id="username" pInputText type="text" formControlName="username" />
+      <label for="username" class="float">Username</label>
+    </span>
+    <span class="p-float-label">
+      <input
+        id="password"
+        pInputText
+        type="password"
+        formControlName="password"
+      />
+      <label for="password" class="float">Password</label>
+    </span>
+    <span class="p-float-label">
+      <input
+        id="password"
+        pInputText
+        type="password"
+        formControlName="passwordRepeat"
+      />
+      <label for="password" class="float">Repeat password</label>
+    </span>
+  </form>
+  <div *ngIf="error" class="error-message">
+    <i class="pi pi-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+  </div>
+  <loading-button
+    label="Sign in"
+    [disabled]="verifyForm()"
+    (submit)="signup()"
+    [isLoading]="isLoading"
+    style="padding: 0.5rem 2.5rem"
+  ></loading-button>
+</section>

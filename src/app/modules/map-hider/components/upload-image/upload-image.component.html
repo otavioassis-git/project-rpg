@@ -1,0 +1,25 @@
+<div id="upload-image-container">
+  <p>Do you want to upload this image to your account?</p>
+  <div class="image-container">
+    <img [src]="image.value" alt="Image preview" />
+    <small>image name: {{ image.name }}</small>
+  </div>
+  <span class="p-float-label">
+    <input id="name" pInputText type="text" [(ngModel)]="newName" />
+    <label for="name">Change name</label>
+  </span>
+  <div class="dialog-footer">
+    <button
+      pButton
+      label="Cancel"
+      class="white-background-cancel"
+      (click)="close(false)"
+    ></button>
+    <loading-button
+      class="w-full"
+      label="Upload"
+      (submit)="uploadImageToAccount()"
+      [isLoading]="isLoading"
+    ></loading-button>
+  </div>
+</div>

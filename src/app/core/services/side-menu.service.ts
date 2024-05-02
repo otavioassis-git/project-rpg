@@ -9,6 +9,7 @@ export interface MenuItem {
   label: string;
   route: string;
   height: number;
+  offline: boolean;
 }
 
 @Injectable({
