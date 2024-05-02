@@ -1,3 +1,4 @@
+import { ComunityImagesModule } from './../comunity-images/comunity-images.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainWindowComponent } from '../main-window/pages/main-window/main-window.component';
@@ -6,6 +7,7 @@ import { MapProjectionComponent } from '../map-projection/pages/map-projection/m
 import { ImageFinderComponent } from '../image-finder/pages/image-finder/image-finder.component';
 import { SoundboardComponent } from '../soundboard/pages/soundboard/soundboard.component';
 import { PageNotFoundComponent } from '../../shared/components';
+import { ComunityImagesComponent } from '../comunity-images/pages/comunity-images/comunity-images.component';
 
 const routes: Routes = [
   {
@@ -31,10 +33,12 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'soundboard',
-    component: SoundboardComponent,
+    path: 'comunity-images',
+    component: ComunityImagesComponent,
     loadChildren: () =>
-      import('../soundboard/soundboard.module').then((m) => m.SoundboardModule),
+      import('../comunity-images/comunity-images.module').then(
+        (m) => m.ComunityImagesModule
+      ),
   },
 ];
 
