@@ -9,6 +9,12 @@
     font-size: 2.5rem;
   }
 
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .images-list-container {
     display: flex;
     gap: 1rem;

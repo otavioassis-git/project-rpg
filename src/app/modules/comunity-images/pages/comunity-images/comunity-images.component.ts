@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ComunityImagesService } from '../../services/comunity-images.service';
-import { take } from 'rxjs';
+import { take, Subscription } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { LinkImageComponent } from '../../components/link-image/link-image.component';
 
@@ -16,20 +16,29 @@ export interface ComunityImage {
   styleUrls: ['./comunity-images.component.scss'],
   providers: [DialogService],
 })
-export class ComunityImagesComponent implements OnInit {
+export class ComunityImagesComponent implements OnInit, OnDestroy {
   images: ComunityImage[] = [];
+  subscription: Subscription;
 
   constructor(
-    private service: ComunityImagesService,
+    private comunityImagesService: ComunityImagesService,
     private dialog: DialogService
   ) {}
 
   ngOnInit(): void {
-    this.getImages();
+    this.subscription = this.comunityImagesService
+      .getUpdateImages()
+      .subscribe(() => {
+        this.getImages();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   getImages() {
-    this.service
+    this.comunityImagesService
       .getImages()
       .pipe(take(1))
       .subscribe((response) => {
@@ -46,5 +55,9 @@ export class ComunityImagesComponent implements OnInit {
     ref.onClose.pipe(take(2)).subscribe((reload) => {
       if (reload) this.getImages();
     });
+  }
+
+  openAccountImages() {
+    this.comunityImagesService.setShowAccountImages(true);
   }
 }

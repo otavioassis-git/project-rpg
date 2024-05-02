@@ -1,7 +1,15 @@
+<app-account-images></app-account-images>
 <div id="comunity-images-container">
-  <div>
-    <h1>Comunity images</h1>
-    <small>Images that are already on your account won't show here</small>
+  <div class="header">
+    <div>
+      <h1>Comunity images</h1>
+      <small>Images that are already on your account won't show here</small>
+    </div>
+    <button
+      pButton
+      label="Account images"
+      (click)="openAccountImages()"
+    ></button>
   </div>
   <div *ngIf="images.length > 0" class="images-list-container">
     <div *ngFor="let image of images" class="image">
