@@ -21,7 +21,9 @@ export class EnvChangerComponent implements OnInit {
   }
 
   changeEnv() {
-    this.electronService.saveEnv({ env: this.env });
+    this.electronService.saveEnv({
+      env: this.env.includes('http') ? this.env : `http://${this.env}`,
+    });
     localStorage.setItem('env', this.env);
     this.close();
   }

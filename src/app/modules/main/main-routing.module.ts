@@ -1,12 +1,8 @@
-import { ComunityImagesModule } from './../comunity-images/comunity-images.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainWindowComponent } from '../main-window/pages/main-window/main-window.component';
 import { MapHiderComponent } from '../map-hider/pages/map-hider/map-hider.component';
-import { MapProjectionComponent } from '../map-projection/pages/map-projection/map-projection.component';
 import { ImageFinderComponent } from '../image-finder/pages/image-finder/image-finder.component';
-import { SoundboardComponent } from '../soundboard/pages/soundboard/soundboard.component';
-import { PageNotFoundComponent } from '../../shared/components';
 import { ComunityImagesComponent } from '../comunity-images/pages/comunity-images/comunity-images.component';
 
 const routes: Routes = [
