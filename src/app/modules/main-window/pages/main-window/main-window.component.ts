@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
-import { Tutorials } from '../../../../core/services/tutorial.service';
+import {
+  Tutorials,
+  TutorialService,
+} from '../../../../core/services/tutorial.service';
 import { resolve } from 'path';
 import { Settings } from '../../../../core/services/settings.service';
 
@@ -14,7 +17,10 @@ export class MainWindowComponent implements OnInit {
   username: string = '';
   isOfflineMode: boolean = false;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private tutorialService: TutorialService
+  ) {}
 
   ngOnInit(): void {
     if (
@@ -74,9 +80,17 @@ export class MainWindowComponent implements OnInit {
           this.httpClient
             .get('assets/tutorials.json')
             .pipe(take(1))
-            .subscribe((value: Tutorials) => {
-              localStorage.setItem('tutorials', JSON.stringify(value));
-            });
+            .subscribe(
+              (value: Tutorials) => {
+                localStorage.setItem('tutorials', JSON.stringify(value));
+              },
+              () => {
+                localStorage.setItem(
+                  'tutorials',
+                  JSON.stringify(this.tutorialService.getDefaultTutorials())
+                );
+              }
+            );
         } else {
           try {
             let value: Tutorials = JSON.parse(
@@ -94,7 +108,12 @@ export class MainWindowComponent implements OnInit {
                 )
             );
             localStorage.setItem('tutorials', JSON.stringify(value));
-          } catch (error) {}
+          } catch (error) {
+            localStorage.setItem(
+              'tutorials',
+              JSON.stringify(this.tutorialService.getDefaultTutorials())
+            );
+          }
         }
       });
   }

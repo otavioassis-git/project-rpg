@@ -21,6 +21,7 @@ export class TutorialsComponent implements OnInit {
 
   ngOnInit(): void {
     this.tutorials = this.tutorialService.getTutorials();
+    this.tutorialsEnabled = Object.values(this.tutorials).every((item) => item);
   }
 
   handleTutorialChange(event) {
